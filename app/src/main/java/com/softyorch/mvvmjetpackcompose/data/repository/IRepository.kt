@@ -1,6 +1,6 @@
-package com.softyorch.mvvmjetpackcompose.core.repository
+package com.softyorch.mvvmjetpackcompose.data.repository
 
-import com.softyorch.mvvmjetpackcompose.core.entity.UserEntity
+import com.softyorch.mvvmjetpackcompose.data.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 

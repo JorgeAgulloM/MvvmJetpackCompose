@@ -1,16 +1,13 @@
-package com.softyorch.mvvmjetpackcompose.core.repository
+package com.softyorch.mvvmjetpackcompose.data.repository
 
-import com.softyorch.mvvmjetpackcompose.core.entity.UserDao
-import com.softyorch.mvvmjetpackcompose.core.entity.UserEntity
+import com.softyorch.mvvmjetpackcompose.data.entity.UserDao
+import com.softyorch.mvvmjetpackcompose.data.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(private val userDao: UserDao) : IRepository {
     override suspend fun getUsers(): Flow<List<UserEntity>> {
-        return flow {
-            emit(userDao.getUsers())
-        }
+        return userDao.getUsers()
     }
 
     override suspend fun insertUsers(users: List<UserEntity>) {
