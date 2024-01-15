@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -50,7 +52,27 @@ android {
 }
 
 dependencies {
+    /** Room database library */
+    val room = "2.6.1"
+    implementation("androidx.room:room-runtime:$room")
+    //noinspection KaptUsageInsteadOfKsp
+    kapt("androidx.room:room-compiler:$room")
+    implementation("androidx.room:room-ktx:$room")
 
+    /** Dagger Hilt injection library */
+    val dagger = "2.48"
+    implementation("com.google.dagger:hilt-android:$dagger")
+    kapt("com.google.dagger:hilt-android-compiler:$dagger")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+    kapt("androidx.hilt:hilt-compiler:1.1.0")
+
+    /** Coroutines library */
+    val coroutines = "1.7.1"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
