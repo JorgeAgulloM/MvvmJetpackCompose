@@ -10,6 +10,7 @@ import com.softyorch.mvvmjetpackcompose.ui.screen.splash.SplashScreen
 import com.softyorch.mvvmjetpackcompose.ui.screen.userDetail.UserDetailScreen
 import com.softyorch.mvvmjetpackcompose.ui.screen.main.MainScreen
 import com.softyorch.mvvmjetpackcompose.utils.ToUUID
+import com.softyorch.mvvmjetpackcompose.utils.USER_ID
 
 @Composable
 fun NavigationManager(navController: NavHostController = rememberNavController()) {
@@ -22,9 +23,9 @@ fun NavigationManager(navController: NavHostController = rememberNavController()
         }
         composable(
             route = NavigationRoutes.UserDetailScreen.route,
-            arguments = listOf(navArgument("userId") { defaultValue = "0" })
+            arguments = listOf(navArgument(USER_ID) { defaultValue = "unKnown" })
         ) { backStackEntry ->
-            backStackEntry.arguments?.getString("userId")?.let {
+            backStackEntry.arguments?.getString(USER_ID)?.let {
                 UserDetailScreen(it.ToUUID()) { navController.popBackStack() }
             }
         }
