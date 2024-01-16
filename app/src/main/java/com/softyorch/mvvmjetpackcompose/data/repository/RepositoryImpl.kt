@@ -10,7 +10,7 @@ class RepositoryImpl @Inject constructor(private val userDao: UserDao) : IReposi
         return userDao.getUsers()
     }
 
-    override suspend fun insertUsers(users: List<UserEntity>) {
+    override suspend fun insertUsers(users: UserEntity) {
         userDao.insertUsers(users)
     }
 }

@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface IRepository {
     suspend fun getUsers(): Flow<List<UserEntity>>
-    suspend fun insertUsers(users: List<UserEntity>)
+    suspend fun insertUsers(users: UserEntity)
 }
