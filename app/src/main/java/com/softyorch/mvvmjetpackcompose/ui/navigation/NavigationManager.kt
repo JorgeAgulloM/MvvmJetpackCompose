@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.softyorch.mvvmjetpackcompose.ui.screen.splash.SplashScreen
-import com.softyorch.mvvmjetpackcompose.ui.screen.userDetail.UserDetailScreen
+import com.softyorch.mvvmjetpackcompose.ui.screen.userDetail.screen.UserDetailScreen
 import com.softyorch.mvvmjetpackcompose.ui.screen.main.MainScreen
 import com.softyorch.mvvmjetpackcompose.utils.ToUUID
 import com.softyorch.mvvmjetpackcompose.utils.USER_ID
