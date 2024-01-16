@@ -1,6 +1,6 @@
 package com.softyorch.mvvmjetpackcompose.ui.screen.main.usersList
 
-import com.softyorch.mvvmjetpackcompose.ui.screen.main.models.UserUi
+import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 
 sealed class UsersListState {
     data object Loading : UsersListState()
