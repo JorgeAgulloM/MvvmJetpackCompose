@@ -1,4 +1,4 @@
-package com.softyorch.mvvmjetpackcompose.ui.screen.users
+package com.softyorch.mvvmjetpackcompose.ui.screen.main
 
 sealed class MainState {
     data object Loading : MainState()
