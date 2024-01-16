@@ -1,4 +1,4 @@
-package com.softyorch.mvvmjetpackcompose.ui.screen.main
+package com.softyorch.mvvmjetpackcompose.ui.screen.main.models
 
 import com.softyorch.mvvmjetpackcompose.domain.UserDomain
 import java.util.UUID
