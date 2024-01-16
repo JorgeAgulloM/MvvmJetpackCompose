@@ -5,4 +5,4 @@ import androidx.room.PrimaryKey
 import java.util.UUID
 
 @Entity(tableName = "user")
-data class UserEntity(@PrimaryKey val id: UUID? = UUID.randomUUID(), val name: String, val age: Int)
+data class UserEntity(@PrimaryKey val id: UUID, val name: String, val age: Int)
