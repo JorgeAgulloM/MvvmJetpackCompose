@@ -7,7 +7,7 @@ import com.softyorch.mvvmjetpackcompose.data.entity.UserDao
 import com.softyorch.mvvmjetpackcompose.data.repository.IRepository
 import com.softyorch.mvvmjetpackcompose.data.repository.RepositoryImpl
 import com.softyorch.mvvmjetpackcompose.domain.GetListUserUseCase
-import com.softyorch.mvvmjetpackcompose.domain.SetListUserUseCase
+import com.softyorch.mvvmjetpackcompose.domain.SetUserUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,6 +44,6 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesSetListUserUseCase(repo: IRepository): SetListUserUseCase = SetListUserUseCase(repo)
+    fun providesSetListUserUseCase(repo: IRepository): SetUserUseCase = SetUserUseCase(repo)
 
 }
