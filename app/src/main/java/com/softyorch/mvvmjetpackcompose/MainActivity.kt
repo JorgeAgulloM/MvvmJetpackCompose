@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.softyorch.mvvmjetpackcompose.ui.screen.users.MainScreen
+import com.softyorch.mvvmjetpackcompose.ui.navigation.NavigationManager
 import com.softyorch.mvvmjetpackcompose.ui.theme.MvvmJetpackComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,12 +17,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MvvmJetpackComposeTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen()
+                    NavigationManager()
                 }
             }
         }
