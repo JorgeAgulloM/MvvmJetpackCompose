@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
+import java.util.UUID
 
 @Composable
 fun CreateUser(
@@ -39,7 +40,7 @@ fun CreateUser(
             onClick = {
                 viewModel.setUsers(
                     UserUi(
-                        id = null,
+                        id = UUID.randomUUID(),
                         name = fieldName,
                         age = fieldAge.toInt()
                     )
