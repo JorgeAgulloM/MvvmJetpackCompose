@@ -9,6 +9,7 @@ import com.softyorch.mvvmjetpackcompose.data.repository.RepositoryImpl
 import com.softyorch.mvvmjetpackcompose.domain.GetListUserUseCase
 import com.softyorch.mvvmjetpackcompose.domain.GetUserUseCase
 import com.softyorch.mvvmjetpackcompose.domain.SetUserUseCase
+import com.softyorch.mvvmjetpackcompose.domain.UpdateUserUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,5 +51,9 @@ object AppModule {
     @Singleton
     @Provides
     fun providesSetListUserUseCase(repo: IRepository): SetUserUseCase = SetUserUseCase(repo)
+
+    @Singleton
+    @Provides
+    fun providesUpdateUserUseCase(repo: IRepository): UpdateUserUseCase = UpdateUserUseCase(repo)
 
 }
