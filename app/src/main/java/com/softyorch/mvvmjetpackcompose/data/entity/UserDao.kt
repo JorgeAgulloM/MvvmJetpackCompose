@@ -1,6 +1,5 @@
 package com.softyorch.mvvmjetpackcompose.data.entity
 
-
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -11,15 +10,15 @@ import java.util.UUID
 
 @Dao
 interface UserDao {
-    @Query("SELECT * FROM user")
+    @Query("SELECT * FROM user_table")
     fun getUsers(): Flow<List<UserEntity>>
 
-    @Query("SELECT * FROM user WHERE id=:userId")
-    fun getUser(userId: UUID): UserEntity
+    @Query("SELECT * FROM user_table WHERE id=:userId")
+    fun getUser(userId: UUID): Flow<UserEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUsers(users: UserEntity)
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(user: UserEntity)
+    @Update
+    suspend fun updateUser(user: UserEntity)
 }

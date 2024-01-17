@@ -11,7 +11,7 @@ class RepositoryImpl @Inject constructor(private val userDao: UserDao) : IReposi
         return userDao.getUsers()
     }
 
-    override suspend fun getUser(userId: UUID): UserEntity {
+    override suspend fun getUser(userId: UUID): Flow<UserEntity> {
         return userDao.getUser(userId)
     }
 
@@ -20,6 +20,6 @@ class RepositoryImpl @Inject constructor(private val userDao: UserDao) : IReposi
     }
 
     override suspend fun updateUser(user: UserEntity) {
-        userDao.update(user)
+        userDao.updateUser(user)
     }
 }
