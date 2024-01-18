@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -16,6 +17,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
@@ -35,14 +38,14 @@ fun CreateUser(
         verticalArrangement = Arrangement.Top
     ) {
         UserField(fieldName, "Nombre") { fieldName = it }
-        UserField(fieldAge, "Edad") { fieldAge = it }
+        UserField(fieldAge, "Edad", onlyNumbs = true) { fieldAge = it }
         Button(
             onClick = {
                 viewModel.setUsers(
                     UserUi(
                         id = UUID.randomUUID(),
                         name = fieldName,
-                        age = fieldAge.toInt()
+                        age = fieldAge
                     )
                 )
                 fieldName = ""
@@ -57,7 +60,15 @@ fun CreateUser(
 }
 
 @Composable
-private fun UserField(fieldName: String, label: String, onTextChange: (String) -> Unit) {
+private fun UserField(
+    fieldName: String,
+    label: String,
+    onlyNumbs: Boolean = false,
+    onTextChange: (String) -> Unit
+) {
+    val keyboardOptions = if (onlyNumbs) KeyboardOptions(keyboardType = KeyboardType.Number)
+    else KeyboardOptions(capitalization = KeyboardCapitalization.Words)
+
     OutlinedTextField(
         value = fieldName,
         onValueChange = { onTextChange(it) },
@@ -65,6 +76,7 @@ private fun UserField(fieldName: String, label: String, onTextChange: (String) -
         enabled = true,
         label = { Text(text = label) },
         placeholder = { Text(text = label) },
+        keyboardOptions = keyboardOptions,
         shape = MaterialTheme.shapes.large
     )
 }
