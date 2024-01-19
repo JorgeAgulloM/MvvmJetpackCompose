@@ -1,12 +1,18 @@
 package com.softyorch.mvvmjetpackcompose.ui.screen.userDetail.details
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,13 +45,15 @@ fun UserDetails(
     val stateError: StateError by viewModel.stateError.collectAsStateWithLifecycle()
     val userError: UserErrorModel by viewModel.userError.collectAsStateWithLifecycle()
 
+    Log.i("MYAPP", "eventDetails: $eventDetails")
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top
     ) {
         when (stateDetails) {
-            StateDetails.Loading -> Text(text = "Cargando...")
+            StateDetails.Loading -> DetailsInfo(text = "Cargando...")
             is StateDetails.Success -> {
                 when (eventDetails) {
                     EventDetails.Edit -> BodyEdit(
@@ -54,15 +62,27 @@ fun UserDetails(
                         onDataChange = viewModel::onDataChange
                     )
 
-                    else -> BodyRead((stateDetails as StateDetails.Success).user)
+                    EventDetails.Read -> BodyRead((stateDetails as StateDetails.Success).user)
+                    EventDetails.Delete -> DetailsInfo(text = "Usuario eliminado!")
                 }
             }
 
-            is StateDetails.Error -> Text(text = (stateDetails as StateDetails.Error).msg)
+            is StateDetails.Error -> DetailsInfo(text = (stateDetails as StateDetails.Error).msg)
         }
-        DetailsButton(eventDetails, stateError) { event ->
-            viewModel.eventManager(event)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            DetailsButton(eventDetails, stateError) { event ->
+                viewModel.eventManager(event)
+            }
+            val enabled = eventDetails == EventDetails.Read
+            DeleteButton(enabled = enabled) { event ->
+                viewModel.eventManager(event)
+            }
         }
+
     }
 }
 
@@ -84,7 +104,7 @@ private fun BodyEdit(
         text = user.name,
         label = "Nombre",
         error = userError.name,
-        supportingText = "Debe contener al menos 3 caracteres",
+        supportingText = "Debe contener al menos 4 caracteres",
         onTextChange = { name -> onDataChange(name, user.age) }
     )
     DataField(
@@ -139,6 +159,7 @@ private fun DetailsButton(
     val nextEvent: EventDetails
     val text: String
     val color: Color
+    var enabled = true
 
     when (eventDetails) {
         EventDetails.Edit -> {
@@ -147,19 +168,53 @@ private fun DetailsButton(
             color = MaterialTheme.colorScheme.primary
         }
 
-        else -> {
+        EventDetails.Read -> {
             nextEvent = EventDetails.Edit
             text = "Editar"
             color = MaterialTheme.colorScheme.secondary
+        }
+
+        EventDetails.Delete -> {
+            enabled = false
+            nextEvent = EventDetails.Delete
+            text = "Eliminado"
+            color = MaterialTheme.colorScheme.surfaceVariant
         }
     }
 
     Button(
         onClick = { onClick(nextEvent) },
         modifier = Modifier.padding(horizontal = 24.dp),
-        enabled = stateError == StateError.Working,
+        enabled = enabled && stateError == StateError.Working,
         colors = ButtonDefaults.buttonColors(containerColor = color)
     ) {
         Text(text = text)
+    }
+}
+
+@Composable
+fun DeleteButton(enabled: Boolean, onDelete: (EventDetails) -> Unit) {
+    IconButton(
+        onClick = { onDelete(EventDetails.Delete) },
+        modifier = Modifier.padding(horizontal = 24.dp),
+        enabled = enabled
+    ) {
+        Icon(
+            Icons.Default.Delete,
+            contentDescription = null,
+            tint = if (enabled) MaterialTheme.colorScheme.error
+            else MaterialTheme.colorScheme.surfaceVariant
+        )
+    }
+}
+
+@Composable
+fun DetailsInfo(text: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(16.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(text = text, style = MaterialTheme.typography.titleMedium)
     }
 }

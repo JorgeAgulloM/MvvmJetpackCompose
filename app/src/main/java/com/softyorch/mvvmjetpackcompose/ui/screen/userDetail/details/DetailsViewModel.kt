@@ -3,6 +3,7 @@ package com.softyorch.mvvmjetpackcompose.ui.screen.userDetail.details
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.softyorch.mvvmjetpackcompose.domain.DeleteUserUseCase
 import com.softyorch.mvvmjetpackcompose.domain.GetUserUseCase
 import com.softyorch.mvvmjetpackcompose.domain.UpdateUserUseCase
 import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
@@ -10,6 +11,7 @@ import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toDomain
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toUi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,14 +20,15 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
-    private val updateUserUseCase: UpdateUserUseCase
+    private val updateUserUseCase: UpdateUserUseCase,
+    private val deleteUserUseCase: DeleteUserUseCase,
+    private val dispatcherIo: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
     private val _stateDetails = MutableStateFlow<StateDetails>(StateDetails.Loading)
@@ -41,9 +44,11 @@ class DetailsViewModel @Inject constructor(
     val userError: StateFlow<UserErrorModel> = _userError
 
     fun getUSer(userId: UUID) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcherIo) {
             getDataUSer(userId).catch { flowT ->
-                _stateDetails.update { StateDetails.Error(flowT.message.toString()) }
+                //if (_stateDetails.value != StateDetails.Deleted)
+                if (_eventDetails.value != EventDetails.Delete)
+                    _stateDetails.update { StateDetails.Error(flowT.message.toString()) }
             }.collect { user ->
                 _stateDetails.update { StateDetails.Success(user) }
             }
@@ -51,21 +56,24 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun eventManager(newEvent: EventDetails) {
-        when (newEvent) {
-            EventDetails.Read -> {
-                if (_eventDetails.value == EventDetails.Edit) {
-                    when (val state = _stateDetails.value) {
-                        is StateDetails.Success -> viewModelScope.launch(Dispatchers.IO) {
+        when (val state = _stateDetails.value) {
+            StateDetails.Loading -> {}
+            is StateDetails.Success -> {
+                when (newEvent) {
+                    EventDetails.Read -> {
+                        viewModelScope.launch(dispatcherIo) {
                             updateDataUser(state.user)
                         }
-
-                        else -> {}
+                    }
+                    EventDetails.Edit -> {}
+                    EventDetails.Delete -> {
+                        viewModelScope.launch(dispatcherIo) {
+                            deleteDataUser(state.user)
+                        }
                     }
                 }
             }
-
-            EventDetails.Edit -> {}
-            EventDetails.Delete -> {}
+            is StateDetails.Error -> {}
         }
         _eventDetails.value = newEvent
     }
@@ -95,7 +103,7 @@ class DetailsViewModel @Inject constructor(
     }
 
     private fun isNameCorrect(name: String): Boolean {
-        return name.length < 4 || name.isDigitsOnly()
+        return name.length > 3 && !name.isDigitsOnly()
     }
 
     private fun isAgeCorrect(age: String): Boolean {
@@ -121,4 +129,7 @@ class DetailsViewModel @Inject constructor(
         updateUserUseCase.invoke(user.toDomain())
     }
 
+    private suspend fun deleteDataUser(user: UserUi) {
+        deleteUserUseCase.invoke(user.toDomain())
+    }
 }
