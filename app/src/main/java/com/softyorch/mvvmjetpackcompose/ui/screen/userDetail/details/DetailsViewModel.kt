@@ -40,7 +40,7 @@ class DetailsViewModel @Inject constructor(
     private val _stateError = MutableStateFlow<StateError>(StateError.Working)
     val stateError: StateFlow<StateError> = _stateError
 
-    private val _userError = MutableStateFlow(UserErrorModel(name = false, age = false))
+    private val _userError = MutableStateFlow(UserErrorModel())
     val userError: StateFlow<UserErrorModel> = _userError
 
     fun getUSer(userId: UUID) {
@@ -78,13 +78,16 @@ class DetailsViewModel @Inject constructor(
         _eventDetails.value = newEvent
     }
 
-    fun onDataChange(name: String, age: String) {
-        searchError(name, age)
+    fun onDataChange(user: UserUi) {
+        searchError(user)
         when (val state = _stateDetails.value) {
             is StateDetails.Success -> {
                 val userEdit = state.user.copy(
-                    name = name,
-                    age = age
+                    name = user.name,
+                    surName = user.surName,
+                    phoneNumber = user.phoneNumber,
+                    email = user.email,
+                    age = user.age
                 )
                 _stateDetails.value = StateDetails.Success(userEdit)
             }
@@ -93,11 +96,14 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
-    private fun searchError(name: String, age: String) {
-        val errorName = !isNameCorrect(name)
-        val errorAge = !isAgeCorrect(age)
+    private fun searchError(user: UserUi) {
+        val errorName = !isNameCorrect(user.name)
+        val errorSurName = false
+        val errorPhoneNumber = false
+        val errorEmail = false
+        val errorAge = user.age?.let { !isAgeCorrect(it) } ?: false
 
-        _userError.update { UserErrorModel(errorName, errorAge) }
+        _userError.update { UserErrorModel(errorName, errorSurName, errorPhoneNumber, errorEmail, errorAge) }
         _stateError.update { if (errorName || errorAge) StateError.Error else StateError.Working }
 
     }

@@ -4,10 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,11 +14,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.softyorch.mvvmjetpackcompose.ui.componens.dataField.DataField
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
+import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
 import java.util.UUID
 
 @Composable
@@ -37,14 +34,27 @@ fun CreateUser(
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top
     ) {
-        UserField(fieldName, "Nombre") { fieldName = it }
-        UserField(fieldAge, "Edad", onlyNumbs = true) { fieldAge = it }
+        DataField(
+            label = "Nombre",
+            text = fieldName,
+            error = false,
+            supportingText = EMPTY_STRING
+        ) { fieldName = it }
+        DataField(
+            label = "Edad",
+            text = fieldAge,
+            error = false,
+            supportingText = EMPTY_STRING
+        ) { fieldAge = it }
         Button(
             onClick = {
                 viewModel.setUsers(
                     UserUi(
                         id = UUID.randomUUID(),
                         name = fieldName,
+                        surName = null,
+                        phoneNumber = EMPTY_STRING,
+                        email = null,
                         age = fieldAge
                     )
                 )
@@ -57,26 +67,4 @@ fun CreateUser(
             Text(text = "Crear usuario")
         }
     }
-}
-
-@Composable
-private fun UserField(
-    fieldName: String,
-    label: String,
-    onlyNumbs: Boolean = false,
-    onTextChange: (String) -> Unit
-) {
-    val keyboardOptions = if (onlyNumbs) KeyboardOptions(keyboardType = KeyboardType.Number)
-    else KeyboardOptions(capitalization = KeyboardCapitalization.Words)
-
-    OutlinedTextField(
-        value = fieldName,
-        onValueChange = { onTextChange(it) },
-        modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp),
-        enabled = true,
-        label = { Text(text = label) },
-        placeholder = { Text(text = label) },
-        keyboardOptions = keyboardOptions,
-        shape = MaterialTheme.shapes.large
-    )
 }
