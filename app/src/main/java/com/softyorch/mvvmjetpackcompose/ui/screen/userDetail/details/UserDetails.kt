@@ -90,7 +90,7 @@ fun UserDetails(
 private fun BodyEdit(
     user: UserUi,
     userError: UserErrorModel,
-    onDataChange: (String, String) -> Unit
+    onDataChange: (UserUi) -> Unit
 ) {
     DataField(
         text = user.id.toString(),
@@ -105,15 +105,36 @@ private fun BodyEdit(
         label = "Nombre",
         error = userError.name,
         supportingText = "Debe contener al menos 4 caracteres",
-        onTextChange = { name -> onDataChange(name, user.age) }
+        onTextChange = { name -> onDataChange(user.copy(name = name)) }
     )
     DataField(
-        text = user.age,
+        text = user.surName ?: EMPTY_STRING,
+        label = "Apellido",
+        error = userError.name,
+        supportingText = "Debe contener al menos 4 caracteres",
+        onTextChange = { surName -> onDataChange(user.copy(surName = surName)) }
+    )
+    DataField(
+        text = user.phoneNumber,
+        label = "Teléfono",
+        error = userError.name,
+        supportingText = "Solo puede contener número",
+        onTextChange = { phoneNumber -> onDataChange(user.copy(phoneNumber = phoneNumber)) }
+    )
+    DataField(
+        text = user.email ?: EMPTY_STRING,
+        label = "Email",
+        error = userError.name,
+        supportingText = "El email no es correcto",
+        onTextChange = { email -> onDataChange(user.copy(email = email)) }
+    )
+    DataField(
+        text = user.age ?: EMPTY_STRING,
         label = "Edad",
         error = userError.age,
         supportingText = "Edad no puede estar vacío",
         onlyNumbs = true,
-        onTextChange = { age -> onDataChange(user.name, age) }
+        onTextChange = { age -> onDataChange(user.copy(age = age)) }
     )
 }
 
@@ -121,13 +142,16 @@ private fun BodyEdit(
 private fun BodyRead(user: UserUi) {
     TextRead(label = "Id de usuario", text = user.id.toString())
     TextRead(label = "Nombre", text = user.name)
+    TextRead(label = "Apellido", text = user.surName)
+    TextRead(label = "Teléfono", text = user.phoneNumber)
+    TextRead(label = "Email", text = user.email)
     TextRead(label = "Edad", text = user.age)
 }
 
 
 @Composable
-private fun TextRead(label: String, text: String) {
-    Column(
+private fun TextRead(label: String, text: String?) {
+    if (!text.isNullOrEmpty()) Column(
         modifier = Modifier.fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 2.dp)
             .background(
