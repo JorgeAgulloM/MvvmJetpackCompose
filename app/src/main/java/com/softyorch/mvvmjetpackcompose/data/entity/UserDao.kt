@@ -1,6 +1,7 @@
 package com.softyorch.mvvmjetpackcompose.data.entity
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -21,4 +22,7 @@ interface UserDao {
 
     @Update
     suspend fun updateUser(user: UserEntity)
+
+    @Delete
+    suspend fun deleteUser(user: UserEntity)
 }

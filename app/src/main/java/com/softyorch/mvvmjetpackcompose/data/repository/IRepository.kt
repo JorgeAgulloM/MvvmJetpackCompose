@@ -10,4 +10,5 @@ interface IRepository {
     suspend fun getUser(userId: UUID): Flow<UserEntity>
     suspend fun insertUsers(users: UserEntity)
     suspend fun updateUser(user: UserEntity)
+    suspend fun deleteUser(user: UserEntity)
 }
