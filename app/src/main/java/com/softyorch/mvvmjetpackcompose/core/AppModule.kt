@@ -6,6 +6,7 @@ import com.softyorch.mvvmjetpackcompose.data.AppDatabase
 import com.softyorch.mvvmjetpackcompose.data.entity.UserDao
 import com.softyorch.mvvmjetpackcompose.data.repository.IRepository
 import com.softyorch.mvvmjetpackcompose.data.repository.RepositoryImpl
+import com.softyorch.mvvmjetpackcompose.domain.DeleteUserUseCase
 import com.softyorch.mvvmjetpackcompose.domain.GetListUserUseCase
 import com.softyorch.mvvmjetpackcompose.domain.GetUserUseCase
 import com.softyorch.mvvmjetpackcompose.domain.SetUserUseCase
@@ -55,5 +56,9 @@ object AppModule {
     @Singleton
     @Provides
     fun providesUpdateUserUseCase(repo: IRepository): UpdateUserUseCase = UpdateUserUseCase(repo)
+
+    @Singleton
+    @Provides
+    fun providesDeleteUserUseCase(repo: IRepository): DeleteUserUseCase = DeleteUserUseCase(repo)
 
 }
