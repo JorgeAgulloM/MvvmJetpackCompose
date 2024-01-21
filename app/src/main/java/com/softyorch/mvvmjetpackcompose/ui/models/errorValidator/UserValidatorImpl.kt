@@ -2,7 +2,6 @@ package com.softyorch.mvvmjetpackcompose.ui.models.errorValidator
 
 import android.util.Patterns
 import androidx.core.text.isDigitsOnly
-import java.util.regex.Pattern
 import javax.inject.Inject
 
 class UserValidatorImpl @Inject constructor() : IUserValidator {
