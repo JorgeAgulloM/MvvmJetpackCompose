@@ -8,7 +8,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.ContactMail
+import androidx.compose.material.icons.filled.ContactPhone
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Key
+import androidx.compose.material.icons.filled.Numbers
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Person2
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.VerifiedUser
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -93,49 +103,49 @@ private fun BodyEdit(
     onDataChange: (UserUi) -> Unit
 ) {
     DataField(
-        text = user.id.toString(),
         label = "Id de usuario",
+        text = user.id.toString(),
         enabled = false,
         error = false,
         supportingText = EMPTY_STRING,
-        onTextChange = {}
-    )
+        leadingIcon = Icons.Default.Key
+    ) {}
     DataField(
-        text = user.name,
         label = "Nombre",
+        text = user.name,
         error = userError.name,
         supportingText = "Debe contener al menos 4 caracteres",
-        onTextChange = { name -> onDataChange(user.copy(name = name)) }
-    )
+        leadingIcon = Icons.Default.Person
+    ) { name -> onDataChange(user.copy(name = name)) }
     DataField(
-        text = user.surName ?: EMPTY_STRING,
         label = "Apellido",
+        text = user.surName ?: EMPTY_STRING,
         error = userError.name,
         supportingText = "Debe contener al menos 4 caracteres",
-        onTextChange = { surName -> onDataChange(user.copy(surName = surName)) }
-    )
+        leadingIcon = Icons.Default.Person
+    ) { surName -> onDataChange(user.copy(surName = surName)) }
     DataField(
-        text = user.phoneNumber,
         label = "Teléfono",
+        text = user.phoneNumber,
         error = userError.name,
         supportingText = "Solo puede contener número",
-        onTextChange = { phoneNumber -> onDataChange(user.copy(phoneNumber = phoneNumber)) }
-    )
+        leadingIcon = Icons.Default.Phone
+    ) { phoneNumber -> onDataChange(user.copy(phoneNumber = phoneNumber)) }
     DataField(
-        text = user.email ?: EMPTY_STRING,
         label = "Email",
+        text = user.email ?: EMPTY_STRING,
         error = userError.name,
         supportingText = "El email no es correcto",
-        onTextChange = { email -> onDataChange(user.copy(email = email)) }
-    )
+        leadingIcon = Icons.Default.Email
+    ) { email -> onDataChange(user.copy(email = email)) }
     DataField(
-        text = user.age ?: EMPTY_STRING,
         label = "Edad",
+        text = user.age ?: EMPTY_STRING,
         error = userError.age,
-        supportingText = "Edad no puede estar vacío",
         onlyNumbs = true,
-        onTextChange = { age -> onDataChange(user.copy(age = age)) }
-    )
+        supportingText = "Edad no puede estar vacío",
+        leadingIcon = Icons.Default.CalendarMonth
+    ) { age -> onDataChange(user.copy(age = age)) }
 }
 
 @Composable
