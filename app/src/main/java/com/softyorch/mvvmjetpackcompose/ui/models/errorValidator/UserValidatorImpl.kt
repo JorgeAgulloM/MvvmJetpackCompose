@@ -1,5 +1,6 @@
-package com.softyorch.mvvmjetpackcompose.ui.models.errorManager
+package com.softyorch.mvvmjetpackcompose.ui.models.errorValidator
 
+import android.util.Patterns
 import androidx.core.text.isDigitsOnly
 import java.util.regex.Pattern
 import javax.inject.Inject
@@ -14,9 +15,7 @@ class UserValidatorImpl @Inject constructor() : IUserValidator {
     }
 
     override fun isEmailCorrect(email: String): Boolean {
-        val regex = "^[A-Za-z](.*)('@')('+')(\\.)('+')"
-        val pattern: Pattern = Pattern.compile(regex)
-        return pattern.matcher(email).matches()
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     override fun isAgeCorrect(age: String): Boolean {
