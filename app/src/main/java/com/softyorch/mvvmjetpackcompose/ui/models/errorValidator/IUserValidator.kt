@@ -1,4 +1,4 @@
-package com.softyorch.mvvmjetpackcompose.ui.models.errorManager
+package com.softyorch.mvvmjetpackcompose.ui.models.errorValidator
 
 interface IUserValidator {
     fun isNameCorrect(name: String, size: Int): Boolean

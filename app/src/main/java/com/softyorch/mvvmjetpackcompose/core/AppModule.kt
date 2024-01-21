@@ -11,8 +11,8 @@ import com.softyorch.mvvmjetpackcompose.domain.GetListUserUseCase
 import com.softyorch.mvvmjetpackcompose.domain.GetUserUseCase
 import com.softyorch.mvvmjetpackcompose.domain.SetUserUseCase
 import com.softyorch.mvvmjetpackcompose.domain.UpdateUserUseCase
-import com.softyorch.mvvmjetpackcompose.ui.models.errorManager.IUserValidator
-import com.softyorch.mvvmjetpackcompose.ui.models.errorManager.UserValidatorImpl
+import com.softyorch.mvvmjetpackcompose.ui.models.errorValidator.IUserValidator
+import com.softyorch.mvvmjetpackcompose.ui.models.errorValidator.UserValidatorImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

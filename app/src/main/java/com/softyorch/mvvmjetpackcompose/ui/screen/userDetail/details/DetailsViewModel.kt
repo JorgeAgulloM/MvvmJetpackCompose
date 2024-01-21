@@ -1,6 +1,6 @@
 package com.softyorch.mvvmjetpackcompose.ui.screen.userDetail.details
 
-import androidx.core.text.isDigitsOnly
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softyorch.mvvmjetpackcompose.domain.DeleteUserUseCase
@@ -10,6 +10,8 @@ import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toDomain
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toUi
+import com.softyorch.mvvmjetpackcompose.ui.models.errorValidator.IUserValidator
+import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +30,7 @@ class DetailsViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
     private val updateUserUseCase: UpdateUserUseCase,
     private val deleteUserUseCase: DeleteUserUseCase,
+    private val validator: IUserValidator,
     private val dispatcherIo: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
@@ -97,31 +100,18 @@ class DetailsViewModel @Inject constructor(
     }
 
     private fun searchError(user: UserUi) {
-        val errorName = !isNameCorrect(user.name)
-        val errorSurName = false
-        val errorPhoneNumber = false
-        val errorEmail = false
-        val errorAge = user.age?.let { !isAgeCorrect(it) } ?: false
+        val errorName = !validator.isNameCorrect(user.name, 3)
+        val errorSurName = user.surName?.let {
+            Log.i("MYAPP", "surname: ${user.surName}")
+            if (it == EMPTY_STRING) false else !validator.isNameCorrect(it, 3)
+        } ?: false
+        val errorPhoneNumber = !validator.isPhoneNumberCorrect(user.phoneNumber)
+        val errorEmail = user.email?.let { if (it.isEmpty()) false else !validator.isEmailCorrect(it) } ?: false
+        val errorAge = user.age?.let { if (it.isEmpty()) false else !validator.isAgeCorrect(it) } ?: false
 
         _userError.update { UserErrorModel(errorName, errorSurName, errorPhoneNumber, errorEmail, errorAge) }
         _stateError.update { if (errorName || errorAge) StateError.Error else StateError.Working }
 
-    }
-
-    private fun isNameCorrect(name: String): Boolean {
-        return name.length > 3 && !name.isDigitsOnly()
-    }
-
-    private fun isAgeCorrect(age: String): Boolean {
-        return try {
-            if (age.isEmpty()) return false
-            if (!age.isDigitsOnly()) return false
-            if (age[0].toString() == "0") return false
-            val intAge = age.toInt()
-            intAge in 1..110
-        } catch (e: Exception) {
-            false
-        }
     }
 
     //##########################################################################
