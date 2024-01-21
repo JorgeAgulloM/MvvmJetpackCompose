@@ -7,14 +7,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.VerifiedUser
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -25,7 +21,6 @@ import com.softyorch.mvvmjetpackcompose.ui.componens.dataField.DataField
 import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
-import java.util.UUID
 
 @Composable
 fun CreateUser(
