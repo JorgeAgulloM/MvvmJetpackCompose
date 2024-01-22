@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -103,6 +104,7 @@ private fun BodyEdit(
         enabled = false,
         error = false,
         supportingText = EMPTY_STRING,
+        keyboardType = KeyboardType.Text,
         leadingIcon = Icons.Default.Key
     ) {}
     DataField(
@@ -110,6 +112,7 @@ private fun BodyEdit(
         text = user.name,
         error = userError.name,
         supportingText = "Debe contener al menos 4 caracteres",
+        keyboardType = KeyboardType.Text,
         leadingIcon = Icons.Default.Person
     ) { name -> onDataChange(user.copy(name = name)) }
     DataField(
@@ -117,6 +120,7 @@ private fun BodyEdit(
         text = user.surName ?: EMPTY_STRING,
         error = userError.name,
         supportingText = "Debe contener al menos 4 caracteres",
+        keyboardType = KeyboardType.Text,
         leadingIcon = Icons.Default.Person
     ) { surName -> onDataChange(user.copy(surName = surName)) }
     DataField(
@@ -124,6 +128,7 @@ private fun BodyEdit(
         text = user.phoneNumber,
         error = userError.name,
         supportingText = "Solo puede contener número",
+        keyboardType = KeyboardType.Phone,
         leadingIcon = Icons.Default.Phone
     ) { phoneNumber -> onDataChange(user.copy(phoneNumber = phoneNumber)) }
     DataField(
@@ -131,14 +136,16 @@ private fun BodyEdit(
         text = user.email ?: EMPTY_STRING,
         error = userError.name,
         supportingText = "El email no es correcto",
+        keyboardType = KeyboardType.Email,
         leadingIcon = Icons.Default.Email
     ) { email -> onDataChange(user.copy(email = email)) }
     DataField(
         label = "Edad",
         text = user.age ?: EMPTY_STRING,
         error = userError.age,
-        onlyNumbs = true,
+        isLast = true,
         supportingText = "Edad no puede estar vacío",
+        keyboardType = KeyboardType.Number,
         leadingIcon = Icons.Default.CalendarMonth
     ) { age -> onDataChange(user.copy(age = age)) }
 }
