@@ -3,7 +3,10 @@ package com.softyorch.mvvmjetpackcompose.ui.screen.main.newUser
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.softyorch.mvvmjetpackcompose.core.generate
 import com.softyorch.mvvmjetpackcompose.domain.SetUserUseCase
+import com.softyorch.mvvmjetpackcompose.domain.UserDomain.Companion.toDomain
+import com.softyorch.mvvmjetpackcompose.domain.UserDomain.Companion.toEntity
 import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toDomain
@@ -30,7 +33,9 @@ class CreateUserViewModel @Inject constructor(
             surName = null,
             phoneNumber = EMPTY_STRING,
             email = null,
-            age = null
+            age = null,
+            lastCall = null,
+            typeCall = null
         )
     )
     val user: StateFlow<UserUi> = _user
@@ -40,6 +45,14 @@ class CreateUserViewModel @Inject constructor(
 
     private val _userError = MutableStateFlow(UserErrorModel())
     val userError: StateFlow<UserErrorModel> = _userError
+
+    /*init {
+        viewModelScope.launch {
+            generate().forEach { user ->
+                setUserUseCase.invoke(user.toDomain())
+            }
+        }
+    }*/
 
     fun setUsers() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -67,8 +80,10 @@ class CreateUserViewModel @Inject constructor(
             if (it.isEmpty()) false else !validator.isNameCorrect(it, 3)
         } ?: false
         val errorPhoneNumber = !validator.isPhoneNumberCorrect(user.phoneNumber)
-        val errorEmail = user.email?.let { if (it.isEmpty()) false else !validator.isEmailCorrect(it) } ?: false
-        val errorAge = user.age?.let { if (it.isEmpty()) false else !validator.isAgeCorrect(it) } ?: false
+        val errorEmail =
+            user.email?.let { if (it.isEmpty()) false else !validator.isEmailCorrect(it) } ?: false
+        val errorAge =
+            user.age?.let { if (it.isEmpty()) false else !validator.isAgeCorrect(it) } ?: false
 
 
         _userError.update {
