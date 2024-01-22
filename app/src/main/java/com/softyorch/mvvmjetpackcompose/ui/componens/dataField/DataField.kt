@@ -3,6 +3,7 @@ package com.softyorch.mvvmjetpackcompose.ui.componens.dataField
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.ZeroCornerSize
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -11,6 +12,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -20,14 +22,13 @@ fun DataField(
     label: String,
     text: String,
     enabled: Boolean = true,
+    isLast: Boolean = false,
     error: Boolean,
-    onlyNumbs: Boolean = false,
     supportingText: String,
     leadingIcon: ImageVector,
+    keyboardType: KeyboardType,
     onTextChange: (String) -> Unit
-){
-    val keyboardOptions = if (onlyNumbs) KeyboardOptions(keyboardType = KeyboardType.Number)
-    else KeyboardOptions(capitalization = KeyboardCapitalization.Words)
+) {
     val shape = MaterialTheme.shapes.small.copy(
         bottomStart = ZeroCornerSize,
         bottomEnd = ZeroCornerSize
@@ -43,8 +44,12 @@ fun DataField(
         leadingIcon = { Icon(leadingIcon, contentDescription = null) },
         supportingText = { if (error) Text(text = supportingText) },
         isError = error,
-        keyboardOptions = keyboardOptions,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType,
+            capitalization = KeyboardCapitalization.Words,
+            imeAction = if (isLast) ImeAction.Done else ImeAction.Next
+        ),
+        singleLine = true,
         shape = shape
     )
-
 }
