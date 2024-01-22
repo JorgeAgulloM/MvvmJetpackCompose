@@ -3,10 +3,7 @@ package com.softyorch.mvvmjetpackcompose.ui.screen.main.newUser
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.softyorch.mvvmjetpackcompose.core.generate
 import com.softyorch.mvvmjetpackcompose.domain.SetUserUseCase
-import com.softyorch.mvvmjetpackcompose.domain.UserDomain.Companion.toDomain
-import com.softyorch.mvvmjetpackcompose.domain.UserDomain.Companion.toEntity
 import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toDomain
