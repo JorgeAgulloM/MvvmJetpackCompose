@@ -22,8 +22,10 @@ fun generarUsuarioAleatorio(): UserEntity {
     val fechaActual = Date()
     val fechaHaceUnAno = restarAno(fechaActual)
     val lastCall = Random.nextLong(fechaHaceUnAno.time, fechaActual.time)
+    val favorite = Random.nextBoolean()
+    val blocked = if (!favorite) Random.nextBoolean() else false
 
-    return UserEntity(id, nombres.random(), "${apellidos.random()} ${apellidos.random()}", phoneNumber, email, edades, lastCall ,typeCall.takeIf { it < 3 } )
+    return UserEntity(id, nombres.random(), "${apellidos.random()} ${apellidos.random()}", phoneNumber, email, edades, lastCall ,typeCall.takeIf { it < 3 }, favorite, blocked )
 }
 
 fun restarAno(fecha: Date): Date {

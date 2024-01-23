@@ -11,11 +11,13 @@ data class UserUi(
     val email: String?,
     val age: String?,
     val lastCall: Long?,
-    val typeCall: Int?
+    val typeCall: Int?,
+    val favorite: Boolean?,
+    val phoneBlocked: Boolean?
 ) {
     companion object {
-        fun UserUi.toDomain(): UserDomain = UserDomain(id, name, surName, phoneNumber, email, age?.toInt(), lastCall, typeCall)
+        fun UserUi.toDomain(): UserDomain = UserDomain(id, name, surName, phoneNumber, email, age?.toInt(), lastCall, typeCall, favorite, phoneBlocked)
 
-        fun UserDomain.toUi(): UserUi = UserUi(id, name, surName, phoneNumber, email, age.toString(), lastCall, typeCall)
+        fun UserDomain.toUi(): UserUi = UserUi(id, name, surName, phoneNumber, email, age.toString(), lastCall, typeCall, favorite, phoneBlocked)
     }
 }

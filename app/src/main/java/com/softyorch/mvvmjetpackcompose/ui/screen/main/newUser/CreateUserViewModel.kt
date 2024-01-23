@@ -32,7 +32,9 @@ class CreateUserViewModel @Inject constructor(
             email = null,
             age = null,
             lastCall = null,
-            typeCall = null
+            typeCall = null,
+            favorite = null,
+            phoneBlocked = null
         )
     )
     val user: StateFlow<UserUi> = _user

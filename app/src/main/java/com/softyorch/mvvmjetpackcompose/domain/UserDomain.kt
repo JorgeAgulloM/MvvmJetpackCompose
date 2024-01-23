@@ -11,12 +11,26 @@ data class UserDomain(
     val email: String?,
     val age: Int?,
     val lastCall: Long?,
-    val typeCall: Int?
+    val typeCall: Int?,
+    val favorite: Boolean?,
+    val phoneBlocked: Boolean?
 
 ) {
     companion object {
         fun UserDomain.toEntity(): UserEntity =
-            UserEntity(name = name, surName = surName, phoneNumber = phoneNumber, email = email, age = age, lastCall = lastCall, typeCall = typeCall)
-        fun UserEntity.toDomain(): UserDomain = UserDomain(id, name, surName, phoneNumber, email, age, lastCall, typeCall)
+            UserEntity(
+                name = name,
+                surName = surName,
+                phoneNumber = phoneNumber,
+                email = email,
+                age = age,
+                lastCall = lastCall,
+                typeCall = typeCall,
+                favorite = favorite,
+                phoneBlocked = phoneBlocked
+            )
+
+        fun UserEntity.toDomain(): UserDomain =
+            UserDomain(id, name, surName, phoneNumber, email, age, lastCall, typeCall, favorite, phoneBlocked)
     }
 }

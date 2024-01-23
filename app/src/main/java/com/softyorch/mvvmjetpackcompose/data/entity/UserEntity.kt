@@ -15,5 +15,7 @@ data class UserEntity(
     @ColumnInfo(name = "email") val email: String?,
     @ColumnInfo(name = "age") val age: Int?,
     @ColumnInfo(name = "last_call") val lastCall: Long?,
-    @ColumnInfo(name = "type_call") val typeCall: Int?
+    @ColumnInfo(name = "type_call") val typeCall: Int?,
+    @ColumnInfo(name = "favorite") val favorite: Boolean?,
+    @ColumnInfo(name = "phone_blocked") val phoneBlocked: Boolean?
 )
