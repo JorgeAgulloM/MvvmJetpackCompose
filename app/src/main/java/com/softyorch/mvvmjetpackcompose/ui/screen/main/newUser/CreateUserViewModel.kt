@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +26,7 @@ class CreateUserViewModel @Inject constructor(
 
     private val _user = MutableStateFlow(
         UserUi(
-            id = null,
+            id = UUID.randomUUID(),
             name = EMPTY_STRING,
             surName = null,
             phoneNumber = EMPTY_STRING,
