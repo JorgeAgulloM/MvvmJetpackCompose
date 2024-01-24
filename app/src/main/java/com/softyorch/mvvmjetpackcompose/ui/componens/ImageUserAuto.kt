@@ -12,22 +12,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import kotlin.random.Random
 
 @Composable
 fun ImageUserAuto(
     userImage: Painter? = null,
-    userName: String
+    userName: String,
+    size: Dp = 40.dp
 ) {
     if (userImage == null) Box(
-        modifier = Modifier.size(40.dp).background(color = randomColor(), shape = CircleShape),
+        modifier = Modifier.size(size).background(color = randomColor(), shape = CircleShape),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = userName[0].toString(),
             style = MaterialTheme.typography.headlineMedium.copy(
-                color = MaterialTheme.colorScheme.background
+                color = MaterialTheme.colorScheme.background,
+                fontSize = (size.value / 2).sp
             )
         )
     }
