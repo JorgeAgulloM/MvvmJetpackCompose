@@ -2,7 +2,7 @@ package com.softyorch.mvvmjetpackcompose.ui.screen.main.usersList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.softyorch.mvvmjetpackcompose.domain.GetListUserUseCase
+import com.softyorch.mvvmjetpackcompose.domain.useCases.GetListUserUseCase
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toUi
 import dagger.hilt.android.lifecycle.HiltViewModel

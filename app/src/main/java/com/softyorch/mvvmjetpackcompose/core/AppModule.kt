@@ -6,11 +6,11 @@ import com.softyorch.mvvmjetpackcompose.data.AppDatabase
 import com.softyorch.mvvmjetpackcompose.data.entity.UserDao
 import com.softyorch.mvvmjetpackcompose.data.repository.IRepository
 import com.softyorch.mvvmjetpackcompose.data.repository.RepositoryImpl
-import com.softyorch.mvvmjetpackcompose.domain.DeleteUserUseCase
-import com.softyorch.mvvmjetpackcompose.domain.GetListUserUseCase
-import com.softyorch.mvvmjetpackcompose.domain.GetUserUseCase
-import com.softyorch.mvvmjetpackcompose.domain.SetUserUseCase
-import com.softyorch.mvvmjetpackcompose.domain.UpdateUserUseCase
+import com.softyorch.mvvmjetpackcompose.domain.useCases.DeleteUserUseCase
+import com.softyorch.mvvmjetpackcompose.domain.useCases.GetListUserUseCase
+import com.softyorch.mvvmjetpackcompose.domain.useCases.GetUserUseCase
+import com.softyorch.mvvmjetpackcompose.domain.useCases.SetUserUseCase
+import com.softyorch.mvvmjetpackcompose.domain.useCases.UpdateUserUseCase
 import com.softyorch.mvvmjetpackcompose.ui.models.errorValidator.IUserValidator
 import com.softyorch.mvvmjetpackcompose.ui.models.errorValidator.UserValidatorImpl
 import dagger.Module

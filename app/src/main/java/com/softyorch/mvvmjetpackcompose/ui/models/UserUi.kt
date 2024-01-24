@@ -1,6 +1,6 @@
 package com.softyorch.mvvmjetpackcompose.ui.models
 
-import com.softyorch.mvvmjetpackcompose.domain.UserDomain
+import com.softyorch.mvvmjetpackcompose.domain.models.UserDomain
 import java.util.UUID
 
 data class UserUi(

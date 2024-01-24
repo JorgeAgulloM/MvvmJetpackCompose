@@ -3,9 +3,9 @@ package com.softyorch.mvvmjetpackcompose.ui.screen.userDetail.details
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.softyorch.mvvmjetpackcompose.domain.DeleteUserUseCase
-import com.softyorch.mvvmjetpackcompose.domain.GetUserUseCase
-import com.softyorch.mvvmjetpackcompose.domain.UpdateUserUseCase
+import com.softyorch.mvvmjetpackcompose.domain.useCases.DeleteUserUseCase
+import com.softyorch.mvvmjetpackcompose.domain.useCases.GetUserUseCase
+import com.softyorch.mvvmjetpackcompose.domain.useCases.UpdateUserUseCase
 import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toDomain

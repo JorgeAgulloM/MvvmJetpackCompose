@@ -1,7 +1,8 @@
-package com.softyorch.mvvmjetpackcompose.domain
+package com.softyorch.mvvmjetpackcompose.domain.useCases
 
 import com.softyorch.mvvmjetpackcompose.data.repository.IRepository
-import com.softyorch.mvvmjetpackcompose.domain.UserDomain.Companion.toDomain
+import com.softyorch.mvvmjetpackcompose.domain.models.UserDomain
+import com.softyorch.mvvmjetpackcompose.domain.models.UserDomain.Companion.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

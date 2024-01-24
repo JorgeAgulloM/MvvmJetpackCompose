@@ -1,4 +1,4 @@
-package com.softyorch.mvvmjetpackcompose.domain
+package com.softyorch.mvvmjetpackcompose.domain.models
 
 import com.softyorch.mvvmjetpackcompose.data.entity.UserEntity
 import java.util.UUID
