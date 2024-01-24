@@ -1,7 +1,5 @@
 package com.softyorch.mvvmjetpackcompose.ui.screen.userDetail.details
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,6 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.softyorch.mvvmjetpackcompose.core.intents.ActionsImpl.Companion.Actions
 import com.softyorch.mvvmjetpackcompose.ui.componens.ImageUserAuto
 import com.softyorch.mvvmjetpackcompose.ui.componens.dataField.DataField
 import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
@@ -249,24 +248,13 @@ private fun BodyRead(user: UserUi) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconAction(icon = Icons.Outlined.Phone, text = "Llamar") {
-            context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:+${user.phoneNumber}")))
+            context.Actions().sendDial(user.phoneNumber)
         }
         IconAction(icon = Icons.Outlined.Sms, text = "SMS") {
-            context.startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("smsto:${user.phoneNumber}")
-                ).apply {
-                    putExtra("sms_body", "Hola ${user.name}")
-                })
+            context.Actions().sendSMS(user.phoneNumber, user.name)
         }
         IconAction(icon = Icons.Outlined.Email, text = "Email") {
-            context.startActivity(
-                Intent(
-                    Intent.ACTION_SENDTO,
-                    Uri.parse("mailto:${user.email}?subject=${user.name}&body=Hola ${user.name}")
-                )
-            )
+            context.Actions().sendEmail(user.phoneNumber, user.name)
         }
     }
     Column(
