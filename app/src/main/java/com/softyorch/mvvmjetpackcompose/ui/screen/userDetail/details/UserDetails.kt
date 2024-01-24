@@ -1,8 +1,11 @@
 package com.softyorch.mvvmjetpackcompose.ui.screen.userDetail.details
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,6 +23,7 @@ import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
+import androidx.compose.material.icons.outlined.Sms
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -33,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -225,8 +230,9 @@ private fun BodyEdit(
 
 @Composable
 private fun BodyRead(user: UserUi) {
+    val context = LocalContext.current
     Column(
-        modifier = Modifier.fillMaxWidth().padding(16.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -237,11 +243,37 @@ private fun BodyRead(user: UserUi) {
             style = MaterialTheme.typography.headlineSmall.copy(textAlign = TextAlign.Center)
         )
     }
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconAction(icon = Icons.Outlined.Phone, text = "Llamar") {
+            context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:+${user.phoneNumber}")))
+        }
+        IconAction(icon = Icons.Outlined.Sms, text = "SMS") {
+            context.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("smsto:${user.phoneNumber}")
+                ).apply {
+                    putExtra("sms_body", "Hola ${user.name}")
+                })
+        }
+        IconAction(icon = Icons.Outlined.Email, text = "Email") {
+            context.startActivity(
+                Intent(
+                    Intent.ACTION_SENDTO,
+                    Uri.parse("mailto:${user.email}?subject=${user.name}&body=Hola ${user.name}")
+                )
+            )
+        }
+    }
     Column(
         modifier = Modifier.fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 2.dp)
+            .padding(horizontal = 16.dp)
             .background(
-                color = MaterialTheme.colorScheme.secondaryContainer,
+                color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.3f),
                 shape = MaterialTheme.shapes.large
             )
     ) {
@@ -281,5 +313,33 @@ fun DetailsInfo(text: String) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(text = text, style = MaterialTheme.typography.titleMedium)
+    }
+}
+
+@Composable
+fun IconAction(icon: ImageVector, text: String, onClick: () -> Unit) {
+    Box(
+        modifier = Modifier.clip(CircleShape).clickable { onClick() },
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier.padding(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
+            Box(
+                modifier = Modifier.padding(8.dp).background(
+                    color = MaterialTheme.colorScheme.secondaryContainer,
+                    shape = CircleShape
+                ), contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    icon,
+                    contentDescription = null,
+                    modifier = Modifier.padding(12.dp)
+                )
+            }
+            Text(text = text, style = MaterialTheme.typography.labelLarge)
+        }
     }
 }
