@@ -63,19 +63,16 @@ class DetailsViewModel @Inject constructor(
             StateDetails.Loading -> {}
             is StateDetails.Success -> {
                 when (newEvent) {
-                    EventDetails.Read -> {
-                        viewModelScope.launch(dispatcherIo) {
-                            updateDataUser(state.user)
-                        }
+                    EventDetails.Read -> viewModelScope.launch(dispatcherIo) {
+                        updateDataUser(state.user)
                     }
                     EventDetails.Edit -> {}
-                    EventDetails.Delete -> {
-                        viewModelScope.launch(dispatcherIo) {
-                            deleteDataUser(state.user)
-                        }
+                    EventDetails.Delete -> viewModelScope.launch(dispatcherIo) {
+                        deleteDataUser(state.user)
                     }
                 }
             }
+
             is StateDetails.Error -> {}
         }
         _eventDetails.value = newEvent
@@ -90,7 +87,9 @@ class DetailsViewModel @Inject constructor(
                     surName = user.surName,
                     phoneNumber = user.phoneNumber,
                     email = user.email,
-                    age = user.age
+                    age = user.age,
+                    favorite = user.favorite,
+                    phoneBlocked = user.phoneBlocked
                 )
                 _stateDetails.value = StateDetails.Success(userEdit)
             }
