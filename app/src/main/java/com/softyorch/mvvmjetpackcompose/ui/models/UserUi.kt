@@ -4,7 +4,7 @@ import com.softyorch.mvvmjetpackcompose.domain.UserDomain
 import java.util.UUID
 
 data class UserUi(
-    val id: UUID?,
+    val id: UUID,
     val name: String,
     val surName: String?,
     val phoneNumber: String,

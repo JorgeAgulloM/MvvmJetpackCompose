@@ -4,7 +4,7 @@ import com.softyorch.mvvmjetpackcompose.data.entity.UserEntity
 import java.util.UUID
 
 data class UserDomain(
-    val id: UUID?,
+    val id: UUID,
     val name: String,
     val surName: String?,
     val phoneNumber: String,
@@ -19,6 +19,7 @@ data class UserDomain(
     companion object {
         fun UserDomain.toEntity(): UserEntity =
             UserEntity(
+                id = id,
                 name = name,
                 surName = surName,
                 phoneNumber = phoneNumber,

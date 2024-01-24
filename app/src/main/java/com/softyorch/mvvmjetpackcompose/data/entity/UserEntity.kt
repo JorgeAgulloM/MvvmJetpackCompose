@@ -8,7 +8,7 @@ import java.util.UUID
 @Entity(tableName = "user_table")
 data class UserEntity(
     @PrimaryKey
-    @ColumnInfo(name = "id") val id: UUID = UUID.randomUUID(),
+    @ColumnInfo(name = "id") val id: UUID,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "sur_name") val surName: String?,
     @ColumnInfo(name = "phone_number") val phoneNumber: String,
