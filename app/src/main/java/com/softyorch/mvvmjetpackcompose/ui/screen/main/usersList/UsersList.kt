@@ -46,7 +46,7 @@ fun UsersList(
     val lazyState = rememberLazyListState()
 
     LazyColumn(
-        modifier = Modifier.fillMaxWidth(0.95f),
+        modifier = Modifier.fillMaxWidth(),
         state = lazyState
     ) {
         when (val state = uiState) {
