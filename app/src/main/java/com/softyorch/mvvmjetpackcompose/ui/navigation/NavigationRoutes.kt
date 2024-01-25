@@ -6,7 +6,8 @@ sealed class NavigationRoutes(val route: String) {
     enum class Routes {
         SPLASH,
         MAIN,
-        USER_DETAIL
+        USER_DETAIL,
+        SEARCH
     }
 
     data object SplashScreen: NavigationRoutes(route = Routes.SPLASH.name)
@@ -14,4 +15,5 @@ sealed class NavigationRoutes(val route: String) {
     data object UserDetailScreen: NavigationRoutes(route = "${Routes.USER_DETAIL.name}?${USER_ID}={${USER_ID}}") {
         fun createRoute(userId: String) = "${Routes.USER_DETAIL.name}?${USER_ID}=$userId"
     }
+    data object SearchScreen: NavigationRoutes(route = Routes.SEARCH.name)
 }
