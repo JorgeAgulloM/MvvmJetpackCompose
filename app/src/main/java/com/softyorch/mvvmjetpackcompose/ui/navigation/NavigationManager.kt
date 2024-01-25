@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.softyorch.mvvmjetpackcompose.ui.screen.splash.SplashScreen
 import com.softyorch.mvvmjetpackcompose.ui.screen.userDetail.UserDetailScreen
 import com.softyorch.mvvmjetpackcompose.ui.screen.main.MainScreen
+import com.softyorch.mvvmjetpackcompose.ui.screen.search.SearchScreen
 import com.softyorch.mvvmjetpackcompose.utils.ToUUID
 import com.softyorch.mvvmjetpackcompose.utils.USER_ID
 
@@ -28,6 +29,9 @@ fun NavigationManager(navController: NavHostController = rememberNavController()
             backStackEntry.arguments?.getString(USER_ID)?.let {
                 UserDetailScreen(it.ToUUID()) { navController.popBackStack() }
             }
+        }
+        composable(route = NavigationRoutes.SearchScreen.route) {
+            SearchScreen { navController.popBackStack() }
         }
     }
 }
