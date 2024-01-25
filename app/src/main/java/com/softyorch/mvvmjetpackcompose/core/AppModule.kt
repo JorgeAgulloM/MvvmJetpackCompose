@@ -8,6 +8,7 @@ import com.softyorch.mvvmjetpackcompose.data.repository.IRepository
 import com.softyorch.mvvmjetpackcompose.data.repository.RepositoryImpl
 import com.softyorch.mvvmjetpackcompose.domain.useCases.DeleteUserUseCase
 import com.softyorch.mvvmjetpackcompose.domain.useCases.GetListUserUseCase
+import com.softyorch.mvvmjetpackcompose.domain.useCases.GetSearchUsersUseCase
 import com.softyorch.mvvmjetpackcompose.domain.useCases.GetUserUseCase
 import com.softyorch.mvvmjetpackcompose.domain.useCases.SetUserUseCase
 import com.softyorch.mvvmjetpackcompose.domain.useCases.UpdateUserUseCase
@@ -71,5 +72,10 @@ object AppModule {
     @Singleton
     @Provides
     fun providesUserValidator(): IUserValidator = UserValidatorImpl()
+
+    @Singleton
+    @Provides
+    fun providesGetSearchUsersUseCase(repo: IRepository): GetSearchUsersUseCase =
+        GetSearchUsersUseCase(repo)
 
 }
