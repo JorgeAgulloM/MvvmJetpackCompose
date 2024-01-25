@@ -1,16 +1,23 @@
 package com.softyorch.mvvmjetpackcompose.ui.screen.main
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
@@ -20,8 +27,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.softyorch.mvvmjetpackcompose.ui.navigation.NavigationRoutes
 import com.softyorch.mvvmjetpackcompose.ui.screen.main.newUser.CreateUser
 import com.softyorch.mvvmjetpackcompose.ui.screen.main.usersList.UsersList
 import kotlinx.coroutines.launch
@@ -67,13 +76,36 @@ fun MainScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
-                Text(
-                    text = "Lista de usuarios guardados",
-                    modifier = Modifier.padding(horizontal = (24 + 4).dp, vertical = 4.dp),
-                    style = MaterialTheme.typography.bodyLarge
-                )
+                SearchButton { navController.navigate(route = NavigationRoutes.Routes.SEARCH.name)}
                 UsersList { route -> navController.navigate(route = route) }
             }
+        }
+    }
+}
+
+@Composable
+private fun SearchButton(onClick: () -> Unit) {
+    OutlinedButton(
+        onClick = { onClick() },
+        modifier = Modifier.fillMaxWidth().padding(8.dp),
+        shape = MaterialTheme.shapes.extraLarge,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+        ),
+        border = BorderStroke(0.dp, Color.White)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Search,
+                contentDescription = null
+            )
+            Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+            Text(text = "Buscar contactos", style = MaterialTheme.typography.bodyLarge)
         }
     }
 }
