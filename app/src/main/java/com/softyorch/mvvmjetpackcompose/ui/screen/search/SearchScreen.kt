@@ -17,9 +17,13 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -38,6 +42,11 @@ fun SearchScreen(
     val filter: String by viewModel.filter.collectAsStateWithLifecycle()
     val lazyListState = rememberLazyListState()
     val fieldColor = MaterialTheme.colorScheme.surfaceVariant
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -47,7 +56,7 @@ fun SearchScreen(
         TextField(
             value = filter,
             placeholder = { Text(text = "Buscar contactos") },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp).focusRequester(focusRequester),
             onValueChange = { newFilter -> viewModel.searchEvent(newFilter) },
             leadingIcon = {
                 IconButton(onClick = { onBack() }) {
@@ -80,8 +89,9 @@ fun SearchScreen(
             }
 
             StateFilter.Empty -> Text(
-                text = "Puedes filtrar por Nombre, Apellido, teléfono o email",
-                modifier = Modifier.padding(24.dp)
+                text = "Puedes filtrar por Nombre, Apellidos, teléfono o email",
+                modifier = Modifier.padding(24.dp),
+                style = MaterialTheme.typography.bodyLarge
             )
         }
     }
