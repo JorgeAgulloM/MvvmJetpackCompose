@@ -41,7 +41,7 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch(dispatcherIO) {
             searUsersData(filter).collect { list ->
                 Log.i("MYAPP", "List: $list")
-                if (list.isEmpty())
+                if (list.isEmpty() || filter.isEmpty())
                     _stateFilter.update { StateFilter.Empty }
                 else
                     _stateFilter.update { StateFilter.Find(list) }
