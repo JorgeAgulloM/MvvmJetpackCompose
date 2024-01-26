@@ -23,10 +23,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.softyorch.mvvmjetpackcompose.ui.componens.DataView
+import com.softyorch.mvvmjetpackcompose.ui.componens.User
+import com.softyorch.mvvmjetpackcompose.ui.navigation.NavigationRoutes
 
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel<SearchViewModel>(),
+    onDetailNav: (String) -> Unit,
     onBack: () -> Unit
 ) {
 
@@ -67,13 +71,19 @@ fun SearchScreen(
                     state = lazyListState
                 ) {
                     items(state.users) { user ->
-                        Text(text = user.name)
+                        User(user, DataView.NumberAndEmail) { id ->
+                            val route = NavigationRoutes.UserDetailScreen.createRoute(id)
+                            onDetailNav(route)
+                        }
                     }
                 }
             }
-            StateFilter.Empty -> Text(text = "Puedes filtrar por Nombre, Apellido, teléfono o email")
+
+            StateFilter.Empty -> Text(
+                text = "Puedes filtrar por Nombre, Apellido, teléfono o email",
+                modifier = Modifier.padding(24.dp)
+            )
         }
     }
-
 
 }
