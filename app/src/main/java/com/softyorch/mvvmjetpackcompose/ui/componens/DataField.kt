@@ -1,4 +1,4 @@
-package com.softyorch.mvvmjetpackcompose.ui.componens.dataField
+package com.softyorch.mvvmjetpackcompose.ui.componens
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

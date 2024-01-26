@@ -1,4 +1,4 @@
-package com.softyorch.mvvmjetpackcompose.ui.componens.user
+package com.softyorch.mvvmjetpackcompose.ui.componens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.softyorch.mvvmjetpackcompose.ui.componens.ImageUserAuto
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
 import java.text.SimpleDateFormat
