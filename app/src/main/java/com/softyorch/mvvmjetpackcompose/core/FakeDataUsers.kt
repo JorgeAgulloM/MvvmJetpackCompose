@@ -1,6 +1,7 @@
 package com.softyorch.mvvmjetpackcompose.core
 
 import com.softyorch.mvvmjetpackcompose.data.entity.UserEntity
+import com.softyorch.mvvmjetpackcompose.utils.deleteAccents
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -13,19 +14,23 @@ fun generarUsuarioAleatorio(): UserEntity {
     val random = java.util.Random()
     val id = UUID.randomUUID()
     val nombres = arrayOf("Jorge", "Juan", "María", "Carlos", "Laura", "Pedro", "Ana", "David", "Sofía", "Diego", "Elena")
+    val nombre = nombres.random()
     val apellidos = arrayOf("Agulló", "Martín", "Pérez", "López", "Gómez", "Fernández", "Martínez", "Rodríguez", "Sánchez", "García", "Ruiz", "Torres")
-    val edades = random.nextInt(70) + 18 // Edades entre 18 y 87
+    val apellido1 = apellidos.random()
+    val apellido2 = apellidos.random()
+    val edad = random.nextInt(70) + 18 // Edades entre 18 y 87
     val phoneNumber = (600000000 + random.nextInt(99999999)).toString() // Números aleatorios entre 600000000 y 699999999
-    val email = "${nombres.random().lowercase(Locale.ROOT)}@example.com"
+    val email = "${nombre.lowercase(Locale.ROOT).deleteAccents()}$edad@${apellido1.lowercase(Locale.ROOT).deleteAccents()}.com"
     val typeCall = random.nextInt(4) // 0, 1, 2 o null (25% de probabilidad para cada caso)
 
     val fechaActual = Date()
     val fechaHaceUnAno = restarAno(fechaActual)
     val lastCall = Random.nextLong(fechaHaceUnAno.time, fechaActual.time)
-    val favorite = Random.nextBoolean()
-    val blocked = if (!favorite) Random.nextBoolean() else false
+    val percent25 = Random.nextInt(4)
+    val favorite = if (percent25 == 2) Random.nextBoolean() else false
+    val blocked = if (!favorite && percent25 == 1) Random.nextBoolean() else false
 
-    return UserEntity(id, nombres.random(), "${apellidos.random()} ${apellidos.random()}", phoneNumber, email, edades, lastCall ,typeCall.takeIf { it < 3 }, favorite, blocked )
+    return UserEntity(id, nombre, "$apellido1 $apellido2", phoneNumber, email, edad, lastCall ,typeCall.takeIf { it < 3 }, favorite, blocked )
 }
 
 fun restarAno(fecha: Date): Date {
