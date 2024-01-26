@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.CallMade
 import androidx.compose.material.icons.filled.CallMissed
 import androidx.compose.material.icons.filled.CallReceived
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,6 +20,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
@@ -28,7 +31,7 @@ import java.util.Date
 import java.util.Locale
 
 @Composable
-fun User(user: UserUi, onClick: (String) -> Unit) {
+fun User(user: UserUi, dataView: DataView = DataView.LastCall, onClick: (String) -> Unit) {
     val shape = MaterialTheme.shapes.large
 
     Row(
@@ -45,14 +48,14 @@ fun User(user: UserUi, onClick: (String) -> Unit) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Top
         ) {
-            DataUser(user)
+            DataUser(user, dataView)
             FavoriteOrBlocked(user.favorite, user.phoneBlocked)
         }
     }
 }
 
 @Composable
-private fun DataUser(user: UserUi) {
+private fun DataUser(user: UserUi, dataView: DataView) {
     Column(
         modifier = Modifier.padding(start = 16.dp, top = 4.dp, bottom = 4.dp),
         horizontalAlignment = Alignment.Start,
@@ -63,38 +66,13 @@ private fun DataUser(user: UserUi) {
             style = MaterialTheme.typography.bodyLarge,
             overflow = TextOverflow.Ellipsis
         )
-        if (user.lastCall != null) Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            val icon = when (user.typeCall) {
-                0 -> Icons.Default.CallMissed
-                1 -> Icons.Default.CallReceived
-                else -> Icons.Default.CallMade
+        when (dataView) {
+            DataView.LastCall -> user.typeCall?.let { LastCall(it, user.lastCall!!) }
+            else -> {
+                UserSubData(data = user.phoneNumber, icon = Icons.Outlined.Phone)
             }
-            val color = when (user.typeCall) {
-                0 -> MaterialTheme.colorScheme.error
-                1 -> MaterialTheme.colorScheme.tertiaryContainer
-                else -> MaterialTheme.colorScheme.secondaryContainer
-            }
-            Icon(
-                icon,
-                contentDescription = null,
-                modifier = Modifier.padding(horizontal = 2.dp),
-                tint = color
-            )
-            Text(
-                text = dateLongToString(user.lastCall),
-                style = MaterialTheme.typography.labelMedium
-            )
         }
     }
-}
-
-private fun dateLongToString(timeInMillis: Long): String {
-    val format = SimpleDateFormat("dd-MM - HH:mm", Locale.getDefault())
-    val date = Date(timeInMillis)
-    return format.format(date)
 }
 
 @Composable
@@ -114,4 +92,54 @@ private fun FavoriteOrBlocked(favorite: Boolean?, blocked: Boolean?) {
         contentDescription = contentDescription,
         tint = MaterialTheme.colorScheme.primary
     )
+}
+
+@Composable
+private fun LastCall(typeCall: Int, lastCall: Long) {
+    val icon = when (typeCall) {
+        0 -> Icons.Default.CallMissed
+        1 -> Icons.Default.CallReceived
+        else -> Icons.Default.CallMade
+    }
+    val color = when (typeCall) {
+        0 -> MaterialTheme.colorScheme.error
+        1 -> MaterialTheme.colorScheme.tertiaryContainer
+        else -> MaterialTheme.colorScheme.secondaryContainer
+    }
+    UserSubData(data = dateLongToString(lastCall), icon = icon, color = color)
+}
+
+@Composable
+fun UserSubData(
+    data: String,
+    icon: ImageVector,
+    color: Color = MaterialTheme.colorScheme.outlineVariant
+) {
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            icon,
+            contentDescription = null,
+            modifier = Modifier.padding(horizontal = 2.dp),
+            tint = color
+        )
+        Text(
+            text = data,
+            style = MaterialTheme.typography.labelMedium
+        )
+    }
+
+}
+
+private fun dateLongToString(timeInMillis: Long): String {
+    val format = SimpleDateFormat("dd-MM - HH:mm", Locale.getDefault())
+    val date = Date(timeInMillis)
+    return format.format(date)
+}
+
+sealed class DataView {
+    data object LastCall : DataView()
+    data object NumberAndEmail : DataView()
 }
