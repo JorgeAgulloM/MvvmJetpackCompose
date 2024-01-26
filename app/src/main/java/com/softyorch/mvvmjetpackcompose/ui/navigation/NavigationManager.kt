@@ -31,7 +31,9 @@ fun NavigationManager(navController: NavHostController = rememberNavController()
             }
         }
         composable(route = NavigationRoutes.SearchScreen.route) {
-            SearchScreen { navController.popBackStack() }
+            SearchScreen(onDetailNav = { route -> navController.navigate(route) }) {
+                navController.popBackStack()
+            }
         }
     }
 }
