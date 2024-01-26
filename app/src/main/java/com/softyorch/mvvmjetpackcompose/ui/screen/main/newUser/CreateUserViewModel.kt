@@ -54,10 +54,14 @@ class CreateUserViewModel @Inject constructor(
         }
     }*/
 
-    fun setUsers() {
-        viewModelScope.launch(Dispatchers.IO) {
-            setDataUser(_user.value)
-        }
+    fun setUsers(): Boolean {
+        searchError(_user.value)
+        val isValid = _stateError.value == StateError.Working
+        if (isValid)
+            viewModelScope.launch(Dispatchers.IO) {
+                setDataUser(_user.value)
+            }
+        return isValid
     }
 
     fun onDataChange(user: UserUi) {
@@ -97,7 +101,8 @@ class CreateUserViewModel @Inject constructor(
         }
         _stateError.update {
             if (errorName || errorSurName || errorPhoneNumber || errorEmail || errorAge)
-                StateError.Error else StateError.Working
+                StateError.Error
+            else StateError.Working
         }
     }
 
