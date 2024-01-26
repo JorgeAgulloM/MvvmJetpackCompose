@@ -235,9 +235,14 @@ private fun BodyRead(user: UserUi) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+
+        val surName = if (user.surName?.contains(" ") == true)
+            user.surName.split(" ")[0]
+        else user.surName
+
         ImageUserAuto(userImage = null, userName = user.name, size = 200.dp)
         Text(
-            text = "${user.name} ${user.surName}",
+            text = "${user.name} $surName",
             modifier = Modifier.fillMaxWidth(),
             style = MaterialTheme.typography.headlineSmall.copy(textAlign = TextAlign.Center)
         )
@@ -270,9 +275,9 @@ private fun BodyRead(user: UserUi) {
             modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 4.dp),
             style = MaterialTheme.typography.labelLarge
         )
+        TextRead(icon = Icons.Outlined.Person, text = "${user.name} ${user.surName}")
         TextRead(icon = Icons.Outlined.Phone, text = user.phoneNumber)
         TextRead(icon = Icons.Outlined.Email, text = user.email)
-        TextRead(icon = Icons.Outlined.CalendarMonth, text = user.age)
     }
 }
 
