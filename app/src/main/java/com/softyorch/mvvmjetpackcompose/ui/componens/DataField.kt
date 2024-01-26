@@ -33,12 +33,15 @@ fun DataField(
         bottomStart = ZeroCornerSize,
         bottomEnd = ZeroCornerSize
     )
+    val backColor = MaterialTheme.colorScheme.background
+    val bottomDP = if (error) 8.dp else 4.dp
 
     TextField(
         value = text,
         onValueChange = { onTextChange(it) },
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+        modifier = Modifier.fillMaxWidth().padding(start = 8.dp, end = 8.dp, bottom = bottomDP),
         enabled = enabled,
+        textStyle = MaterialTheme.typography.bodyLarge,
         label = { Text(text = label) },
         placeholder = { Text(text = label, color = MaterialTheme.colorScheme.surfaceVariant) },
         leadingIcon = { Icon(leadingIcon, contentDescription = null) },
@@ -52,8 +55,9 @@ fun DataField(
         singleLine = true,
         shape = shape,
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = MaterialTheme.colorScheme.background,
-            unfocusedContainerColor = MaterialTheme.colorScheme.background
+            focusedContainerColor = backColor,
+            unfocusedContainerColor = backColor,
+            errorContainerColor = backColor
         )
     )
 }
