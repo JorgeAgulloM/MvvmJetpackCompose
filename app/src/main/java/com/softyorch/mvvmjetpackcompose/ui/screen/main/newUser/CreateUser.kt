@@ -10,6 +10,8 @@ import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -42,6 +45,13 @@ fun CreateUser(
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top
     ) {
+        Text(
+            text = "Crear nuevo contacto",
+            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+            style = MaterialTheme.typography.headlineSmall.copy(
+                textAlign = TextAlign.Center
+            )
+        )
         DataField(
             label = "Nombre",
             text = user.name,
@@ -51,7 +61,7 @@ fun CreateUser(
             leadingIcon = Icons.Default.Person
         ) { name -> viewModel.onDataChange(user.copy(name = name)) }
         DataField(
-            label = "Apellido",
+            label = "Apellidos",
             text = user.surName ?: EMPTY_STRING,
             error = userErrors.surName,
             supportingText = "Debe contener al menos 4 caracteres",
@@ -85,14 +95,17 @@ fun CreateUser(
         ) { age -> viewModel.onDataChange(user.copy(age = age)) }
         Button(
             onClick = {
-                viewModel.setUsers()
-                focusManager.clearFocus()
-                onCreateUser()
+                val isValid = viewModel.setUsers()
+                if (isValid) {
+                    focusManager.clearFocus()
+                    onCreateUser()
+                }
             },
             modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
-            enabled = stateError == StateError.Working
+            enabled = stateError == StateError.Working,
+            elevation = ButtonDefaults.buttonElevation()
         ) {
-            Text(text = "Crear usuario")
+            Text(text = "Crear", style = MaterialTheme.typography.bodyLarge)
         }
     }
 }
