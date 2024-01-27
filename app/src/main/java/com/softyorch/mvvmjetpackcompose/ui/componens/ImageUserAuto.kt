@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
-import kotlin.random.Random
 
 @Composable
 fun ImageUserAuto(
@@ -67,17 +66,4 @@ fun ImageUserAuto(
         modifier = Modifier.size(size),
         contentScale = ContentScale.Crop
     )
-}
-
-@Composable
-fun randomColor(): Color {
-    MaterialTheme.colorScheme.apply {
-        val colorList = listOf(
-            primaryContainer,
-            secondaryContainer,
-            tertiaryContainer
-        )
-        val random = Random.nextInt(colorList.size)
-        return colorList[random]
-    }
 }
