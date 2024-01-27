@@ -1,8 +1,6 @@
 package com.softyorch.mvvmjetpackcompose.ui.screen.main.newUser
 
-import android.net.Uri
 import android.util.Log
-import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -144,14 +142,4 @@ fun CreateUser(
             Text(text = "Crear", style = MaterialTheme.typography.bodyLarge)
         }
     }
-}
-
-@Composable
-fun selectImage(): ManagedActivityResultLauncher<String, Uri?> {
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        if (uri != null) {
-            Log.i("MYAPP", "Image: $uri")
-        }
-    }
-    return launcher
 }
