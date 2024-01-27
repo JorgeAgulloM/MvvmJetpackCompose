@@ -1,5 +1,6 @@
 package com.softyorch.mvvmjetpackcompose.data.entity
 
+import androidx.compose.ui.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -14,6 +15,9 @@ data class UserEntity(
     @ColumnInfo(name = "phone_number") val phoneNumber: String,
     @ColumnInfo(name = "email") val email: String?,
     @ColumnInfo(name = "age") val age: Int?,
+    @ColumnInfo(name = "photo") val photoUri: String?,
+    @ColumnInfo(name = "logo") val logo: String?,
+    @ColumnInfo(name = "logo_color") val logoColor: String?,
     @ColumnInfo(name = "last_call") val lastCall: Long?,
     @ColumnInfo(name = "type_call") val typeCall: Int?,
     @ColumnInfo(name = "favorite") val favorite: Boolean?,

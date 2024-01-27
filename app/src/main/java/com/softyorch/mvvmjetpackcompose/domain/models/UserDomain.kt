@@ -1,5 +1,6 @@
 package com.softyorch.mvvmjetpackcompose.domain.models
 
+import androidx.compose.ui.graphics.Color
 import com.softyorch.mvvmjetpackcompose.data.entity.UserEntity
 import java.util.UUID
 
@@ -10,6 +11,9 @@ data class UserDomain(
     val phoneNumber: String,
     val email: String?,
     val age: Int?,
+    val photoUri: String?,
+    val logo: String?,
+    val logoColor: String?,
     val lastCall: Long?,
     val typeCall: Int?,
     val favorite: Boolean?,
@@ -25,6 +29,9 @@ data class UserDomain(
                 phoneNumber = phoneNumber,
                 email = email,
                 age = age,
+                photoUri = photoUri,
+                logo = logo,
+                logoColor = logoColor,
                 lastCall = lastCall,
                 typeCall = typeCall,
                 favorite = favorite,
@@ -32,6 +39,20 @@ data class UserDomain(
             )
 
         fun UserEntity.toDomain(): UserDomain =
-            UserDomain(id, name, surName, phoneNumber, email, age, lastCall, typeCall, favorite, phoneBlocked)
+            UserDomain(
+                id = id,
+                name = name,
+                surName = surName,
+                phoneNumber = phoneNumber,
+                email = email,
+                age = age,
+                photoUri = photoUri,
+                logo = logo,
+                logoColor = logoColor,
+                lastCall = lastCall,
+                typeCall = typeCall,
+                favorite = favorite,
+                phoneBlocked = phoneBlocked
+            )
     }
 }

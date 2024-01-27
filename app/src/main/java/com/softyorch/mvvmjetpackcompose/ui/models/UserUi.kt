@@ -10,14 +10,45 @@ data class UserUi(
     val phoneNumber: String,
     val email: String?,
     val age: String?,
+    val photoUri: String?,
+    val logo: String?,
+    val logoColor: String?,
     val lastCall: Long?,
     val typeCall: Int?,
     val favorite: Boolean?,
     val phoneBlocked: Boolean?
 ) {
     companion object {
-        fun UserUi.toDomain(): UserDomain = UserDomain(id, name, surName, phoneNumber, email, age?.toInt(), lastCall, typeCall, favorite, phoneBlocked)
+        fun UserUi.toDomain(): UserDomain = UserDomain(
+            id = id,
+            name = name,
+            surName = surName,
+            phoneNumber = phoneNumber,
+            email = email,
+            age = age?.toInt(),
+            photoUri = photoUri,
+            logo = logo,
+            logoColor = logoColor,
+            lastCall = lastCall,
+            typeCall = typeCall,
+            favorite = favorite,
+            phoneBlocked = phoneBlocked
+        )
 
-        fun UserDomain.toUi(): UserUi = UserUi(id, name, surName, phoneNumber, email, age.toString(), lastCall, typeCall, favorite, phoneBlocked)
+        fun UserDomain.toUi(): UserUi = UserUi(
+            id = id,
+            name = name,
+            surName = surName,
+            phoneNumber = phoneNumber,
+            email = email,
+            age = age.toString(),
+            photoUri = photoUri,
+            logo = logo,
+            logoColor = logoColor,
+            lastCall = lastCall,
+            typeCall = typeCall,
+            favorite = favorite,
+            phoneBlocked = phoneBlocked
+        )
     }
 }
