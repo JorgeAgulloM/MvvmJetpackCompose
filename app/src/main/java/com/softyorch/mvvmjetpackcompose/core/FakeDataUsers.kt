@@ -1,6 +1,9 @@
 package com.softyorch.mvvmjetpackcompose.core
 
 import com.softyorch.mvvmjetpackcompose.data.entity.UserEntity
+import com.softyorch.mvvmjetpackcompose.ui.theme.Pink40
+import com.softyorch.mvvmjetpackcompose.ui.theme.Purple40
+import com.softyorch.mvvmjetpackcompose.ui.theme.PurpleGrey40
 import com.softyorch.mvvmjetpackcompose.utils.deleteAccents
 import java.util.Calendar
 import java.util.Date
@@ -8,46 +11,50 @@ import java.util.Locale
 import java.util.UUID
 import kotlin.random.Random
 
-val contactosTelefonicos = mutableListOf<UserEntity>()
+val phoneContacts = mutableListOf<UserEntity>()
 
-fun generarUsuarioAleatorio(): UserEntity {
+fun generateRandomUser(): UserEntity {
     val random = java.util.Random()
     val id = UUID.randomUUID()
-    val nombres = arrayOf("Jorge", "Juan", "María", "Carlos", "Laura", "Pedro", "Ana", "David", "Sofía", "Diego", "Elena")
-    val nombre = nombres.random()
-    val apellidos = arrayOf("Agulló", "Martín", "Pérez", "López", "Gómez", "Fernández", "Martínez", "Rodríguez", "Sánchez", "García", "Ruiz", "Torres")
-    val apellido1 = apellidos.random()
-    val apellido2 = apellidos.random()
-    val edad = random.nextInt(70) + 18 // Edades entre 18 y 87
-    val phoneNumber = (600000000 + random.nextInt(99999999)).toString() // Números aleatorios entre 600000000 y 699999999
-    val email = "${nombre.lowercase(Locale.ROOT).deleteAccents()}$edad@${apellido1.lowercase(Locale.ROOT).deleteAccents()}.com"
-    val typeCall = random.nextInt(4) // 0, 1, 2 o null (25% de probabilidad para cada caso)
+    val names = arrayOf("Jorge", "Juan", "María", "Carlos", "Laura", "Pedro", "Ana", "David", "Sofía", "Diego", "Elena")
+    val name = names.random()
+    val lastNames = arrayOf("Agulló", "Martín", "Pérez", "López", "Gómez", "Fernández", "Martínez", "Rodríguez", "Sánchez", "García", "Ruiz", "Torres")
+    val lastName1 = lastNames.random()
+    val lastName2 = lastNames.random()
+    val age = random.nextInt(70) + 18 // Ages between 18 and 87
+    val phoneNumber = (600000000 + random.nextInt(99999999)).toString() // Random numbers between 600000000 and 699999999
+    val email = "${name.lowercase(Locale.ROOT).deleteAccents()}$age@${lastName1.lowercase(Locale.ROOT).deleteAccents()}.com"
+    val typeCall = random.nextInt(4) // 0, 1, 2 or null (25% probability for each case)
 
-    val fechaActual = Date()
-    val fechaHaceUnAno = restarAno(fechaActual)
-    val lastCall = Random.nextLong(fechaHaceUnAno.time, fechaActual.time)
+    val colorList = listOf(Purple40.toString(), PurpleGrey40.toString(), Pink40.toString())
+    val color = colorList.random()
+
+    val currentDate = Date()
+    val lastYearDate = subtractYear(currentDate)
+    val lastCall = Random.nextLong(lastYearDate.time, currentDate.time)
     val percent25 = Random.nextInt(4)
     val favorite = if (percent25 == 2) Random.nextBoolean() else false
     val blocked = if (!favorite && percent25 == 1) Random.nextBoolean() else false
 
-    return UserEntity(id, nombre, "$apellido1 $apellido2", phoneNumber, email, edad, lastCall ,typeCall.takeIf { it < 3 }, favorite, blocked )
+    return UserEntity(id, name, "$lastName1 $lastName2", phoneNumber, email, age, null, name[0].toString(), color, lastCall ,typeCall.takeIf { it < 3 }, favorite, blocked)
 }
 
-fun restarAno(fecha: Date): Date {
+fun subtractYear(date: Date): Date {
     val calendar = Calendar.getInstance()
-    calendar.time = fecha
+    calendar.time = date
     calendar.add(Calendar.YEAR, -1)
     return calendar.time
 }
 
 fun generate(): MutableList<UserEntity> {
     repeat(100) {
-        val nuevoUsuario = generarUsuarioAleatorio()
-        contactosTelefonicos.add(nuevoUsuario)
+        val newUser = generateRandomUser()
+        phoneContacts.add(newUser)
     }
 
-// Imprime la lista de los primeros 10 contactos telefónicos generados
-    return contactosTelefonicos
+    // Print the list of the first 10 phone contacts generated
+    return phoneContacts
 }
+
 
 
