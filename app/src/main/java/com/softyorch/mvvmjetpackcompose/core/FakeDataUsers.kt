@@ -1,9 +1,10 @@
 package com.softyorch.mvvmjetpackcompose.core
 
+import androidx.compose.ui.graphics.toArgb
 import com.softyorch.mvvmjetpackcompose.data.entity.UserEntity
-import com.softyorch.mvvmjetpackcompose.ui.theme.Pink40
-import com.softyorch.mvvmjetpackcompose.ui.theme.Purple40
-import com.softyorch.mvvmjetpackcompose.ui.theme.PurpleGrey40
+import com.softyorch.mvvmjetpackcompose.ui.theme.Pink80
+import com.softyorch.mvvmjetpackcompose.ui.theme.Purple80
+import com.softyorch.mvvmjetpackcompose.ui.theme.PurpleGrey80
 import com.softyorch.mvvmjetpackcompose.utils.deleteAccents
 import java.util.Calendar
 import java.util.Date
@@ -26,7 +27,7 @@ fun generateRandomUser(): UserEntity {
     val email = "${name.lowercase(Locale.ROOT).deleteAccents()}$age@${lastName1.lowercase(Locale.ROOT).deleteAccents()}.com"
     val typeCall = random.nextInt(4) // 0, 1, 2 or null (25% probability for each case)
 
-    val colorList = listOf(Purple40.toString(), PurpleGrey40.toString(), Pink40.toString())
+    val colorList = listOf(Purple80.toArgb().toLong(), PurpleGrey80.toArgb().toLong(), Pink80.toArgb().toLong())
     val color = colorList.random()
 
     val currentDate = Date()

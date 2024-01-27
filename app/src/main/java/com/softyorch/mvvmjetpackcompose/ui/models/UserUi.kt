@@ -12,7 +12,7 @@ data class UserUi(
     val age: String?,
     val photoUri: String?,
     val logo: String?,
-    val logoColor: String?,
+    val logoColor: Long?,
     val lastCall: Long?,
     val typeCall: Int?,
     val favorite: Boolean?,

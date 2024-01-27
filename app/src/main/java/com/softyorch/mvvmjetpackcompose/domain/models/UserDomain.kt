@@ -13,7 +13,7 @@ data class UserDomain(
     val age: Int?,
     val photoUri: String?,
     val logo: String?,
-    val logoColor: String?,
+    val logoColor: Long?,
     val lastCall: Long?,
     val typeCall: Int?,
     val favorite: Boolean?,
