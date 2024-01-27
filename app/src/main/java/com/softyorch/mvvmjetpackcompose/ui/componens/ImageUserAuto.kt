@@ -15,20 +15,27 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
 import kotlin.random.Random
 
 @Composable
 fun ImageUserAuto(
     userImage: Painter? = null,
-    userName: String,
+    userLogo: String?,
+    userLogoColor: Long?,
     size: Dp = 40.dp
 ) {
+
+    val color =
+        if (userLogoColor != null) Color(userLogoColor.toInt()) else MaterialTheme.colorScheme.background
+
     if (userImage == null) Box(
-        modifier = Modifier.size(size).background(color = randomColor(), shape = CircleShape),
+        modifier = Modifier.size(size)
+            .background(color = color, shape = CircleShape),
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = userName[0].toString(),
+            text = userLogo?.get(0)?.toString() ?: EMPTY_STRING,
             style = MaterialTheme.typography.headlineMedium.copy(
                 color = MaterialTheme.colorScheme.background,
                 fontSize = (size.value / 2).sp
