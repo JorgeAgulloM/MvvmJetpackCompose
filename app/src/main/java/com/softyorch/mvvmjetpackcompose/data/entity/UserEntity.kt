@@ -1,6 +1,5 @@
 package com.softyorch.mvvmjetpackcompose.data.entity
 
-import androidx.compose.ui.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey

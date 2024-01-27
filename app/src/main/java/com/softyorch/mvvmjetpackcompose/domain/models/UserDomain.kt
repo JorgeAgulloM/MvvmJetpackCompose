@@ -1,6 +1,5 @@
 package com.softyorch.mvvmjetpackcompose.domain.models
 
-import androidx.compose.ui.graphics.Color
 import com.softyorch.mvvmjetpackcompose.data.entity.UserEntity
 import java.util.UUID
 
