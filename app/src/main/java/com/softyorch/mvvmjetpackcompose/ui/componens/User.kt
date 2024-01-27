@@ -42,7 +42,7 @@ fun User(user: UserUi, dataView: DataView = DataView.LastCall, onClick: (String)
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        ImageUserAuto(userImage = null, userLogo = user.logo, userLogoColor = user.logoColor)
+        ImageUserAuto(userImage = user.photoUri, userLogo = user.logo, userLogoColor = user.logoColor)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,

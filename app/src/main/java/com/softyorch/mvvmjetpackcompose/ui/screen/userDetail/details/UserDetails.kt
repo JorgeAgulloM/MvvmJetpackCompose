@@ -240,7 +240,7 @@ private fun BodyRead(user: UserUi) {
             user.surName.split(" ")[0]
         else user.surName
 
-        ImageUserAuto(userImage = null, userLogo = user.logo, userLogoColor = user.logoColor, size = 200.dp)
+        ImageUserAuto(userImage = user.photoUri, userLogo = user.logo, userLogoColor = user.logoColor, size = 200.dp)
         Text(
             text = "${user.name} $surName",
             modifier = Modifier.fillMaxWidth(),

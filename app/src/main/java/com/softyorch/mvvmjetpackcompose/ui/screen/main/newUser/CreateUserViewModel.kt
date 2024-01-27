@@ -77,6 +77,7 @@ class CreateUserViewModel @Inject constructor(
                 phoneNumber = user.phoneNumber,
                 email = user.email,
                 age = user.age,
+                photoUri = user.photoUri,
                 logo = if (user.name.isNotEmpty()) user.name[0].toString() else EMPTY_STRING,
                 logoColor = user.logoColor ?: colorList.random()
             )
