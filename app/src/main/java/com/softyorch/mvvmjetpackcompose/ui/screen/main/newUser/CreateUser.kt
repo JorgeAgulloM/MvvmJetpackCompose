@@ -1,9 +1,13 @@
 package com.softyorch.mvvmjetpackcompose.ui.screen.main.newUser
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Mail
@@ -17,6 +21,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -24,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.softyorch.mvvmjetpackcompose.ui.componens.DataField
+import com.softyorch.mvvmjetpackcompose.ui.componens.ImageUserAuto
 import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
@@ -42,7 +49,7 @@ fun CreateUser(
 
     Column(
         modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-        horizontalAlignment = Alignment.Start,
+        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
         Text(
@@ -52,6 +59,21 @@ fun CreateUser(
                 textAlign = TextAlign.Center
             )
         )
+        Row(
+            modifier = Modifier.background(color = Color.Transparent, shape = CircleShape)
+                .clip(shape = CircleShape)
+                .clickable { }
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            ImageUserAuto(
+                userImage = user.photoUri,
+                userLogo = user.logo,
+                userLogoColor = user.logoColor,
+                size = 200.dp
+            )
+        }
         DataField(
             label = "Nombre",
             text = user.name,

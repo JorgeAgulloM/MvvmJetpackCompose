@@ -9,6 +9,7 @@ import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toDomain
 import com.softyorch.mvvmjetpackcompose.ui.models.errorValidator.IUserValidator
 import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
+import com.softyorch.mvvmjetpackcompose.utils.colorList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -75,7 +76,9 @@ class CreateUserViewModel @Inject constructor(
                 surName = user.surName,
                 phoneNumber = user.phoneNumber,
                 email = user.email,
-                age = user.age
+                age = user.age,
+                logo = if (user.name.isNotEmpty()) user.name[0].toString() else EMPTY_STRING,
+                logoColor = user.logoColor ?: colorList.random()
             )
         }
     }
