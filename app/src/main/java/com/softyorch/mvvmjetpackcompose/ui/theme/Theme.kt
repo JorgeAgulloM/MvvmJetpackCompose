@@ -56,9 +56,12 @@ fun MvvmJetpackComposeTheme(
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+            (view.context as Activity).window.apply {
+                statusBarColor = colorScheme.background.toArgb()
+                navigationBarColor = colorScheme.primaryContainer.toArgb()
+                WindowCompat.getInsetsController(this, view)
+                    .isAppearanceLightStatusBars = !darkTheme
+            }
         }
     }
 
