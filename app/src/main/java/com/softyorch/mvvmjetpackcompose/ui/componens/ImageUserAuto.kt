@@ -1,7 +1,5 @@
 package com.softyorch.mvvmjetpackcompose.ui.componens
 
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,14 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
+import com.softyorch.mvvmjetpackcompose.utils.getBitmapFromUriString
 
 @Composable
 fun ImageUserAuto(
@@ -32,15 +29,8 @@ fun ImageUserAuto(
 ) {
     val context = LocalContext.current
 
-    val image: ImageBitmap? = userImage?.let { uriString ->
-        val uri = Uri.parse(uriString)
-        try {
-            val inputStream = context.contentResolver.openInputStream(uri)
-            BitmapFactory.decodeStream(inputStream)?.asImageBitmap()
-        } catch (e: Exception) {
-            null
-        }
-    }
+    val image = context.getBitmapFromUriString(userImage)
+
     Log.i("MYAPP", "ImageUserAuto - Image: $image")
     if (image == null) {
         val logo = if (!userLogo.isNullOrEmpty()) userLogo else EMPTY_STRING
