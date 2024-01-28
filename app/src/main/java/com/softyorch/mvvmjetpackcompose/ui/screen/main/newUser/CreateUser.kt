@@ -1,6 +1,6 @@
 package com.softyorch.mvvmjetpackcompose.ui.screen.main.newUser
 
-import android.util.Log
+import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -49,13 +50,17 @@ fun CreateUser(
     val userErrors: UserErrorModel by viewModel.userError.collectAsStateWithLifecycle()
 
     val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
 
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        if (uri != null) {
-            Log.i("MYAPP", "Image: $uri")
-            viewModel.onDataChange(user.copy(photoUri = uri.toString()))
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            if (uri != null) {
+                val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                context.contentResolver.takePersistableUriPermission(uri, takeFlags)
+                viewModel.onDataChange(user.copy(photoUri = uri.toString()))
+            }
         }
-    }
 
     Column(
         modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
@@ -73,7 +78,7 @@ fun CreateUser(
             modifier = Modifier.background(color = Color.Transparent, shape = CircleShape)
                 .clip(shape = CircleShape)
                 .clickable {
-                    launcher.launch("image/*")
+                    launcher.launch(arrayOf("image/*"))
                 }
                 .padding(16.dp),
             horizontalArrangement = Arrangement.Center,
