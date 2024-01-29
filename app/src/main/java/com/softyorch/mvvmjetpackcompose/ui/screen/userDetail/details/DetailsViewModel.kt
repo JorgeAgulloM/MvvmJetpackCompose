@@ -88,12 +88,26 @@ class DetailsViewModel @Inject constructor(
                     phoneNumber = user.phoneNumber,
                     email = user.email,
                     age = user.age,
+                    photoUri = user.photoUri,
                     favorite = user.favorite,
                     phoneBlocked = user.phoneBlocked
                 )
                 _stateDetails.value = StateDetails.Success(userEdit)
             }
 
+            else -> {}
+        }
+    }
+
+    fun setFavoriteBlockedOrNone(user: UserUi) {
+        when (val state = _stateDetails.value) {
+            is StateDetails.Success -> {
+                val userEdit = state.user.copy(
+                    favorite = user.favorite,
+                    phoneBlocked = user.phoneBlocked
+                )
+                _stateDetails.value = StateDetails.Success(userEdit)
+            }
             else -> {}
         }
     }
