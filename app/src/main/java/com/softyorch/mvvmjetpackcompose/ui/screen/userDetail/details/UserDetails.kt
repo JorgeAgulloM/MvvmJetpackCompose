@@ -1,5 +1,8 @@
 package com.softyorch.mvvmjetpackcompose.ui.screen.userDetail.details
 
+import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,9 +14,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
-import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Block
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Delete
@@ -42,8 +45,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.softyorch.mvvmjetpackcompose.core.intents.ActionsImpl.Companion.Actions
-import com.softyorch.mvvmjetpackcompose.ui.componens.ImageUserAuto
 import com.softyorch.mvvmjetpackcompose.ui.componens.DataField
+import com.softyorch.mvvmjetpackcompose.ui.componens.ImageUserAuto
 import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
@@ -74,19 +77,29 @@ fun UserDetails(
             StateDetails.Loading -> DetailsInfo(text = "Cargando...")
             is StateDetails.Success -> {
                 when (eventDetails) {
-                    EventDetails.Edit -> BodyEdit(
-                        user = state.user,
-                        userError = userError,
-                        stateError,
-                        onEvent = viewModel::eventManager,
-                        onDataChange = viewModel::onDataChange
-                    )
+                    EventDetails.Edit -> {
+                        TopBar(
+                            editMode = true,
+                            user = state.user,
+                            onEvent = viewModel::eventManager,
+                            onDataChange = viewModel::setFavoriteBlockedOrNone
+                        ) {
+                            viewModel.eventManager(EventDetails.Read)
+                        }
+                        BodyEdit(
+                            user = state.user,
+                            userError = userError,
+                            stateError,
+                            onEvent = viewModel::eventManager,
+                            onDataChange = viewModel::onDataChange
+                        )
+                    }
 
                     EventDetails.Read -> {
                         TopBar(
-                            state.user,
-                            viewModel::eventManager,
-                            viewModel::onDataChange
+                            user = state.user,
+                            onEvent = viewModel::eventManager,
+                            onDataChange = viewModel::onDataChange
                         ) {
                             onClick()
                         }
@@ -104,6 +117,7 @@ fun UserDetails(
 
 @Composable
 fun TopBar(
+    editMode: Boolean = false,
     user: UserUi,
     onEvent: (EventDetails) -> Unit,
     onDataChange: (UserUi) -> Unit,
@@ -124,26 +138,27 @@ fun TopBar(
         IconButton(
             onClick = { onBackClick() }
         ) {
-            Icon(Icons.Outlined.ArrowBack, contentDescription = null)
+            Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = null)
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TopIcon(icon = Icons.Outlined.Edit) { onEvent(EventDetails.Edit) }
+            if (!editMode) TopIcon(icon = Icons.Outlined.Edit) { onEvent(EventDetails.Edit) }
             if (!blocked) TopIcon(icon = iconStart) {
                 onDataChange(user.copy(favorite = !favorite))
-                onEvent(EventDetails.Read)
+                if (!editMode) onEvent(EventDetails.Read)
             }
             TopIcon(icon = Icons.Outlined.Block, color = colorBlock) {
                 onDataChange(user.copy(favorite = false, phoneBlocked = !blocked))
-                onEvent(EventDetails.Read)
+                if (!editMode) onEvent(EventDetails.Read)
             }
             TopIcon(
                 icon = Icons.Outlined.Delete,
                 color = MaterialTheme.colorScheme.error
             ) {
+                //Introducir pregunta aàra reafirmar la eliminación
                 onEvent(EventDetails.Delete)
             }
         }
@@ -175,7 +190,37 @@ private fun BodyEdit(
     onEvent: (EventDetails) -> Unit,
     onDataChange: (UserUi) -> Unit
 ) {
+
+    val context = LocalContext.current
+
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            if (uri != null) {
+                val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                context.contentResolver.takePersistableUriPermission(uri, takeFlags)
+                onDataChange(user.copy(photoUri = uri.toString()))
+            }
+        }
+
     Spacer(modifier = Modifier.padding(vertical = 4.dp))
+    Row(
+        modifier = Modifier.fillMaxWidth().background(color = Color.Transparent, shape = CircleShape)
+            .clip(shape = CircleShape)
+            .clickable {
+                launcher.launch(arrayOf("image/*"))
+            }
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        ImageUserAuto(
+            userImage = user.photoUri,
+            userLogo = user.logo,
+            userLogoColor = user.logoColor,
+            size = 200.dp
+        )
+    }
     DataField(
         label = "Nombre",
         text = user.name,
@@ -222,7 +267,7 @@ private fun BodyEdit(
         modifier = Modifier.padding(16.dp),
         enabled = stateError == StateError.Working
     ) {
-        Text(text = "Guardar")
+        Text(text = "Editar")
     }
 
 }
