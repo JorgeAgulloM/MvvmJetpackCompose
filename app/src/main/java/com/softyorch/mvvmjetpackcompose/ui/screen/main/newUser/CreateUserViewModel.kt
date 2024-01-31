@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softyorch.mvvmjetpackcompose.domain.useCases.SetUserUseCase
+import com.softyorch.mvvmjetpackcompose.ui.componens.userFields.StateError
 import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
+import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.emptyUser
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toDomain
 import com.softyorch.mvvmjetpackcompose.ui.models.errorValidator.IUserValidator
 import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
@@ -16,7 +18,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,23 +26,7 @@ class CreateUserViewModel @Inject constructor(
     private val validator: IUserValidator
 ) : ViewModel() {
 
-    private val _user = MutableStateFlow(
-        UserUi(
-            id = UUID.randomUUID(),
-            name = EMPTY_STRING,
-            surName = null,
-            phoneNumber = EMPTY_STRING,
-            email = null,
-            age = null,
-            photoUri = null,
-            logo = null,
-            logoColor = null,
-            lastCall = null,
-            typeCall = null,
-            favorite = null,
-            phoneBlocked = null
-        )
-    )
+    private val _user = MutableStateFlow(emptyUser())
     val user: StateFlow<UserUi> = _user
 
     private val _stateError = MutableStateFlow<StateError>(StateError.Working)
