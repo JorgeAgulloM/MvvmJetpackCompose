@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.softyorch.mvvmjetpackcompose.domain.useCases.DeleteUserUseCase
 import com.softyorch.mvvmjetpackcompose.domain.useCases.GetUserUseCase
 import com.softyorch.mvvmjetpackcompose.domain.useCases.UpdateUserUseCase
+import com.softyorch.mvvmjetpackcompose.ui.componens.userFields.StateError
 import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toDomain
@@ -49,13 +50,17 @@ class DetailsViewModel @Inject constructor(
     fun getUSer(userId: UUID) {
         viewModelScope.launch(dispatcherIo) {
             getDataUSer(userId).catch { flowT ->
-                //if (_stateDetails.value != StateDetails.Deleted)
                 if (_eventDetails.value != EventDetails.Delete)
                     _stateDetails.update { StateDetails.Error(flowT.message.toString()) }
             }.collect { user ->
                 _stateDetails.update { StateDetails.Success(user) }
             }
         }
+    }
+
+    fun setUsers(user: UserUi): Boolean {
+        searchError(user)
+        return _stateError.value == StateError.Working
     }
 
     fun eventManager(newEvent: EventDetails) {
@@ -122,8 +127,12 @@ class DetailsViewModel @Inject constructor(
         val errorEmail = user.email?.let { if (it.isEmpty()) false else !validator.isEmailCorrect(it) } ?: false
         val errorAge = user.age?.let { if (it.isEmpty()) false else !validator.isAgeCorrect(it) } ?: false
 
-        _userError.update { UserErrorModel(errorName, errorSurName, errorPhoneNumber, errorEmail, errorAge) }
-        _stateError.update { if (errorName || errorAge) StateError.Error else StateError.Working }
+        _userError.update {
+            UserErrorModel(errorName, errorSurName, errorPhoneNumber, errorEmail, errorAge)
+        }
+        _stateError.update {
+            if (errorName || errorAge) StateError.Error else StateError.Working
+        }
 
     }
 
