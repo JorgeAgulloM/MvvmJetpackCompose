@@ -1,4 +1,4 @@
-package com.softyorch.mvvmjetpackcompose.ui.screen.main.newUser
+package com.softyorch.mvvmjetpackcompose.ui.componens.userFields
 
 sealed class StateError {
     data object Working: StateError()
