@@ -1,15 +1,11 @@
 package com.softyorch.mvvmjetpackcompose.ui.screen.userDetail.details
 
-import android.content.Intent
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -18,14 +14,12 @@ import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.icons.outlined.Block
-import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material.icons.outlined.Sms
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -39,17 +33,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.softyorch.mvvmjetpackcompose.core.intents.ActionsImpl.Companion.Actions
-import com.softyorch.mvvmjetpackcompose.ui.componens.DataField
 import com.softyorch.mvvmjetpackcompose.ui.componens.ImageUserAuto
+import com.softyorch.mvvmjetpackcompose.ui.componens.userFields.StateError
+import com.softyorch.mvvmjetpackcompose.ui.componens.userFields.FromContact
 import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
-import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
 import java.util.UUID
 
 @Composable
@@ -86,13 +79,16 @@ fun UserDetails(
                         ) {
                             viewModel.eventManager(EventDetails.Read)
                         }
-                        BodyEdit(
+                        FromContact(
+                            editUser = true,
                             user = state.user,
-                            userError = userError,
-                            stateError,
-                            onEvent = viewModel::eventManager,
+                            userErrors = userError,
+                            stateError = stateError,
                             onDataChange = viewModel::onDataChange
-                        )
+                        ) {
+                            val isValid = viewModel.setUsers(state.user)
+                            if (isValid) viewModel.eventManager(EventDetails.Read)
+                        }
                     }
 
                     EventDetails.Read -> {
@@ -180,96 +176,6 @@ fun TopIcon(
         },
         tint = color
     )
-}
-
-@Composable
-private fun BodyEdit(
-    user: UserUi,
-    userError: UserErrorModel,
-    stateError: StateError,
-    onEvent: (EventDetails) -> Unit,
-    onDataChange: (UserUi) -> Unit
-) {
-
-    val context = LocalContext.current
-
-    val launcher =
-        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
-            if (uri != null) {
-                val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or
-                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-                context.contentResolver.takePersistableUriPermission(uri, takeFlags)
-                onDataChange(user.copy(photoUri = uri.toString()))
-            }
-        }
-
-    Spacer(modifier = Modifier.padding(vertical = 4.dp))
-    Row(
-        modifier = Modifier.fillMaxWidth().background(color = Color.Transparent, shape = CircleShape)
-            .clip(shape = CircleShape)
-            .clickable {
-                launcher.launch(arrayOf("image/*"))
-            }
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        ImageUserAuto(
-            userImage = user.photoUri,
-            userLogo = user.logo,
-            userLogoColor = user.logoColor,
-            size = 200.dp
-        )
-    }
-    DataField(
-        label = "Nombre",
-        text = user.name,
-        error = userError.name,
-        supportingText = "Debe contener al menos 4 caracteres",
-        keyboardType = KeyboardType.Text,
-        leadingIcon = Icons.Outlined.Person
-    ) { name -> onDataChange(user.copy(name = name)) }
-    DataField(
-        label = "Apellido",
-        text = user.surName ?: EMPTY_STRING,
-        error = userError.name,
-        supportingText = "Debe contener al menos 4 caracteres",
-        keyboardType = KeyboardType.Text,
-        leadingIcon = Icons.Outlined.Person
-    ) { surName -> onDataChange(user.copy(surName = surName)) }
-    DataField(
-        label = "Teléfono",
-        text = user.phoneNumber,
-        error = userError.name,
-        supportingText = "Solo puede contener número",
-        keyboardType = KeyboardType.Phone,
-        leadingIcon = Icons.Outlined.Phone
-    ) { phoneNumber -> onDataChange(user.copy(phoneNumber = phoneNumber)) }
-    DataField(
-        label = "Email",
-        text = user.email ?: EMPTY_STRING,
-        error = userError.name,
-        supportingText = "El email no es correcto",
-        keyboardType = KeyboardType.Email,
-        leadingIcon = Icons.Outlined.Email
-    ) { email -> onDataChange(user.copy(email = email)) }
-    DataField(
-        label = "Edad",
-        text = user.age ?: EMPTY_STRING,
-        error = userError.age,
-        isLast = true,
-        supportingText = "Edad no puede estar vacío",
-        keyboardType = KeyboardType.Number,
-        leadingIcon = Icons.Outlined.CalendarMonth
-    ) { age -> onDataChange(user.copy(age = age)) }
-    Button(
-        onClick = { onEvent(EventDetails.Read) },
-        modifier = Modifier.padding(16.dp),
-        enabled = stateError == StateError.Working
-    ) {
-        Text(text = "Editar")
-    }
-
 }
 
 @Composable
