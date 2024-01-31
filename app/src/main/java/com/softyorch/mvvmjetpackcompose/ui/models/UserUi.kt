@@ -1,6 +1,7 @@
 package com.softyorch.mvvmjetpackcompose.ui.models
 
 import com.softyorch.mvvmjetpackcompose.domain.models.UserDomain
+import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
 import java.util.UUID
 
 data class UserUi(
@@ -49,6 +50,22 @@ data class UserUi(
             typeCall = typeCall,
             favorite = favorite,
             phoneBlocked = phoneBlocked
+        )
+
+        fun emptyUser(): UserUi = UserUi(
+            id = UUID.randomUUID(),
+            name = EMPTY_STRING,
+            surName = null,
+            phoneNumber = EMPTY_STRING,
+            email = null,
+            age = null,
+            photoUri = null,
+            logo = null,
+            logoColor = null,
+            lastCall = null,
+            typeCall = null,
+            favorite = null,
+            phoneBlocked = null
         )
     }
 }
