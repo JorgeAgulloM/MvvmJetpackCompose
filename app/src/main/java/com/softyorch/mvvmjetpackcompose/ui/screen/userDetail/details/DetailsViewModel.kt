@@ -1,6 +1,5 @@
 package com.softyorch.mvvmjetpackcompose.ui.screen.userDetail.details
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softyorch.mvvmjetpackcompose.domain.useCases.DeleteUserUseCase
@@ -12,7 +11,6 @@ import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toDomain
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toUi
 import com.softyorch.mvvmjetpackcompose.ui.models.errorValidator.IUserValidator
-import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -59,7 +57,10 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun setUsers(user: UserUi): Boolean {
-        searchError(user)
+        when (val state = _stateDetails.value) {
+            is StateDetails.Success -> searchError(user, state.user)
+            else -> {}
+        }
         return _stateError.value == StateError.Working
     }
 
@@ -84,9 +85,9 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun onDataChange(user: UserUi) {
-        searchError(user)
         when (val state = _stateDetails.value) {
             is StateDetails.Success -> {
+                searchFieldError(user, state.user)
                 val userEdit = state.user.copy(
                     name = user.name,
                     surName = user.surName,
@@ -117,23 +118,23 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
-    private fun searchError(user: UserUi) {
-        val errorName = !validator.isNameCorrect(user.name, 3)
-        val errorSurName = user.surName?.let {
-            Log.i("MYAPP", "surname: ${user.surName}")
-            if (it == EMPTY_STRING) false else !validator.isNameCorrect(it, 3)
-        } ?: false
-        val errorPhoneNumber = !validator.isPhoneNumberCorrect(user.phoneNumber)
-        val errorEmail = user.email?.let { if (it.isEmpty()) false else !validator.isEmailCorrect(it) } ?: false
-        val errorAge = user.age?.let { if (it.isEmpty()) false else !validator.isAgeCorrect(it) } ?: false
+    private fun searchError(user: UserUi, oldDataUser: UserUi) {
+        setErrors(validator.searchError(user, oldDataUser))
+    }
 
-        _userError.update {
-            UserErrorModel(errorName, errorSurName, errorPhoneNumber, errorEmail, errorAge)
-        }
-        _stateError.update {
-            if (errorName || errorAge) StateError.Error else StateError.Working
-        }
+    private fun searchFieldError(user: UserUi, oldDataUser: UserUi) {
+        setErrors(validator.searFieldError(user, oldDataUser))
+    }
 
+    private fun setErrors(userError: UserErrorModel) {
+        _userError.update { userError }
+        userError.apply {
+            _stateError.update {
+                if (name || surName || phoneNumber || email || age)
+                    StateError.Error
+                else StateError.Working
+            }
+        }
     }
 
     //##########################################################################
