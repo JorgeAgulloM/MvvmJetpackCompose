@@ -1,8 +1,9 @@
 package com.softyorch.mvvmjetpackcompose.ui.models.errorValidator
 
+import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
+import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
+
 interface IUserValidator {
-    fun isNameCorrect(name: String, size: Int): Boolean
-    fun isPhoneNumberCorrect(phoneNumber: String): Boolean
-    fun isEmailCorrect(email: String): Boolean
-    fun isAgeCorrect(age: String): Boolean
+    fun searchError(user: UserUi, oldDataUser: UserUi): UserErrorModel
+    fun searFieldError(user: UserUi, oldDataUser: UserUi): UserErrorModel
 }
