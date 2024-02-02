@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -73,22 +74,24 @@ fun FromContact(
                 textAlign = TextAlign.Center
             )
         )
-        Row(
-            modifier = Modifier.background(color = Color.Transparent, shape = CircleShape)
-                .clip(shape = CircleShape)
-                .clickable {
-                    launcher.launch(arrayOf("image/*"))
-                }
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            ImageUserAuto(
-                userImage = user.photoUri,
-                userLogo = user.logo,
-                userLogoColor = user.logoColor,
-                size = 200.dp
-            )
+        Box(modifier = Modifier.padding(16.dp), contentAlignment = Alignment.Center){
+            Row(
+                modifier = Modifier
+                    .background(color = Color.Transparent, shape = CircleShape)
+                    .clip(shape = CircleShape)
+                    .clickable {
+                        launcher.launch(arrayOf("image/*"))
+                    },
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                ImageUserAuto(
+                    userImage = user.photoUri,
+                    userLogo = user.logo,
+                    userLogoColor = user.logoColor,
+                    size = 200.dp
+                )
+            }
         }
         DataField(
             label = "Nombre",
