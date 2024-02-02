@@ -1,6 +1,5 @@
 package com.softyorch.mvvmjetpackcompose.ui.screen.main.newUser
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softyorch.mvvmjetpackcompose.domain.useCases.SetUserUseCase
@@ -54,7 +53,7 @@ class CreateUserViewModel @Inject constructor(
     }
 
     fun onDataChange(user: UserUi) {
-        searchError(user)
+        searchFieldError(user)
         _user.update {
             user.copy(
                 name = user.name,
@@ -70,31 +69,21 @@ class CreateUserViewModel @Inject constructor(
     }
 
     private fun searchError(user: UserUi) {
-        val errorName = !validator.isNameCorrect(user.name, 3)
-        val errorSurName = user.surName?.let {
-            Log.i("MYAPP", "surname: ${user.surName}")
-            if (it.isEmpty()) false else !validator.isNameCorrect(it, 3)
-        } ?: false
-        val errorPhoneNumber = !validator.isPhoneNumberCorrect(user.phoneNumber)
-        val errorEmail =
-            user.email?.let { if (it.isEmpty()) false else !validator.isEmailCorrect(it) } ?: false
-        val errorAge =
-            user.age?.let { if (it.isEmpty()) false else !validator.isAgeCorrect(it) } ?: false
+        setErrors(validator.searchError(user, _user.value))
+    }
 
+    private fun searchFieldError(user: UserUi) {
+        setErrors(validator.searFieldError(user, _user.value))
+    }
 
-        _userError.update {
-            UserErrorModel(
-                errorName,
-                errorSurName,
-                errorPhoneNumber,
-                errorEmail,
-                errorAge
-            )
-        }
-        _stateError.update {
-            if (errorName || errorSurName || errorPhoneNumber || errorEmail || errorAge)
-                StateError.Error
-            else StateError.Working
+    private fun setErrors(userError: UserErrorModel) {
+        _userError.update { userError }
+        userError.apply {
+            _stateError.update {
+                if (name || surName || phoneNumber || email || age)
+                    StateError.Error
+                else StateError.Working
+            }
         }
     }
 
