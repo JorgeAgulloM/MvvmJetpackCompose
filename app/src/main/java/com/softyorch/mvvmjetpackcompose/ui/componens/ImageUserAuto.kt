@@ -1,6 +1,5 @@
 package com.softyorch.mvvmjetpackcompose.ui.componens
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -31,7 +30,6 @@ fun ImageUserAuto(
 
     val image = context.getBitmapFromUriString(userImage)
 
-    Log.i("MYAPP", "ImageUserAuto - Image: $image")
     if (image == null) {
         val logo = if (!userLogo.isNullOrEmpty()) userLogo else EMPTY_STRING
         val color =
