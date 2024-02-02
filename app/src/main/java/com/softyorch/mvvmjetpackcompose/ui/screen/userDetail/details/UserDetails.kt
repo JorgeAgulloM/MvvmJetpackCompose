@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -20,6 +21,10 @@ import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material.icons.outlined.Sms
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -45,6 +50,7 @@ import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 import java.util.UUID
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserDetails(
     viewModel: DetailsViewModel = hiltViewModel<DetailsViewModel>(),
@@ -102,11 +108,74 @@ fun UserDetails(
                         BodyRead(state.user)
                     }
 
-                    EventDetails.Delete -> DetailsInfo(text = "Usuario eliminado!")
+                    EventDetails.Deleting ->
+                        DeleteContact(state.user.name, onEventManager = viewModel::eventManager)
+
+                    EventDetails.Delete -> {
+                        TopBar(
+                            user = state.user,
+                            onEvent = viewModel::eventManager,
+                            onDataChange = viewModel::onDataChange
+                        ) {
+                            onClick()
+                        }
+                        DetailsInfo(text = "Usuario eliminado!")
+                    }
                 }
             }
 
             is StateDetails.Error -> DetailsInfo(text = state.msg)
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun DeleteContact(
+    userName: String,
+    onEventManager: (EventDetails) -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = { onEventManager(EventDetails.Read) }
+    ) {
+        Column(
+            modifier = Modifier.background(
+                color = MaterialTheme.colorScheme.background,
+                shape = MaterialTheme.shapes.large
+            ).padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(text = "Eliminar a $userName de la lista de contactos", style = MaterialTheme.typography.titleMedium)
+            Spacer(modifier = Modifier.padding(vertical = 8.dp))
+            Text(text = "¿Estás seguro?", style = MaterialTheme.typography.bodyLarge)
+            Spacer(modifier = Modifier.padding(vertical = 8.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Button(
+                    onClick = { onEventManager(EventDetails.Read) },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    ),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                ) {
+                    Text(text = "No", style = MaterialTheme.typography.bodyLarge)
+                }
+                Button(
+                    onClick = { onEventManager(EventDetails.Delete) },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.errorContainer,
+                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    ),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                ) {
+                    Text(text = "Si", style = MaterialTheme.typography.bodyLarge)
+                }
+            }
         }
     }
 }
@@ -154,8 +223,7 @@ fun TopBar(
                 icon = Icons.Outlined.Delete,
                 color = MaterialTheme.colorScheme.error
             ) {
-                //Introducir pregunta aàra reafirmar la eliminación
-                onEvent(EventDetails.Delete)
+                onEvent(EventDetails.Deleting)
             }
         }
     }
@@ -191,7 +259,12 @@ private fun BodyRead(user: UserUi) {
             user.surName.split(" ")[0]
         else user.surName
 
-        ImageUserAuto(userImage = user.photoUri, userLogo = user.logo, userLogoColor = user.logoColor, size = 200.dp)
+        ImageUserAuto(
+            userImage = user.photoUri,
+            userLogo = user.logo,
+            userLogoColor = user.logoColor,
+            size = 200.dp
+        )
         Text(
             text = "${user.name} $surName",
             modifier = Modifier.fillMaxWidth(),
@@ -252,11 +325,11 @@ private fun TextRead(icon: ImageVector, text: String?) {
 @Composable
 fun DetailsInfo(text: String) {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(16.dp),
+        modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = text, style = MaterialTheme.typography.titleMedium)
+        Text(text = text, style = MaterialTheme.typography.titleLarge)
     }
 }
 

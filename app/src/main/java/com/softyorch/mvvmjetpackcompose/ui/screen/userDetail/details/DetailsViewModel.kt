@@ -72,10 +72,10 @@ class DetailsViewModel @Inject constructor(
                     EventDetails.Read -> viewModelScope.launch(dispatcherIo) {
                         updateDataUser(state.user)
                     }
-                    EventDetails.Edit -> {}
                     EventDetails.Delete -> viewModelScope.launch(dispatcherIo) {
                         deleteDataUser(state.user)
                     }
+                    else -> {}
                 }
             }
 
