@@ -4,6 +4,7 @@ import android.util.Patterns
 import androidx.core.text.isDigitsOnly
 import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
+import com.softyorch.mvvmjetpackcompose.utils.MIN_NAME_LENGTH
 import javax.inject.Inject
 
 class UserValidatorImpl @Inject constructor() : IUserValidator {
@@ -12,9 +13,9 @@ class UserValidatorImpl @Inject constructor() : IUserValidator {
 
     override fun searchError(user: UserUi, oldDataUser: UserUi): UserErrorModel {
 
-        val errorName = !isNameCorrect(user.name, 3)
+        val errorName = !isNameCorrect(user.name, MIN_NAME_LENGTH)
         val errorSurName = user.surName?.let {
-            if (it.isEmpty()) false else !isNameCorrect(it, 3)
+            if (it.isEmpty()) false else !isNameCorrect(it, MIN_NAME_LENGTH)
         } ?: false
         val errorPhoneNumber = !isPhoneNumberCorrect(user.phoneNumber)
         val errorEmail =
@@ -34,11 +35,11 @@ class UserValidatorImpl @Inject constructor() : IUserValidator {
     override fun searFieldError(user: UserUi, oldDataUser: UserUi): UserErrorModel {
 
         if (user.name != oldDataUser.name)
-            return userError.copy(name = !isNameCorrect(user.name, 3))
+            return userError.copy(name = !isNameCorrect(user.name, MIN_NAME_LENGTH))
 
         if (user.surName != oldDataUser.surName)
             return userError.copy(surName = user.surName?.let {
-                if (it.isEmpty()) false else !isNameCorrect(it, 3)
+                if (it.isEmpty()) false else !isNameCorrect(it, MIN_NAME_LENGTH)
             } ?: false)
 
         if (user.phoneNumber != oldDataUser.phoneNumber)

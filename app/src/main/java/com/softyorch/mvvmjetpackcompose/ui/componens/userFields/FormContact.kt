@@ -36,6 +36,7 @@ import com.softyorch.mvvmjetpackcompose.ui.componens.ImageUserAuto
 import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
+import com.softyorch.mvvmjetpackcompose.utils.MIN_NAME_LENGTH
 
 @Composable
 fun FromContact(
@@ -97,7 +98,7 @@ fun FromContact(
             label = "Nombre",
             text = user.name,
             error = userErrors.name,
-            supportingText = "Debe contener al menos 4 caracteres",
+            supportingText = "Debe contener al menos $MIN_NAME_LENGTH caracteres",
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.Person
         ) { name -> onDataChange(user.copy(name = name)) }
@@ -105,7 +106,7 @@ fun FromContact(
             label = "Apellidos",
             text = user.surName ?: EMPTY_STRING,
             error = userErrors.surName,
-            supportingText = "Debe contener al menos 4 caracteres",
+            supportingText = "Debe contener al menos $MIN_NAME_LENGTH caracteres",
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.Person
         ) { surName -> onDataChange(user.copy(surName = surName)) }
