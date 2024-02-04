@@ -1,23 +1,27 @@
 package com.softyorch.mvvmjetpackcompose.domain.useCases
 
-import androidx.core.text.isDigitsOnly
+
 import com.softyorch.mvvmjetpackcompose.data.repository.IRepository
 import com.softyorch.mvvmjetpackcompose.domain.models.UserDomain
 import com.softyorch.mvvmjetpackcompose.domain.models.UserDomain.Companion.toDomain
 import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
 import com.softyorch.mvvmjetpackcompose.utils.deleteAccents
+import com.softyorch.mvvmjetpackcompose.utils.textUtilsWrapper.TextUtilsWrapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class GetSearchUsersUseCase @Inject constructor(private val repo: IRepository) {
+class GetSearchUsersUseCase @Inject constructor(
+    private val repo: IRepository,
+    private val textUtils: TextUtilsWrapper
+) {
     suspend operator fun invoke(filter: String): Flow<List<UserDomain>> {
         return filterUsers(filter)
     }
 
     private suspend fun filterUsers(filter: String): Flow<List<UserDomain>> =
         repo.getUsers().map { list ->
-            if (filter.isDigitsOnly()) {
+            if (textUtils.isDigitsOnly(filter)) {
                 list.filter { it.phoneNumber.startsWith(filter) }
             } else {
                 list.filter {
