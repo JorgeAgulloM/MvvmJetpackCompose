@@ -14,6 +14,7 @@ import com.softyorch.mvvmjetpackcompose.domain.useCases.SetUserUseCase
 import com.softyorch.mvvmjetpackcompose.domain.useCases.UpdateUserUseCase
 import com.softyorch.mvvmjetpackcompose.ui.models.errorValidator.IUserValidator
 import com.softyorch.mvvmjetpackcompose.ui.models.errorValidator.UserValidatorImpl
+import com.softyorch.mvvmjetpackcompose.utils.textUtilsWrapper.TextUtilsWrapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -75,7 +76,13 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesGetSearchUsersUseCase(repo: IRepository): GetSearchUsersUseCase =
-        GetSearchUsersUseCase(repo)
+    fun providesTextUtilsWrapper(): TextUtilsWrapper = TextUtilsWrapper()
+
+    @Singleton
+    @Provides
+    fun providesGetSearchUsersUseCase(
+        repo: IRepository,
+        textUtils: TextUtilsWrapper
+    ): GetSearchUsersUseCase = GetSearchUsersUseCase(repo, textUtils)
 
 }
