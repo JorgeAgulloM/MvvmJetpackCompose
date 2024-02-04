@@ -1,7 +1,6 @@
 package com.softyorch.mvvmjetpackcompose
 
 import android.Manifest
-import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
