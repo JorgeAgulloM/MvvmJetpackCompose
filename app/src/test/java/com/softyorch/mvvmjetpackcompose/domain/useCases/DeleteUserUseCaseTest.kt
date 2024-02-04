@@ -11,7 +11,6 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import java.util.UUID
-import javax.annotation.meta.When
 
 class DeleteUserUseCaseTest {
 
