@@ -2,6 +2,8 @@ package com.softyorch.mvvmjetpackcompose.data.repository
 
 import com.softyorch.mvvmjetpackcompose.data.entity.UserDao
 import com.softyorch.mvvmjetpackcompose.data.entity.UserEntity
+import com.softyorch.mvvmjetpackcompose.utils.testContact
+import com.softyorch.mvvmjetpackcompose.utils.userID
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -12,7 +14,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
-import java.util.UUID
 
 class RepositoryImplTest {
 
@@ -25,23 +26,6 @@ class RepositoryImplTest {
         MockKAnnotations.init(this)
         repo = RepositoryImpl(userDao)
     }
-
-    private val userID = UUID.randomUUID()
-    private val testContact = UserEntity(
-        id = userID,
-        name = "Test",
-        surName = "User",
-        phoneNumber = "1234567890",
-        email = "test.user@example.com",
-        age = 30,
-        photoUri = null,
-        logo = null,
-        logoColor = null,
-        lastCall = null,
-        typeCall = null,
-        favorite = false,
-        phoneBlocked = false
-    )
 
     @Test
     fun `when getUsers calls userDao getUsers`() = runBlocking {

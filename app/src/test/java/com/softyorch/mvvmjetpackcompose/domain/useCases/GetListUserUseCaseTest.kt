@@ -1,8 +1,8 @@
 package com.softyorch.mvvmjetpackcompose.domain.useCases
 
-import com.softyorch.mvvmjetpackcompose.data.entity.UserEntity
 import com.softyorch.mvvmjetpackcompose.data.repository.IRepository
 import com.softyorch.mvvmjetpackcompose.domain.models.UserDomain.Companion.toEntity
+import com.softyorch.mvvmjetpackcompose.utils.testContact
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
-import java.util.UUID
 
 class GetListUserUseCaseTest {
 
@@ -30,24 +29,7 @@ class GetListUserUseCaseTest {
 
     @Test
     fun `when get users list`() = runBlocking {
-        val userID = UUID.randomUUID()
-        val testContactList = listOf(
-            UserEntity(
-                id = userID,
-                name = "Test",
-                surName = "User",
-                phoneNumber = "1234567890",
-                email = "test.user@example.com",
-                age = 30,
-                photoUri = null,
-                logo = null,
-                logoColor = null,
-                lastCall = null,
-                typeCall = null,
-                favorite = false,
-                phoneBlocked = false
-            )
-        )
+        val testContactList = listOf(testContact)
         val contactFlow = flowOf(testContactList)
 
         //Given
