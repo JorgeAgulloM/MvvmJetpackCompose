@@ -1,7 +1,6 @@
 package com.softyorch.mvvmjetpackcompose.utils
 
 import com.softyorch.mvvmjetpackcompose.core.intents.actions.ActionDialTest
-import com.softyorch.mvvmjetpackcompose.core.intents.actions.ActionEmail
 import com.softyorch.mvvmjetpackcompose.core.intents.actions.ActionEmailTest
 import com.softyorch.mvvmjetpackcompose.core.intents.actions.ActionSMSTest
 import com.softyorch.mvvmjetpackcompose.data.entity.UserDaoTest
