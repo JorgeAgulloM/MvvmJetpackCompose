@@ -9,7 +9,6 @@ import com.softyorch.mvvmjetpackcompose.utils.testContact
 import com.softyorch.mvvmjetpackcompose.utils.testContact2
 import com.softyorch.mvvmjetpackcompose.utils.userID
 import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertNotNull
 import junit.framework.TestCase.assertNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
