@@ -56,18 +56,18 @@ class CreateUserViewModel @Inject constructor(
 
     fun onDataChange(user: UserUi) {
         searchFieldError(user)
-        _user.update {
-            user.copy(
-                name = user.name,
-                surName = user.surName,
-                phoneNumber = user.phoneNumber,
-                email = user.email,
-                age = user.age,
-                photoUri = user.photoUri,
-                logo = if (user.name.isNotEmpty()) user.name[0].toString() else EMPTY_STRING,
-                logoColor = user.logoColor ?: colorList.random()
-            )
-        }
+        val userTransform = if (user.logo == null)
+            createdLogo(user)
+        else
+            user
+        _user.update { userTransform }
+    }
+
+    private fun createdLogo(user: UserUi): UserUi {
+        val logo = if (user.name.isNotEmpty()) user.name[0].toString() else EMPTY_STRING
+        val logoColor = user.logoColor ?: colorList.random()
+
+        return user.copy(logo = logo, logoColor = logoColor)
     }
 
     private fun searchError(user: UserUi) {
