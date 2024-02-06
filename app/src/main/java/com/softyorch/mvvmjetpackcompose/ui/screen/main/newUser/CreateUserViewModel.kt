@@ -12,6 +12,7 @@ import com.softyorch.mvvmjetpackcompose.ui.models.errorValidator.IUserValidator
 import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
 import com.softyorch.mvvmjetpackcompose.utils.colorList
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateUserViewModel @Inject constructor(
     private val setUserUseCase: SetUserUseCase,
-    private val validator: IUserValidator
+    private val validator: IUserValidator,
+    private val dispatcherIO: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
     private val _user = MutableStateFlow(emptyUser())
@@ -46,7 +48,7 @@ class CreateUserViewModel @Inject constructor(
         searchError(_user.value)
         val isValid = _stateError.value == StateError.Working
         if (isValid)
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(dispatcherIO) {
                 setDataUser(_user.value)
             }
         return isValid
