@@ -32,7 +32,7 @@ class UserValidatorImpl @Inject constructor() : IUserValidator {
         )
     }
 
-    override fun searFieldError(user: UserUi, oldDataUser: UserUi): UserErrorModel {
+    override fun searchFieldError(user: UserUi, oldDataUser: UserUi): UserErrorModel {
 
         if (user.name != oldDataUser.name)
             return userError.copy(name = !isNameCorrect(user.name, MIN_NAME_LENGTH))

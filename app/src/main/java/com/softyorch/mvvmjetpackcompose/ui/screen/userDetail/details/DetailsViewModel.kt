@@ -123,7 +123,7 @@ class DetailsViewModel @Inject constructor(
     }
 
     private fun searchFieldError(user: UserUi, oldDataUser: UserUi) {
-        setErrors(validator.searFieldError(user, oldDataUser))
+        setErrors(validator.searchFieldError(user, oldDataUser))
     }
 
     private fun setErrors(userError: UserErrorModel) {
