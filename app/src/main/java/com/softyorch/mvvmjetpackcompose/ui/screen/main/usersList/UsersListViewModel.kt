@@ -6,6 +6,7 @@ import com.softyorch.mvvmjetpackcompose.domain.useCases.GetListUserUseCase
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toUi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UsersListViewModel @Inject constructor(
-    private val getListUserUseCase: GetListUserUseCase
+    private val getListUserUseCase: GetListUserUseCase,
+    private val dispatcherIO: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UsersListState>(UsersListState.Loading)
@@ -30,12 +32,12 @@ class UsersListViewModel @Inject constructor(
     }
 
     private fun getUsers() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcherIO) {
             getDataUsers()
                 .catch { flowT ->
                     _uiState.update { UsersListState.Error(flowT.message ?: "Error") }
                 }
-                .flowOn(Dispatchers.IO)
+                .flowOn(dispatcherIO)
                 .collect { list ->
                     _uiState.update { UsersListState.Success(list) }
                 }
