@@ -1,6 +1,5 @@
 package com.softyorch.mvvmjetpackcompose.ui.screen.search
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softyorch.mvvmjetpackcompose.domain.useCases.GetSearchUsersUseCase
@@ -40,7 +39,6 @@ class SearchViewModel @Inject constructor(
     private fun searchUser(filter: String) {
         viewModelScope.launch(dispatcherIO) {
             searUsersData(filter).collect { list ->
-                Log.i("MYAPP", "List: $list")
                 if (list.isEmpty() || filter.isEmpty())
                     _stateFilter.update { StateFilter.Empty }
                 else
