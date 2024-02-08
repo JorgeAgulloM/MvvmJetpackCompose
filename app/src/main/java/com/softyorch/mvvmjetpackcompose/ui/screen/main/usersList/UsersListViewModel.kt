@@ -28,6 +28,10 @@ class UsersListViewModel @Inject constructor(
     val uiState: StateFlow<UsersListState> = _uiState
 
     init {
+        onCreate()
+    }
+
+    fun onCreate() {
         getUsers()
     }
 
