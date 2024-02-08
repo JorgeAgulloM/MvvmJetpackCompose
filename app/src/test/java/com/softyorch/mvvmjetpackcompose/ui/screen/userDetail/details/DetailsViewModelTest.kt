@@ -103,4 +103,25 @@ class DetailsViewModelTest {
         coVerify(exactly = 1) { updateUserUseCase.invoke(newDataContact.toDomain()) }
     }
 
+    @Test
+    fun `test deleting user`() = runTest {
+        val contact = testContact.toDomain()
+        val userId = contact.id
+
+        //Given
+        coEvery { getUserUseCase.invoke(userId) } returns flowOf(contact)
+        viewModel.getUSer(userId)
+        sleep(500)
+        val newState = viewModel.stateDetails.value
+        assert(newState is StateDetails.Success)
+
+        //When
+        viewModel.eventManager(EventDetails.Delete)
+
+        //Then
+        val state = viewModel.stateDetails.value
+        assert(state is StateDetails.Success)
+        coVerify(exactly = 1) { deleteUserUseCase.invoke(contact) }
+    }
+
 }
