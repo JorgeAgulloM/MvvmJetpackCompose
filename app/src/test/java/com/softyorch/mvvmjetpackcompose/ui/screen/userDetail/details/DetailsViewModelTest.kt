@@ -9,11 +9,11 @@ import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toDomain
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toUi
 import com.softyorch.mvvmjetpackcompose.ui.models.errorValidator.IUserValidator
-import com.softyorch.mvvmjetpackcompose.utils.ToUUID
 import com.softyorch.mvvmjetpackcompose.utils.testContact
 import io.mockk.MockKAnnotations
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +27,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.lang.Thread.sleep
-import java.util.UUID
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class DetailsViewModelTest {
@@ -94,12 +93,13 @@ class DetailsViewModelTest {
         //When
         val newDataContact = contact.toUi().copy(name = "Geremias")
         viewModel.onDataChange(newDataContact)
-        viewModel.setUsers(newDataContact)
+        viewModel.eventManager(EventDetails.Read)
 
         //Then
         val state = viewModel.stateDetails.value
         assert(state is StateDetails.Success)
         assertEquals(newDataContact, (state as StateDetails.Success).user)
+        coVerify(exactly = 1) { updateUserUseCase.invoke(newDataContact.toDomain()) }
     }
 
 }
