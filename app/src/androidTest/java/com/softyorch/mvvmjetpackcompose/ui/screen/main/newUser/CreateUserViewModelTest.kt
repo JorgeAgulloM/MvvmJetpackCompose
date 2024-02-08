@@ -62,14 +62,43 @@ class CreateUserViewModelTest {
         val contactUi = contact.toUi()
         //Given
         coEvery { validator.searchError(contactUi, contactUi) } returns UserErrorModel()
-        viewModel.onDataChange(contactUi)
 
         //When
         val isValid = viewModel.setUsers()
 
         //Then
-        val contactNew = viewModel.user.value
         assertTrue(isValid)
+    }
+
+    @Test
+    fun testSetUser() = runTest {
+        val contactUi = contact.toUi()
+        //Given
+        coEvery { validator.searchError(contactUi, contactUi) } returns UserErrorModel()
+
+        //When
+        viewModel.setUsers()
+
+        //Then
+        val contactNew = viewModel.user.value
         coVerify(exactly = 1) { setUserUseCase.invoke(contactNew.toDomain()) }
+    }
+
+    @Test
+    fun testOnDataChange() = runTest {
+        val contactUi = contact.toUi()
+        //Given
+        coEvery { validator.searchFieldError(contactUi, contactUi) } returns UserErrorModel()
+
+        //When
+        viewModel.onDataChange(contactUi)
+
+        //Then
+        val contactNew = viewModel.user.value
+        assertTrue(contactUi.name == contactNew.name)
+        assertTrue(contactUi.surName == contactNew.surName)
+        assertTrue(contactUi.phoneNumber == contactNew.phoneNumber)
+        assertTrue(contactUi.email == contactNew.email)
+        assertTrue(contactUi.age == contactNew.age)
     }
 }
