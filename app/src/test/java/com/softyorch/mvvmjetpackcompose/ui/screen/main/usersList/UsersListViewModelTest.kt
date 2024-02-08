@@ -60,7 +60,7 @@ class UsersListViewModelTest {
 
         //Then
         val state = viewModel.uiState.value
-        assertTrue(viewModel.uiState.value is UsersListState.Success)
+        assertTrue(state is UsersListState.Success)
         assertEquals(contactList.map { it.toUi() }, (state as UsersListState.Success).users)
     }
 
