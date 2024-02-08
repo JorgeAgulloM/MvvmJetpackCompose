@@ -73,6 +73,7 @@ class DetailsViewModelTest {
         val state = viewModel.stateDetails.value
         assert(state is StateDetails.Success)
         assertEquals(contact.toUi(), (state as StateDetails.Success).user)
+        coVerify(exactly = 1) { getUserUseCase.invoke(userId) }
     }
 
     @Test
