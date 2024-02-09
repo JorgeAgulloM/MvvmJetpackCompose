@@ -1,4 +1,4 @@
-package com.softyorch.mvvmjetpackcompose.utils
+package com.softyorch.mvvmjetpackcompose
 
 import com.softyorch.mvvmjetpackcompose.core.intents.actions.ActionDialTest
 import com.softyorch.mvvmjetpackcompose.core.intents.actions.ActionEmailTest
