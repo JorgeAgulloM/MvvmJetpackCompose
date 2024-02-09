@@ -57,8 +57,8 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun setUsers(user: UserUi): Boolean {
-        when (val state = _stateDetails.value) {
-            is StateDetails.Success -> searchError(user, state.user)
+        when (_stateDetails.value) {
+            is StateDetails.Success -> searchError(user)
             else -> {}
         }
         return _stateError.value == StateError.Working
@@ -118,8 +118,8 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
-    private fun searchError(user: UserUi, oldDataUser: UserUi) {
-        setErrors(validator.searchError(user, oldDataUser))
+    private fun searchError(user: UserUi) {
+        setErrors(validator.searchError(user))
     }
 
     private fun searchFieldError(user: UserUi, oldDataUser: UserUi) {
