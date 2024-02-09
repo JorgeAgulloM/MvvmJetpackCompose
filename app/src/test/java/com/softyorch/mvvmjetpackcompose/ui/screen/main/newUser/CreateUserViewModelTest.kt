@@ -13,6 +13,7 @@ import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
+import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -55,7 +56,11 @@ class CreateUserViewModelTest {
     fun testUserValid() = runTest {
         val contactUi = contact.toUi()
         //Given
-        coEvery { validator.searchError(contactUi, contactUi) } returns UserErrorModel()
+        coEvery { validator.searchFieldError(contactUi, any()) } returns UserErrorModel()
+        launch { viewModel.onDataChange(contactUi) }
+        advanceUntilIdle()
+        val user = viewModel.user.value
+        coEvery { validator.searchError(user) } returns UserErrorModel()
 
         //When
         var isValid = false
@@ -67,10 +72,30 @@ class CreateUserViewModelTest {
     }
 
     @Test
+    fun testUserInvalid() = runTest {
+        val invalidUser = contact.toUi().copy(name = "j")
+
+        //Given
+        coEvery { validator.searchFieldError(invalidUser, any()) } returns UserErrorModel(name = true)
+        launch { viewModel.onDataChange(invalidUser) }
+        advanceUntilIdle()
+        val user = viewModel.user.value
+        coEvery { validator.searchError(user) } returns UserErrorModel(name = true)
+
+        //When
+        var isValid = false
+        launch { isValid = viewModel.setUsers() }
+        advanceUntilIdle()
+
+        //Then
+        assertFalse(isValid)
+    }
+
+    @Test
     fun testSetUser() = runTest {
         val contactUi = contact.toUi()
         //Given
-        coEvery { validator.searchError(contactUi, contactUi) } returns UserErrorModel()
+        coEvery { validator.searchError(contactUi) } returns UserErrorModel()
 
         //When
         launch { viewModel.setUsers() }
