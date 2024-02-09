@@ -71,7 +71,7 @@ class CreateUserViewModel @Inject constructor(
     }
 
     private fun searchError(user: UserUi) {
-        setErrors(validator.searchError(user, _user.value))
+        setErrors(validator.searchError(user))
     }
 
     private fun searchFieldError(user: UserUi) {
