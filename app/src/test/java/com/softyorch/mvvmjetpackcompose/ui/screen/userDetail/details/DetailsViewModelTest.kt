@@ -19,16 +19,15 @@ import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.lang.Thread.sleep
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 class DetailsViewModelTest {
 
     @get:Rule
@@ -36,10 +35,13 @@ class DetailsViewModelTest {
 
     @RelaxedMockK
     private lateinit var getUserUseCase: GetUserUseCase
+
     @RelaxedMockK
     private lateinit var updateUserUseCase: UpdateUserUseCase
+
     @RelaxedMockK
     private lateinit var deleteUserUseCase: DeleteUserUseCase
+
     @RelaxedMockK
     private lateinit var validator: IUserValidator
     private lateinit var viewModel: DetailsViewModel
@@ -47,14 +49,18 @@ class DetailsViewModelTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        Dispatchers.setMain(Dispatchers.Unconfined)
-        viewModel = DetailsViewModel(getUserUseCase, updateUserUseCase, deleteUserUseCase, validator)
+        viewModel = DetailsViewModel(
+            getUserUseCase,
+            updateUserUseCase,
+            deleteUserUseCase,
+            validator,
+            Dispatchers.Unconfined
+        )
     }
 
     @After
     fun teardown() {
         clearAllMocks()
-        Dispatchers.resetMain()
     }
 
     @Test
@@ -66,8 +72,8 @@ class DetailsViewModelTest {
         coEvery { getUserUseCase.invoke(userId) } returns flowOf(contact)
 
         //When
-        viewModel.getUSer(userId)
-        sleep(500)
+        launch { viewModel.getUSer(userId) }
+        advanceUntilIdle()
 
         //Then
         val state = viewModel.stateDetails.value
@@ -85,8 +91,8 @@ class DetailsViewModelTest {
         coEvery { getUserUseCase.invoke(userId) } returns flowOf(contact)
         coEvery { validator.searchError(contact.toUi(), any()) } returns UserErrorModel()
 
-        viewModel.getUSer(userId)
-        sleep(500)
+        launch { viewModel.getUSer(userId) }
+        advanceUntilIdle()
 
         val newState = viewModel.stateDetails.value
         assert(newState is StateDetails.Success)
@@ -110,8 +116,9 @@ class DetailsViewModelTest {
 
         //Given
         coEvery { getUserUseCase.invoke(userId) } returns flowOf(contact)
-        viewModel.getUSer(userId)
-        sleep(500)
+        launch { viewModel.getUSer(userId) }
+        advanceUntilIdle()
+
         val newState = viewModel.stateDetails.value
         assert(newState is StateDetails.Success)
 
