@@ -7,6 +7,7 @@ import com.softyorch.mvvmjetpackcompose.domain.useCases.GetSearchUsersUseCaseTes
 import com.softyorch.mvvmjetpackcompose.domain.useCases.GetUserUseCaseTest
 import com.softyorch.mvvmjetpackcompose.domain.useCases.SetUserUseCaseTest
 import com.softyorch.mvvmjetpackcompose.domain.useCases.UpdateUserUseCaseTest
+import com.softyorch.mvvmjetpackcompose.ui.screen.main.newUser.CreateUserViewModelTest
 import com.softyorch.mvvmjetpackcompose.ui.screen.main.usersList.UsersListViewModelTest
 import com.softyorch.mvvmjetpackcompose.ui.screen.search.SearchViewModelTest
 import com.softyorch.mvvmjetpackcompose.ui.screen.userDetail.details.DetailsViewModelTest
@@ -22,6 +23,7 @@ import org.junit.runners.Suite
     SetUserUseCaseTest::class,
     UpdateUserUseCaseTest::class,
     RepositoryImplTest::class,
+    CreateUserViewModelTest::class,
     UsersListViewModelTest::class,
     SearchViewModelTest::class,
     DetailsViewModelTest::class
