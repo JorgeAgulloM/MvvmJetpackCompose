@@ -89,7 +89,7 @@ class DetailsViewModelTest {
 
         //Give
         coEvery { getUserUseCase.invoke(userId) } returns flowOf(contact)
-        coEvery { validator.searchError(contact.toUi(), any()) } returns UserErrorModel()
+        coEvery { validator.searchError(contact.toUi()) } returns UserErrorModel()
 
         launch { viewModel.getUSer(userId) }
         advanceUntilIdle()
