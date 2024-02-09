@@ -1,7 +1,6 @@
 package com.softyorch.mvvmjetpackcompose.ui.screen.main.newUser
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.softyorch.mvvmjetpackcompose.domain.models.UserDomain.Companion.toDomain
 import com.softyorch.mvvmjetpackcompose.domain.useCases.SetUserUseCase
 import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
@@ -23,10 +22,8 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@RunWith(AndroidJUnit4::class)
 class CreateUserViewModelTest {
 
     @get:Rule
