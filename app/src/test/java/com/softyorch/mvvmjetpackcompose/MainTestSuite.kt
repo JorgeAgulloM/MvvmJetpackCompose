@@ -1,4 +1,4 @@
-package com.softyorch.mvvmjetpackcompose.utils
+package com.softyorch.mvvmjetpackcompose
 
 import com.softyorch.mvvmjetpackcompose.data.repository.RepositoryImplTest
 import com.softyorch.mvvmjetpackcompose.domain.useCases.DeleteUserUseCaseTest
