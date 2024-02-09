@@ -11,9 +11,11 @@ import com.softyorch.mvvmjetpackcompose.ui.screen.main.newUser.CreateUserViewMod
 import com.softyorch.mvvmjetpackcompose.ui.screen.main.usersList.UsersListViewModelTest
 import com.softyorch.mvvmjetpackcompose.ui.screen.search.SearchViewModelTest
 import com.softyorch.mvvmjetpackcompose.ui.screen.userDetail.details.DetailsViewModelTest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.runner.RunWith
 import org.junit.runners.Suite
 
+@ExperimentalCoroutinesApi
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
     DeleteUserUseCaseTest::class,
