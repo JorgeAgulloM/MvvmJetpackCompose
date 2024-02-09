@@ -4,6 +4,7 @@ import android.util.Patterns
 import androidx.core.text.isDigitsOnly
 import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
+import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
 import com.softyorch.mvvmjetpackcompose.utils.MIN_NAME_LENGTH
 import javax.inject.Inject
 
@@ -11,7 +12,7 @@ class UserValidatorImpl @Inject constructor() : IUserValidator {
 
     private val userError: UserErrorModel = UserErrorModel()
 
-    override fun searchError(user: UserUi, oldDataUser: UserUi): UserErrorModel {
+    override fun searchError(user: UserUi): UserErrorModel {
 
         val errorName = !isNameCorrect(user.name, MIN_NAME_LENGTH)
         val errorSurName = user.surName?.let {
@@ -59,7 +60,7 @@ class UserValidatorImpl @Inject constructor() : IUserValidator {
     }
 
     private fun isNameCorrect(name: String, size: Int): Boolean {
-        return (name.length >= size && !name.isDigitsOnly())
+        return (name != EMPTY_STRING && name.length >= size && !name.isDigitsOnly())
     }
 
     private fun isPhoneNumberCorrect(phoneNumber: String): Boolean {

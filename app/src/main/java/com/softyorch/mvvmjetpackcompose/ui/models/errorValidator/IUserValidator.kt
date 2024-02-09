@@ -4,6 +4,6 @@ import com.softyorch.mvvmjetpackcompose.ui.models.UserErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
 
 interface IUserValidator {
-    fun searchError(user: UserUi, oldDataUser: UserUi): UserErrorModel
+    fun searchError(user: UserUi): UserErrorModel
     fun searchFieldError(user: UserUi, oldDataUser: UserUi): UserErrorModel
 }
