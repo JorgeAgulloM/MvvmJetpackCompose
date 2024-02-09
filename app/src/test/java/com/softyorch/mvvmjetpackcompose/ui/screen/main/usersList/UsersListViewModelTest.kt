@@ -15,16 +15,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.lang.Exception
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 class UsersListViewModelTest {
 
     @get: Rule
@@ -38,12 +37,10 @@ class UsersListViewModelTest {
     fun onBefore() {
         MockKAnnotations.init(this)
         viewModel = UsersListViewModel(getListUserUseCase, Dispatchers.Unconfined)
-        Dispatchers.setMain(Dispatchers.Unconfined)
     }
 
     @After
     fun onAfter() {
-        Dispatchers.resetMain()
         clearAllMocks()
     }
 
@@ -56,7 +53,8 @@ class UsersListViewModelTest {
         coEvery { getListUserUseCase.invoke() } returns flowList
 
         //When
-        viewModel.onCreate()
+        launch { viewModel.onCreate() }
+        advanceUntilIdle()
 
         //Then
         val state = viewModel.uiState.value
@@ -71,7 +69,8 @@ class UsersListViewModelTest {
         coEvery { getListUserUseCase.invoke() } returns flow { throw Exception(message) }
 
         //When
-        viewModel.onCreate()
+        launch { viewModel.onCreate() }
+        advanceUntilIdle()
 
         //Then
         val state = viewModel.uiState.value
