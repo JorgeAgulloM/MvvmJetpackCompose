@@ -15,15 +15,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 class SearchViewModelTest {
 
     @get: Rule
@@ -37,13 +37,11 @@ class SearchViewModelTest {
     fun onBefore() {
         MockKAnnotations.init(this)
         viewModel = SearchViewModel(searchUsersUseCase, Dispatchers.Unconfined)
-        Dispatchers.setMain(Dispatchers.Unconfined)
     }
 
     @After
     fun onAfter() {
         clearAllMocks()
-        Dispatchers.resetMain()
     }
 
     @Test
@@ -56,8 +54,8 @@ class SearchViewModelTest {
         coEvery { searchUsersUseCase.invoke(filter) } returns flowList
 
         //When
-        viewModel.searchEvent(filter)
-
+        launch { viewModel.searchEvent(filter) }
+        advanceUntilIdle()
         //Then
         val stateFilter = viewModel.stateFilter.value
         assertTrue(stateFilter is StateFilter.Find)
@@ -72,7 +70,8 @@ class SearchViewModelTest {
         coEvery { searchUsersUseCase.invoke(filter) } returns emptyFlow()
 
         //When
-        viewModel.searchEvent(filter)
+        launch { viewModel.searchEvent(filter) }
+        advanceUntilIdle()
 
         //Then
         val stateFilter = viewModel.stateFilter.value
