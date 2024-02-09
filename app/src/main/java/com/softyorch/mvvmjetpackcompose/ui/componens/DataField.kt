@@ -12,6 +12,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -39,7 +40,9 @@ fun DataField(
     TextField(
         value = text,
         onValueChange = { onTextChange(it) },
-        modifier = Modifier.fillMaxWidth().padding(start = 8.dp, end = 8.dp, bottom = bottomDP),
+        modifier = Modifier.fillMaxWidth()
+            .padding(start = 8.dp, end = 8.dp, bottom = bottomDP)
+            .testTag("TextField"),
         enabled = enabled,
         textStyle = MaterialTheme.typography.bodyLarge,
         label = { Text(text = label) },
