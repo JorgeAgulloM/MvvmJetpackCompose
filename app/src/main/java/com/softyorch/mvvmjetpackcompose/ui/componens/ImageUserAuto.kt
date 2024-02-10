@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,13 +46,14 @@ fun ImageUserAuto(
                 style = MaterialTheme.typography.headlineMedium.copy(
                     color = MaterialTheme.colorScheme.background,
                     fontSize = (size.value / 2).sp
-                )
+                ),
+                modifier = Modifier.testTag("LogoText")
             )
         }
     } else Image(
         bitmap = image,
         contentDescription = "User Image",
-        modifier = Modifier.size(size),
+        modifier = Modifier.size(size).testTag("LogoImage"),
         contentScale = ContentScale.Crop
     )
 }
