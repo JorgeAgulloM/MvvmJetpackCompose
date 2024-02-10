@@ -9,6 +9,8 @@ import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import com.softyorch.mvvmjetpackcompose.R
+import com.softyorch.mvvmjetpackcompose.utils.LOGO_IMAGE
+import com.softyorch.mvvmjetpackcompose.utils.LOGO_TEXT
 import org.junit.Rule
 import org.junit.Test
 
@@ -27,8 +29,8 @@ class ImageUserAutoTest {
             )
         }
 
-        composeTestRule.onNodeWithTag("LogoImage").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("LogoText").assertExists()
+        composeTestRule.onNodeWithTag(LOGO_IMAGE).assertDoesNotExist()
+        composeTestRule.onNodeWithTag(LOGO_TEXT).assertExists()
     }
 
     @Test
@@ -41,8 +43,8 @@ class ImageUserAutoTest {
             )
         }
 
-        composeTestRule.onNodeWithTag("LogoImage").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("LogoText").apply {
+        composeTestRule.onNodeWithTag(LOGO_IMAGE).assertDoesNotExist()
+        composeTestRule.onNodeWithTag(LOGO_TEXT).apply {
             assertExists()
             assertIsDisplayed()
             assertTextContains("J")
@@ -68,8 +70,8 @@ class ImageUserAutoTest {
             )
         }
 
-        composeTestRule.onNodeWithTag("LogoText").assertIsNotDisplayed()
-        composeTestRule.onNodeWithTag("LogoImage").apply {
+        composeTestRule.onNodeWithTag(LOGO_TEXT).assertIsNotDisplayed()
+        composeTestRule.onNodeWithTag(LOGO_IMAGE).apply {
             assertExists()
             assertIsDisplayed()
         }

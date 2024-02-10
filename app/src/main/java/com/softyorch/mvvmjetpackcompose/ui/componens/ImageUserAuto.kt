@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
+import com.softyorch.mvvmjetpackcompose.utils.LOGO_IMAGE
+import com.softyorch.mvvmjetpackcompose.utils.LOGO_TEXT
 import com.softyorch.mvvmjetpackcompose.utils.getBitmapFromUriString
 
 @Composable
@@ -47,13 +49,13 @@ fun ImageUserAuto(
                     color = MaterialTheme.colorScheme.background,
                     fontSize = (size.value / 2).sp
                 ),
-                modifier = Modifier.testTag("LogoText")
+                modifier = Modifier.testTag(LOGO_TEXT)
             )
         }
     } else Image(
         bitmap = image,
         contentDescription = "User Image",
-        modifier = Modifier.size(size).testTag("LogoImage"),
+        modifier = Modifier.size(size).testTag(LOGO_IMAGE),
         contentScale = ContentScale.Crop
     )
 }

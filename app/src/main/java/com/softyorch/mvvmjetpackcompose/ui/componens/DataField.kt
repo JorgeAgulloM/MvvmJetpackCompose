@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.softyorch.mvvmjetpackcompose.utils.TEXT_FIELD
 
 @Composable
 fun DataField(
@@ -42,7 +43,7 @@ fun DataField(
         onValueChange = { onTextChange(it) },
         modifier = Modifier.fillMaxWidth()
             .padding(start = 8.dp, end = 8.dp, bottom = bottomDP)
-            .testTag("TextField"),
+            .testTag(TEXT_FIELD),
         enabled = enabled,
         textStyle = MaterialTheme.typography.bodyLarge,
         label = { Text(text = label) },

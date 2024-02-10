@@ -16,6 +16,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.text.input.KeyboardType
+import com.softyorch.mvvmjetpackcompose.utils.TEXT_FIELD
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -46,27 +47,27 @@ class DataFieldTest {
 
     @Test
     fun whenDataTextFieldExistAndIsDisplayedAndEnabled() {
-        composeTestRule.onNodeWithTag("TextField").assertExists()
-        composeTestRule.onNodeWithTag("TextField").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("TextField").assertIsEnabled()
+        composeTestRule.onNodeWithTag(TEXT_FIELD).assertExists()
+        composeTestRule.onNodeWithTag(TEXT_FIELD).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(TEXT_FIELD).assertIsEnabled()
     }
 
     @Test
     fun whenDataTextFieldIsClicked() {
-        composeTestRule.onNodeWithTag("TextField").performClick()
-        composeTestRule.onNodeWithTag("TextField").assertIsFocused()
+        composeTestRule.onNodeWithTag(TEXT_FIELD).performClick()
+        composeTestRule.onNodeWithTag(TEXT_FIELD).assertIsFocused()
     }
 
     @Test
     fun whenDataTextFieldHasText() {
-        composeTestRule.onNodeWithTag("TextField").assertTextContains("TextTest")
-        composeTestRule.onNodeWithTag("TextField").performTextClearance()
-        composeTestRule.onNodeWithTag("TextField").assertTextContains("")
+        composeTestRule.onNodeWithTag(TEXT_FIELD).assertTextContains("TextTest")
+        composeTestRule.onNodeWithTag(TEXT_FIELD).performTextClearance()
+        composeTestRule.onNodeWithTag(TEXT_FIELD).assertTextContains("")
     }
 
     @Test
     fun whenDataTextFieldChangingText() {
-        composeTestRule.onNodeWithTag("TextField").performTextReplacement("Test")
-        composeTestRule.onNodeWithTag("TextField").assertTextContains("Test")
+        composeTestRule.onNodeWithTag(TEXT_FIELD).performTextReplacement("Test")
+        composeTestRule.onNodeWithTag(TEXT_FIELD).assertTextContains("Test")
     }
 }
