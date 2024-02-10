@@ -21,6 +21,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -46,6 +47,11 @@ class GetUsersIntegrationTest {
         repo = RepositoryImpl(userDao)
         getListUserUseCase = GetListUserUseCase(repo)
         viewModel = UsersListViewModel(getListUserUseCase, Dispatchers.Unconfined)
+    }
+
+    @After
+    fun onAfter() {
+        db.close()
     }
 
     @Test
