@@ -9,3 +9,10 @@ const val EMPTY_STRING = ""
 const val USER_ID = "userId"
 val colorList = listOf(Purple80.toArgb().toLong(), PurpleGrey80.toArgb().toLong(), Pink80.toArgb().toLong())
 const val MIN_NAME_LENGTH = 3
+
+/** @@@@@@@@@@@@@@ Test Tags @@@@@@@@@@@@@ */
+/** @@@@@@@@@@ only for testing @@@@@@@@@@ */
+
+const val TEXT_FIELD = "TextField"
+const val LOGO_TEXT = "LogoText"
+const val LOGO_IMAGE = "LogoImage"
