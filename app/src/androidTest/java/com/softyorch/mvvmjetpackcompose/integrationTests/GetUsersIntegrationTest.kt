@@ -15,7 +15,6 @@ import com.softyorch.mvvmjetpackcompose.ui.screen.main.usersList.UsersListViewMo
 import com.softyorch.mvvmjetpackcompose.utils.FakeRoomDataBase
 import com.softyorch.mvvmjetpackcompose.utils.testContact
 import com.softyorch.mvvmjetpackcompose.utils.testContact2
-import io.mockk.impl.annotations.RelaxedMockK
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,15 +33,10 @@ class GetUsersIntegrationTest {
     @get: Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
-    @RelaxedMockK
     private lateinit var db: AppDatabase
-    @RelaxedMockK
     private lateinit var userDao: UserDao
-    @RelaxedMockK
     private lateinit var repo: IRepository
-    @RelaxedMockK
     private lateinit var getListUserUseCase: GetListUserUseCase
-    @RelaxedMockK
     private lateinit var viewModel: UsersListViewModel
 
     @Before
