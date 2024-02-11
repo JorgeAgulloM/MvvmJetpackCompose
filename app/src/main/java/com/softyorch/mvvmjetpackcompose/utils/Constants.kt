@@ -6,7 +6,7 @@ import com.softyorch.mvvmjetpackcompose.ui.theme.Purple80
 import com.softyorch.mvvmjetpackcompose.ui.theme.PurpleGrey80
 
 const val EMPTY_STRING = ""
-const val USER_ID = "userId"
+const val CONTACT_ID = "contactId"
 val colorList = listOf(Purple80.toArgb().toLong(), PurpleGrey80.toArgb().toLong(), Pink80.toArgb().toLong())
 const val MIN_NAME_LENGTH = 3
 

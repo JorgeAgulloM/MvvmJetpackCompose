@@ -31,8 +31,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.softyorch.mvvmjetpackcompose.ui.navigation.NavigationRoutes
-import com.softyorch.mvvmjetpackcompose.ui.screen.main.newUser.CreateUser
-import com.softyorch.mvvmjetpackcompose.ui.screen.main.usersList.UsersList
+import com.softyorch.mvvmjetpackcompose.ui.screen.main.newContact.CreateContact
+import com.softyorch.mvvmjetpackcompose.ui.screen.main.contactsList.ContactsList
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,7 +59,7 @@ fun MainScreen(
     ) { sPd ->
         BottomSheetScaffold(
             sheetContent = {
-                CreateUser {
+                CreateContact {
                     scope.launch {
                         bottomSheetScaffoldState.bottomSheetState.hide()
                     }
@@ -77,7 +77,7 @@ fun MainScreen(
                 verticalArrangement = Arrangement.Top
             ) {
                 SearchButton { navController.navigate(route = NavigationRoutes.Routes.SEARCH.name)}
-                UsersList { route -> navController.navigate(route = route) }
+                ContactsList { route -> navController.navigate(route = route) }
             }
         }
     }

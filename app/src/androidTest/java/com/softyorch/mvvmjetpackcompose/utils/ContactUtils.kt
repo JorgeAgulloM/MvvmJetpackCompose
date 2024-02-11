@@ -1,15 +1,15 @@
 package com.softyorch.mvvmjetpackcompose.utils
 
-import com.softyorch.mvvmjetpackcompose.data.entity.UserEntity
+import com.softyorch.mvvmjetpackcompose.data.entity.ContactEntity
 import java.util.UUID
 
-val userID: UUID = UUID.randomUUID()
-val testContact = UserEntity(
-    id = userID,
+val contactID: UUID = UUID.randomUUID()
+val testContact = ContactEntity(
+    id = contactID,
     name = "Test",
-    surName = "User",
+    surName = "Contact",
     phoneNumber = "1234567890",
-    email = "test.user@example.com",
+    email = "test.contact@example.com",
     age = 30,
     photoUri = null,
     logo = null,
@@ -20,13 +20,13 @@ val testContact = UserEntity(
     phoneBlocked = false
 )
 
-val userID2: UUID = UUID.randomUUID()
-val testContact2 = UserEntity(
-    id = userID2,
+val contactID2: UUID = UUID.randomUUID()
+val testContact2 = ContactEntity(
+    id = contactID2,
     name = "Test",
-    surName = "User",
+    surName = "Contact",
     phoneNumber = "1234567890",
-    email = "test.user@example.com",
+    email = "test.contact@example.com",
     age = 30,
     photoUri = null,
     logo = null,

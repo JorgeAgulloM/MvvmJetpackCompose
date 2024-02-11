@@ -24,52 +24,52 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
+import com.softyorch.mvvmjetpackcompose.ui.models.ContactUi
 import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 @Composable
-fun User(user: UserUi, dataView: DataView = DataView.LastCall, onClick: (String) -> Unit) {
+fun Contact(contact: ContactUi, dataView: DataView = DataView.LastCall, onClick: (String) -> Unit) {
     val shape = MaterialTheme.shapes.large
 
     Row(
         modifier = Modifier.fillMaxWidth()
-            .clickable { onClick(user.id.toString()) }
+            .clickable { onClick(contact.id.toString()) }
             .clip(shape = shape)
             .padding(start = 64.dp, end = 8.dp, top = 4.dp, bottom = 4.dp),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        ImageUserAuto(userImage = user.photoUri, userLogo = user.logo, userLogoColor = user.logoColor)
+        ImageContactAuto(contactImage = contact.photoUri, contactLogo = contact.logo, contactLogoColor = contact.logoColor)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Top
         ) {
-            DataUser(user, dataView)
-            FavoriteOrBlocked(user.favorite, user.phoneBlocked)
+            DataContact(contact, dataView)
+            FavoriteOrBlocked(contact.favorite, contact.phoneBlocked)
         }
     }
 }
 
 @Composable
-private fun DataUser(user: UserUi, dataView: DataView) {
+private fun DataContact(contact: ContactUi, dataView: DataView) {
     Column(
         modifier = Modifier.padding(start = 16.dp, top = 4.dp, bottom = 4.dp),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "${user.name} ${user.surName}",
+            text = "${contact.name} ${contact.surName}",
             style = MaterialTheme.typography.bodyLarge,
             overflow = TextOverflow.Ellipsis
         )
         when (dataView) {
-            DataView.LastCall -> user.typeCall?.let { LastCall(it, user.lastCall!!) }
+            DataView.LastCall -> contact.typeCall?.let { LastCall(it, contact.lastCall!!) }
             else -> {
-                UserSubData(data = user.phoneNumber, icon = Icons.Outlined.Phone)
+                ContactSubData(data = contact.phoneNumber, icon = Icons.Outlined.Phone)
             }
         }
     }
@@ -106,11 +106,11 @@ private fun LastCall(typeCall: Int, lastCall: Long) {
         1 -> MaterialTheme.colorScheme.tertiaryContainer
         else -> MaterialTheme.colorScheme.secondaryContainer
     }
-    UserSubData(data = dateLongToString(lastCall), icon = icon, color = color)
+    ContactSubData(data = dateLongToString(lastCall), icon = icon, color = color)
 }
 
 @Composable
-fun UserSubData(
+fun ContactSubData(
     data: String,
     icon: ImageVector,
     color: Color = MaterialTheme.colorScheme.outlineVariant

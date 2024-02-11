@@ -1,29 +1,29 @@
 package com.softyorch.mvvmjetpackcompose.data.repository
 
-import com.softyorch.mvvmjetpackcompose.data.entity.UserDao
-import com.softyorch.mvvmjetpackcompose.data.entity.UserEntity
+import com.softyorch.mvvmjetpackcompose.data.entity.ContactDao
+import com.softyorch.mvvmjetpackcompose.data.entity.ContactEntity
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 import javax.inject.Inject
 
-class RepositoryImpl @Inject constructor(private val userDao: UserDao) : IRepository {
-    override suspend fun getUsers(): Flow<List<UserEntity>> {
-        return userDao.getUsers()
+class RepositoryImpl @Inject constructor(private val contactDao: ContactDao) : IRepository {
+    override suspend fun getContacts(): Flow<List<ContactEntity>> {
+        return contactDao.getContacts()
     }
 
-    override suspend fun getUser(userId: UUID): Flow<UserEntity> {
-        return userDao.getUser(userId)
+    override suspend fun getContact(contactId: UUID): Flow<ContactEntity> {
+        return contactDao.getContact(contactId)
     }
 
-    override suspend fun insertUsers(users: UserEntity) {
-        userDao.insertUsers(users)
+    override suspend fun insertContacts(contacts: ContactEntity) {
+        contactDao.insertContact(contacts)
     }
 
-    override suspend fun updateUser(user: UserEntity) {
-        userDao.updateUser(user)
+    override suspend fun updateContact(contact: ContactEntity) {
+        contactDao.updateContact(contact)
     }
 
-    override suspend fun deleteUser(user: UserEntity) {
-        userDao.deleteUser(user)
+    override suspend fun deleteContact(contact: ContactEntity) {
+        contactDao.deleteContact(contact)
     }
 }

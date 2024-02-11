@@ -1,9 +1,9 @@
 package com.softyorch.mvvmjetpackcompose.data.repository
 
-import com.softyorch.mvvmjetpackcompose.data.entity.UserDao
-import com.softyorch.mvvmjetpackcompose.data.entity.UserEntity
+import com.softyorch.mvvmjetpackcompose.data.entity.ContactDao
+import com.softyorch.mvvmjetpackcompose.data.entity.ContactEntity
 import com.softyorch.mvvmjetpackcompose.utils.testContact
-import com.softyorch.mvvmjetpackcompose.utils.userID
+import com.softyorch.mvvmjetpackcompose.utils.contactID
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -18,75 +18,75 @@ import org.junit.Test
 class RepositoryImplTest {
 
     @RelaxedMockK
-    private lateinit var userDao: UserDao
+    private lateinit var contactDao: ContactDao
     private lateinit var repo: RepositoryImpl
 
     @Before
     fun onBefore() {
         MockKAnnotations.init(this)
-        repo = RepositoryImpl(userDao)
+        repo = RepositoryImpl(contactDao)
     }
 
     @Test
-    fun `when getUsers calls userDao getUsers`() = runBlocking {
-        val testList = listOf<UserEntity>()
+    fun `when getContacts calls contactDao getContacts`() = runBlocking {
+        val testList = listOf<ContactEntity>()
         val testFlow = flowOf(testList)
 
         //Given
-        coEvery { userDao.getUsers() } returns testFlow
+        coEvery { contactDao.getContacts() } returns testFlow
 
         //When
-        val result = repo.getUsers().first()
+        val result = repo.getContacts().first()
 
         assertEquals(testList, result)
-        coVerify(exactly = 1) { userDao.getUsers() }
+        coVerify(exactly = 1) { contactDao.getContacts() }
     }
 
     @Test
-    fun `when getUser calls userDao getUser`() = runBlocking {
+    fun `when getContact calls contactDao getContact`() = runBlocking {
         val testFlow = flowOf(testContact)
 
         //Given
-        coEvery { userDao.getUser(userID) } returns testFlow
+        coEvery { contactDao.getContact(contactID) } returns testFlow
 
         //When
-        val result = repo.getUser(userID).first()
+        val result = repo.getContact(contactID).first()
 
         assertEquals(testFlow.first(), result)
-        coVerify(exactly = 1) { userDao.getUser(userID) }
+        coVerify(exactly = 1) { contactDao.getContact(contactID) }
     }
 
     @Test
-    fun `when insertUser calls userDao insertUser`() = runBlocking {
+    fun `when insertContact calls contactDao insertContact`() = runBlocking {
         //Given
-        coEvery { userDao.insertUsers(testContact) } returns Unit
+        coEvery { contactDao.insertContact(testContact) } returns Unit
 
         //When
-        repo.insertUsers(testContact)
+        repo.insertContacts(testContact)
 
-        coVerify(exactly = 1) { userDao.insertUsers(testContact) }
+        coVerify(exactly = 1) { contactDao.insertContact(testContact) }
     }
 
     @Test
-    fun `when updateUser calls userDao updateUser`() = runBlocking {
+    fun `when updateContact calls contactDao updateContact`() = runBlocking {
         //Given
-        coEvery { userDao.updateUser(testContact) } returns Unit
+        coEvery { contactDao.updateContact(testContact) } returns Unit
 
         //When
-        repo.updateUser(testContact)
+        repo.updateContact(testContact)
 
-        coVerify(exactly = 1) { userDao.updateUser(testContact) }
+        coVerify(exactly = 1) { contactDao.updateContact(testContact) }
     }
 
     @Test
-    fun `when deleteUser calls userDao deleteUser`() = runBlocking {
+    fun `when deleteContact calls contactDao deleteContact`() = runBlocking {
         //Given
-        coEvery { userDao.deleteUser(testContact) } returns Unit
+        coEvery { contactDao.deleteContact(testContact) } returns Unit
 
         //When
-        repo.deleteUser(testContact)
+        repo.deleteContact(testContact)
 
-        coVerify(exactly = 1) { userDao.deleteUser(testContact) }
+        coVerify(exactly = 1) { contactDao.deleteContact(testContact) }
     }
 
 }

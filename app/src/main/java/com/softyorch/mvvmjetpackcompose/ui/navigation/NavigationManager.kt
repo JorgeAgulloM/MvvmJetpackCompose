@@ -7,11 +7,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.softyorch.mvvmjetpackcompose.ui.screen.splash.SplashScreen
-import com.softyorch.mvvmjetpackcompose.ui.screen.userDetail.UserDetailScreen
+import com.softyorch.mvvmjetpackcompose.ui.screen.contactDetail.ContactDetailScreen
 import com.softyorch.mvvmjetpackcompose.ui.screen.main.MainScreen
 import com.softyorch.mvvmjetpackcompose.ui.screen.search.SearchScreen
 import com.softyorch.mvvmjetpackcompose.utils.ToUUID
-import com.softyorch.mvvmjetpackcompose.utils.USER_ID
+import com.softyorch.mvvmjetpackcompose.utils.CONTACT_ID
 
 @Composable
 fun NavigationManager(navController: NavHostController = rememberNavController()) {
@@ -23,11 +23,11 @@ fun NavigationManager(navController: NavHostController = rememberNavController()
             MainScreen(navController = navController)
         }
         composable(
-            route = NavigationRoutes.UserDetailScreen.route,
-            arguments = listOf(navArgument(USER_ID) { defaultValue = "unKnown" })
+            route = NavigationRoutes.ContactDetailScreen.route,
+            arguments = listOf(navArgument(CONTACT_ID) { defaultValue = "unKnown" })
         ) { backStackEntry ->
-            backStackEntry.arguments?.getString(USER_ID)?.let {
-                UserDetailScreen(it.ToUUID()) { navController.popBackStack() }
+            backStackEntry.arguments?.getString(CONTACT_ID)?.let {
+                ContactDetailScreen(it.ToUUID()) { navController.popBackStack() }
             }
         }
         composable(route = NavigationRoutes.SearchScreen.route) {

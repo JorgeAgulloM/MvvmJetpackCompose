@@ -1,14 +1,14 @@
 package com.softyorch.mvvmjetpackcompose.data.repository
 
-import com.softyorch.mvvmjetpackcompose.data.entity.UserEntity
+import com.softyorch.mvvmjetpackcompose.data.entity.ContactEntity
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 
 interface IRepository {
-    suspend fun getUsers(): Flow<List<UserEntity>>
-    suspend fun getUser(userId: UUID): Flow<UserEntity>
-    suspend fun insertUsers(users: UserEntity)
-    suspend fun updateUser(user: UserEntity)
-    suspend fun deleteUser(user: UserEntity)
+    suspend fun getContacts(): Flow<List<ContactEntity>>
+    suspend fun getContact(contactId: UUID): Flow<ContactEntity>
+    suspend fun insertContacts(contacts: ContactEntity)
+    suspend fun updateContact(contact: ContactEntity)
+    suspend fun deleteContact(contact: ContactEntity)
 }

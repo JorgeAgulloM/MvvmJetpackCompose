@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.softyorch.mvvmjetpackcompose.ui.componens.DataView
-import com.softyorch.mvvmjetpackcompose.ui.componens.User
+import com.softyorch.mvvmjetpackcompose.ui.componens.Contact
 import com.softyorch.mvvmjetpackcompose.ui.navigation.NavigationRoutes
 
 @Composable
@@ -79,9 +79,9 @@ fun SearchScreen(
                 LazyColumn(
                     state = lazyListState
                 ) {
-                    items(state.users) { user ->
-                        User(user, DataView.NumberAndEmail) { id ->
-                            val route = NavigationRoutes.UserDetailScreen.createRoute(id)
+                    items(state.contacts) { contact ->
+                        Contact(contact, DataView.NumberAndEmail) { id ->
+                            val route = NavigationRoutes.ContactDetailScreen.createRoute(id)
                             onDetailNav(route)
                         }
                     }

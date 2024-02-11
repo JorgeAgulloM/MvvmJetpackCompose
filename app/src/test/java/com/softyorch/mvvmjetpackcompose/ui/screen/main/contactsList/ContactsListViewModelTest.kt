@@ -1,8 +1,8 @@
-package com.softyorch.mvvmjetpackcompose.ui.screen.search
+package com.softyorch.mvvmjetpackcompose.ui.screen.main.contactsList
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.softyorch.mvvmjetpackcompose.domain.models.ContactDomain.Companion.toDomain
-import com.softyorch.mvvmjetpackcompose.domain.useCases.GetSearchContactsUseCase
+import com.softyorch.mvvmjetpackcompose.domain.useCases.GetContactsUseCase
 import com.softyorch.mvvmjetpackcompose.ui.models.ContactUi.Companion.toUi
 import com.softyorch.mvvmjetpackcompose.utils.testContact
 import io.mockk.MockKAnnotations
@@ -13,7 +13,7 @@ import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -24,19 +24,19 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class SearchViewModelTest {
+class ContactsListViewModelTest {
 
     @get: Rule
-    val instantExecutorRule = InstantTaskExecutorRule()
+    var instantExecutorRule = InstantTaskExecutorRule()
 
     @RelaxedMockK
-    private lateinit var searchContactsUseCase: GetSearchContactsUseCase
-    private lateinit var viewModel: SearchViewModel
+    private lateinit var getContactsUseCase: GetContactsUseCase
+    private lateinit var viewModel: ContactsListViewModel
 
     @Before
     fun onBefore() {
         MockKAnnotations.init(this)
-        viewModel = SearchViewModel(searchContactsUseCase, Dispatchers.Unconfined)
+        viewModel = ContactsListViewModel(getContactsUseCase, Dispatchers.Unconfined)
     }
 
     @After
@@ -45,36 +45,36 @@ class SearchViewModelTest {
     }
 
     @Test
-    fun `test searching contacts with filter and get list contacts`() = runTest {
+    fun `test get contacts from use case`() = runTest {
         val contactList = listOf(testContact.toDomain())
         val flowList = flowOf(contactList)
-        val filter = "jorge"
 
         //Given
-        coEvery { searchContactsUseCase.invoke(filter) } returns flowList
+        coEvery { getContactsUseCase.invoke() } returns flowList
 
         //When
-        launch { viewModel.searchEvent(filter) }
+        launch { viewModel.onCreate() }
         advanceUntilIdle()
+
         //Then
-        val stateFilter = viewModel.stateFilter.value
-        assertTrue(stateFilter is StateFilter.Find)
-        assertEquals(contactList.map { it.toUi() }, (stateFilter as StateFilter.Find).contacts)
+        val state = viewModel.uiState.value
+        assertTrue(state is ContactsListState.Success)
+        assertEquals(contactList.map { it.toUi() }, (state as ContactsListState.Success).contacts)
     }
 
     @Test
-    fun `test searching contacts with filter but get empty list`() = runTest {
-        val filter = "Antonio"
-
+    fun `test get error from use case`() = runTest {
+        val message = "Error obteniendo usuarios"
         //Given
-        coEvery { searchContactsUseCase.invoke(filter) } returns emptyFlow()
+        coEvery { getContactsUseCase.invoke() } returns flow { throw Exception(message) }
 
         //When
-        launch { viewModel.searchEvent(filter) }
+        launch { viewModel.onCreate() }
         advanceUntilIdle()
 
         //Then
-        val stateFilter = viewModel.stateFilter.value
-        assertTrue(stateFilter is StateFilter.Empty)
+        val state = viewModel.uiState.value
+        assertTrue(state is ContactsListState.Error)
+        assertEquals(message, (state as ContactsListState.Error).msg)
     }
 }

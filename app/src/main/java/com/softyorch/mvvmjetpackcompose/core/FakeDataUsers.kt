@@ -1,6 +1,6 @@
 package com.softyorch.mvvmjetpackcompose.core
 
-import com.softyorch.mvvmjetpackcompose.data.entity.UserEntity
+import com.softyorch.mvvmjetpackcompose.data.entity.ContactEntity
 import com.softyorch.mvvmjetpackcompose.utils.colorList
 import com.softyorch.mvvmjetpackcompose.utils.deleteAccents
 import java.util.Calendar
@@ -9,9 +9,9 @@ import java.util.Locale
 import java.util.UUID
 import kotlin.random.Random
 
-val phoneContacts = mutableListOf<UserEntity>()
+val phoneContacts = mutableListOf<ContactEntity>()
 
-fun generateRandomUser(): UserEntity {
+fun generateRandomContact(): ContactEntity {
     val random = java.util.Random()
     val id = UUID.randomUUID()
     val names = arrayOf("Jorge", "Juan", "María", "Carlos", "Laura", "Pedro", "Ana", "David", "Sofía", "Diego", "Elena")
@@ -34,7 +34,7 @@ fun generateRandomUser(): UserEntity {
     val favorite = if (percent25 == 2) Random.nextBoolean() else false
     val blocked = if (!favorite && percent25 == 1) Random.nextBoolean() else false
 
-    return UserEntity(id, name, "$lastName1 $lastName2", phoneNumber, email, age, null, name[0].toString(), color, lastCall ,typeCall.takeIf { it < 3 }, favorite, blocked)
+    return ContactEntity(id, name, "$lastName1 $lastName2", phoneNumber, email, age, null, name[0].toString(), color, lastCall ,typeCall.takeIf { it < 3 }, favorite, blocked)
 }
 
 fun subtractYear(date: Date): Date {
@@ -44,10 +44,10 @@ fun subtractYear(date: Date): Date {
     return calendar.time
 }
 
-fun generate(): MutableList<UserEntity> {
+fun generate(): MutableList<ContactEntity> {
     repeat(100) {
-        val newUser = generateRandomUser()
-        phoneContacts.add(newUser)
+        val newContact = generateRandomContact()
+        phoneContacts.add(newContact)
     }
 
     // Print the list of the first 10 phone contacts generated

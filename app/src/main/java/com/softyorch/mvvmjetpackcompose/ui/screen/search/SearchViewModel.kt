@@ -2,9 +2,9 @@ package com.softyorch.mvvmjetpackcompose.ui.screen.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.softyorch.mvvmjetpackcompose.domain.useCases.GetSearchUsersUseCase
-import com.softyorch.mvvmjetpackcompose.ui.models.UserUi
-import com.softyorch.mvvmjetpackcompose.ui.models.UserUi.Companion.toUi
+import com.softyorch.mvvmjetpackcompose.domain.useCases.GetSearchContactsUseCase
+import com.softyorch.mvvmjetpackcompose.ui.models.ContactUi
+import com.softyorch.mvvmjetpackcompose.ui.models.ContactUi.Companion.toUi
 import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val searchUsersUseCase: GetSearchUsersUseCase,
+    private val searchContactsUseCase: GetSearchContactsUseCase,
     private val dispatcherIO: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel() {
 
@@ -32,13 +32,13 @@ class SearchViewModel @Inject constructor(
     fun searchEvent(newFilter: String) {
         newFilter.lowercase().let { filterLow ->
             _filter.update { filterLow }
-            searchUser(filterLow)
+            searchContact(filterLow)
         }
     }
 
-    private fun searchUser(filter: String) {
+    private fun searchContact(filter: String) {
         viewModelScope.launch(dispatcherIO) {
-            searUsersData(filter).collect { list ->
+            searContactsData(filter).collect { list ->
                 if (list.isEmpty() || filter.isEmpty())
                     _stateFilter.update { StateFilter.Empty }
                 else
@@ -51,7 +51,7 @@ class SearchViewModel @Inject constructor(
     //################################ UseCases ################################
     //##########################################################################
 
-    private suspend fun searUsersData(filter: String): Flow<List<UserUi>> =
-        searchUsersUseCase.invoke(filter).map { list -> list.map { it.toUi() } }
+    private suspend fun searContactsData(filter: String): Flow<List<ContactUi>> =
+        searchContactsUseCase.invoke(filter).map { list -> list.map { it.toUi() } }
 
 }
