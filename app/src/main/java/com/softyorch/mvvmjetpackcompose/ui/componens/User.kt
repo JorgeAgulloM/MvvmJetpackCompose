@@ -7,10 +7,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.CallMade
+import androidx.compose.material.icons.automirrored.filled.CallMissed
+import androidx.compose.material.icons.automirrored.filled.CallReceived
 import androidx.compose.material.icons.filled.Block
-import androidx.compose.material.icons.filled.CallMade
-import androidx.compose.material.icons.filled.CallMissed
-import androidx.compose.material.icons.filled.CallReceived
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material3.Icon
@@ -97,9 +97,9 @@ private fun FavoriteOrBlocked(favorite: Boolean?, blocked: Boolean?) {
 @Composable
 private fun LastCall(typeCall: Int, lastCall: Long) {
     val icon = when (typeCall) {
-        0 -> Icons.Default.CallMissed
-        1 -> Icons.Default.CallReceived
-        else -> Icons.Default.CallMade
+        0 -> Icons.AutoMirrored.Filled.CallMissed
+        1 -> Icons.AutoMirrored.Filled.CallReceived
+        else -> Icons.AutoMirrored.Filled.CallMade
     }
     val color = when (typeCall) {
         0 -> MaterialTheme.colorScheme.error
