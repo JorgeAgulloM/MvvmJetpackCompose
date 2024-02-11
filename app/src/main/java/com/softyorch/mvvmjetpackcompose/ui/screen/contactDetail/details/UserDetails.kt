@@ -258,12 +258,17 @@ private fun BodyRead(contact: ContactUi) {
             contact.surName.split(" ")[0]
         else contact.surName
 
-        ImageContactAuto(
-            contactImage = contact.photoUri,
-            contactLogo = contact.logo,
-            contactLogoColor = contact.logoColor,
-            size = 200.dp
-        )
+        Row(modifier = Modifier
+            .background(color = Color.Transparent, shape = CircleShape)
+            .clip(shape = CircleShape)
+        ) {
+            ImageContactAuto(
+                contactImage = contact.photoUri,
+                contactLogo = contact.logo,
+                contactLogoColor = contact.logoColor,
+                size = 200.dp
+            )
+        }
         Text(
             text = "${contact.name} $surName",
             modifier = Modifier.fillMaxWidth(),

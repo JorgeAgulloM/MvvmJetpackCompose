@@ -1,11 +1,13 @@
 package com.softyorch.mvvmjetpackcompose.ui.componens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.CallMade
 import androidx.compose.material.icons.automirrored.filled.CallMissed
@@ -42,7 +44,12 @@ fun Contact(contact: ContactUi, dataView: DataView = DataView.LastCall, onClick:
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        ImageContactAuto(contactImage = contact.photoUri, contactLogo = contact.logo, contactLogoColor = contact.logoColor)
+        Row(modifier = Modifier
+            .background(color = Color.Transparent, shape = CircleShape)
+            .clip(shape = CircleShape)
+        ) {
+            ImageContactAuto(contactImage = contact.photoUri, contactLogo = contact.logo, contactLogoColor = contact.logoColor)
+        }
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
