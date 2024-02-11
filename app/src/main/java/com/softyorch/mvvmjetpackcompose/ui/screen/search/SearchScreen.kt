@@ -9,7 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -27,8 +27,8 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.softyorch.mvvmjetpackcompose.ui.componens.DataView
 import com.softyorch.mvvmjetpackcompose.ui.componens.Contact
+import com.softyorch.mvvmjetpackcompose.ui.componens.DataView
 import com.softyorch.mvvmjetpackcompose.ui.navigation.NavigationRoutes
 
 @Composable
@@ -61,7 +61,7 @@ fun SearchScreen(
             leadingIcon = {
                 IconButton(onClick = { onBack() }) {
                     Icon(
-                        imageVector = Icons.Outlined.ArrowBack,
+                        imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
                         contentDescription = null
                     )
                 }
