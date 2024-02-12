@@ -1,21 +1,22 @@
 
-#### Working on this project...
+<img src="https://github.com/JorgeAgulloM/MvvmJetpackCompose/blob/main/Ilustrations/logo_android_beach.jpg" alt="Alpha version">
 
-##### Practical project. 
-- Contact list based on Redmi 10 device running Android 13
+### <img src="https://github.com/JorgeAgulloM/MvvmJetpackCompose/blob/main/Ilustrations/jetpack_compose.png" alt="Alpha version" width="25px">Android Jetpack Compose, Mvvm, clena and dependency injection project
+#### :bookmark_tabs:Contact list (Contact list based on Redmi 10 device running Android 13)
 
-Contains:
-- Developed with Jetpack Compose and Android Studio Hedgehog
-- Mvvm architecture
-- Clear architecture with data, domain and ui layers and functionalities by component
-- Injection dependency with Dagger Hilt
-- Room database
+#### This project designed as practice, you can find: 
+- mvvm and clean architecture
+- Dependency Injection with Dagger Hilt
+- Database with Room
+- Kotlin Coroutines
+- Flow and StateFlow
+- Unititary, integration and UI testing with JUnit4, MockK and Compose-test
 - Material 3
-- Flows
-- Coroutines
-- Data validation on UI
+- Extension functions
 - Use cases
-- Extension Functions
 - Mappers
-- And more to come...
+- Data validation in the UI layer
+
+##### This project tries to replicate the Redmi contact list on android 13. It contains a CRUD for contact management, compose navigation, detail screen where it is possible to call, send e-mails and sms, mark as favourite or block contact. 
+##### It is only a demo app and does not contain all the functionality of a contact list, as its function is to show how to create a project with the properties that it includes. 
 
