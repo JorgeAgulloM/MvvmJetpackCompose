@@ -44,6 +44,7 @@
     <!-- Main Screen -->
     <string name="main_screen_content_desc_add_contact">Add contact</string>
     <string name="main_screen_search_contacts">Search contacts</string>
+    <string name="main_screen_content_desc_search_contacts">Search contacts</string>
 
     <!-- Contact List -->
     <string name="contact_list_loading">Loading…</string>
