@@ -38,10 +38,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.softyorch.mvvmjetpackcompose.R
 import com.softyorch.mvvmjetpackcompose.core.intents.ActionsImpl.Companion.Actions
 import com.softyorch.mvvmjetpackcompose.ui.componens.ImageContactAuto
 import com.softyorch.mvvmjetpackcompose.ui.componens.contactFields.FromContact
@@ -72,7 +74,7 @@ fun ContactDetails(
         verticalArrangement = Arrangement.Top
     ) {
         when (val state = stateDetails) {
-            StateDetails.Loading -> DetailsInfo(text = "Cargando...")
+            StateDetails.Loading -> DetailsInfo(text = stringResource(R.string.contact_details_loading))
             is StateDetails.Success -> {
                 when (eventDetails) {
                     EventDetails.Edit -> {
@@ -118,7 +120,7 @@ fun ContactDetails(
                         ) {
                             onClick()
                         }
-                        DetailsInfo(text = "Usuario eliminado!")
+                        DetailsInfo(text = stringResource(R.string.contact_details_contact_deleted))
                     }
                 }
             }
@@ -145,9 +147,15 @@ private fun DeleteContact(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = "Eliminar a $contactName de la lista de contactos", style = MaterialTheme.typography.titleMedium)
+            Text(
+                text = stringResource(R.string.contact_details_delete_contact_info, contactName),
+                style = MaterialTheme.typography.titleMedium
+            )
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
-            Text(text = "¿Estás seguro?", style = MaterialTheme.typography.bodyLarge)
+            Text(
+                text = stringResource(R.string.contact_details_sure),
+                style = MaterialTheme.typography.bodyLarge
+            )
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -162,7 +170,10 @@ private fun DeleteContact(
                     ),
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
                 ) {
-                    Text(text = "No", style = MaterialTheme.typography.bodyLarge)
+                    Text(
+                        text = stringResource(R.string.contact_details_btn_no),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
                 }
                 Button(
                     onClick = { onEventManager(EventDetails.Delete) },
@@ -172,7 +183,10 @@ private fun DeleteContact(
                     ),
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
                 ) {
-                    Text(text = "Si", style = MaterialTheme.typography.bodyLarge)
+                    Text(
+                        text = stringResource(R.string.contact_details_btn_yes),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
                 }
             }
         }
@@ -258,9 +272,10 @@ private fun BodyRead(contact: ContactUi) {
             contact.surName.split(" ")[0]
         else contact.surName
 
-        Row(modifier = Modifier
-            .background(color = Color.Transparent, shape = CircleShape)
-            .clip(shape = CircleShape)
+        Row(
+            modifier = Modifier
+                .background(color = Color.Transparent, shape = CircleShape)
+                .clip(shape = CircleShape)
         ) {
             ImageContactAuto(
                 contactImage = contact.photoUri,
@@ -280,13 +295,13 @@ private fun BodyRead(contact: ContactUi) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconAction(icon = Icons.Outlined.Phone, text = "Llamar") {
+        IconAction(icon = Icons.Outlined.Phone, text = stringResource(R.string.contact_details_btn_call)) {
             context.Actions().sendDial(contact.phoneNumber)
         }
-        IconAction(icon = Icons.Outlined.Sms, text = "SMS") {
+        IconAction(icon = Icons.Outlined.Sms, text = stringResource(R.string.contact_details_btn_sms)) {
             context.Actions().sendSMS(contact.phoneNumber, contact.name)
         }
-        IconAction(icon = Icons.Outlined.Email, text = "Email") {
+        IconAction(icon = Icons.Outlined.Email, text = stringResource(R.string.contact_details_btn_email)) {
             context.Actions().sendEmail(contact.phoneNumber, contact.name)
         }
     }
@@ -299,7 +314,7 @@ private fun BodyRead(contact: ContactUi) {
             )
     ) {
         Text(
-            text = "Información de contacto",
+            text = stringResource(R.string.contact_details_contact_info),
             modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 4.dp),
             style = MaterialTheme.typography.labelLarge
         )
@@ -317,7 +332,7 @@ private fun TextRead(icon: ImageVector, text: String?) {
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(imageVector = icon, contentDescription = "info")
+        Icon(imageVector = icon, contentDescription = stringResource(R.string.contact_details_content_desc_info))
         Text(
             text = text,
             modifier = Modifier.padding(start = 16.dp, top = 4.dp, end = 16.dp, bottom = 8.dp),
