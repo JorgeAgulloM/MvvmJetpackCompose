@@ -19,4 +19,8 @@
     <!-- Image Contact Auto -->
     <string name="image_contact_auto_content_desc">Contact image</string>
 
+    <!-- User -->
+    <string name="contact_contact_blocked">Blocked contact</string>
+    <string name="contact_contact_favorite">Favorite contact</string>
+
 </resources>
