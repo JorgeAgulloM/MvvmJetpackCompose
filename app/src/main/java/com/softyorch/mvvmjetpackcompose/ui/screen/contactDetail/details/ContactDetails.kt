@@ -295,13 +295,25 @@ private fun BodyRead(contact: ContactUi) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconAction(icon = Icons.Outlined.Phone, text = stringResource(R.string.contact_details_btn_call)) {
+        IconAction(
+            icon = Icons.Outlined.Phone,
+            contentDesc = stringResource(R.string.contact_details_content_desc_icon_call),
+            text = stringResource(R.string.contact_details_btn_call)
+        ) {
             context.Actions().sendDial(contact.phoneNumber)
         }
-        IconAction(icon = Icons.Outlined.Sms, text = stringResource(R.string.contact_details_btn_sms)) {
+        IconAction(
+            icon = Icons.Outlined.Sms,
+            contentDesc = stringResource(R.string.contact_details_content_desc_icon_send_sms),
+            text = stringResource(R.string.contact_details_btn_sms)
+        ) {
             context.Actions().sendSMS(contact.phoneNumber, contact.name)
         }
-        IconAction(icon = Icons.Outlined.Email, text = stringResource(R.string.contact_details_btn_email)) {
+        IconAction(
+            icon = Icons.Outlined.Email,
+            contentDesc = stringResource(R.string.contact_details_content_desc_icon_send_email),
+            text = stringResource(R.string.contact_details_btn_email)
+        ) {
             context.Actions().sendEmail(contact.phoneNumber, contact.name)
         }
     }
@@ -332,7 +344,10 @@ private fun TextRead(icon: ImageVector, text: String?) {
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(imageVector = icon, contentDescription = stringResource(R.string.contact_details_content_desc_info))
+        Icon(
+            imageVector = icon,
+            contentDescription = stringResource(R.string.contact_details_content_desc_info)
+        )
         Text(
             text = text,
             modifier = Modifier.padding(start = 16.dp, top = 4.dp, end = 16.dp, bottom = 8.dp),
@@ -353,7 +368,7 @@ fun DetailsInfo(text: String) {
 }
 
 @Composable
-fun IconAction(icon: ImageVector, text: String, onClick: () -> Unit) {
+fun IconAction(icon: ImageVector, contentDesc: String, text: String, onClick: () -> Unit) {
     Box(
         modifier = Modifier.clip(CircleShape).clickable { onClick() },
         contentAlignment = Alignment.Center
@@ -371,7 +386,7 @@ fun IconAction(icon: ImageVector, text: String, onClick: () -> Unit) {
             ) {
                 Icon(
                     icon,
-                    contentDescription = null,
+                    contentDescription = contentDesc,
                     modifier = Modifier.padding(12.dp)
                 )
             }
