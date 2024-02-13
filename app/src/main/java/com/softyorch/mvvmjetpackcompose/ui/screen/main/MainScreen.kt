@@ -28,8 +28,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.softyorch.mvvmjetpackcompose.R
 import com.softyorch.mvvmjetpackcompose.ui.navigation.NavigationRoutes
 import com.softyorch.mvvmjetpackcompose.ui.screen.main.newContact.CreateContact
 import com.softyorch.mvvmjetpackcompose.ui.screen.main.contactsList.ContactsList
@@ -53,7 +55,10 @@ fun MainScreen(
             if (!bottomSheetScaffoldState.bottomSheetState.isVisible) FloatingActionButton(
                 onClick = { scope.launch { bottomSheetScaffoldState.bottomSheetState.expand() } }
             ) {
-                Icon(Icons.Default.Add, contentDescription = null)
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = stringResource(R.string.main_screen_content_desc_add_contact)
+                )
             }
         }
     ) { sPd ->
@@ -76,7 +81,7 @@ fun MainScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
-                SearchButton { navController.navigate(route = NavigationRoutes.Routes.SEARCH.name)}
+                SearchButton { navController.navigate(route = NavigationRoutes.Routes.SEARCH.name) }
                 ContactsList { route -> navController.navigate(route = route) }
             }
         }
@@ -105,7 +110,7 @@ private fun SearchButton(onClick: () -> Unit) {
                 contentDescription = null
             )
             Spacer(modifier = Modifier.padding(horizontal = 8.dp))
-            Text(text = "Buscar contactos", style = MaterialTheme.typography.bodyLarge)
+            Text(text = stringResource(R.string.main_screen_search_contacts), style = MaterialTheme.typography.bodyLarge)
         }
     }
 }
