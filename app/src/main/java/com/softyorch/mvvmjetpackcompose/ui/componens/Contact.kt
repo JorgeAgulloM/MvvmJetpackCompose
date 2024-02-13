@@ -46,11 +46,16 @@ fun Contact(contact: ContactUi, dataView: DataView = DataView.LastCall, onClick:
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(modifier = Modifier
-            .background(color = Color.Transparent, shape = CircleShape)
-            .clip(shape = CircleShape)
+        Row(
+            modifier = Modifier
+                .background(color = Color.Transparent, shape = CircleShape)
+                .clip(shape = CircleShape)
         ) {
-            ImageContactAuto(contactImage = contact.photoUri, contactLogo = contact.logo, contactLogoColor = contact.logoColor)
+            ImageContactAuto(
+                contactImage = contact.photoUri,
+                contactLogo = contact.logo,
+                contactLogoColor = contact.logoColor
+            )
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -130,7 +135,7 @@ fun ContactSubData(
     ) {
         Icon(
             icon,
-            contentDescription = null,
+            contentDescription = stringResource(R.string.contact_content_desc_call_result),
             modifier = Modifier.padding(horizontal = 2.dp),
             tint = color
         )
