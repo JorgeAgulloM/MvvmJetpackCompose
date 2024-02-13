@@ -36,8 +36,11 @@
     <string name="contact_details_contact_info">Contact information</string>
     <string name="contact_details_content_desc_info">Information</string>
 
-    <!--Main Screen -->
+    <!-- Main Screen -->
     <string name="main_screen_content_desc_add_contact">Add contact</string>
     <string name="main_screen_search_contacts">Search contacts</string>
+
+    <!-- Contact List -->
+    <string name="contact_list_loading">Loading…</string>
 
 </resources>
