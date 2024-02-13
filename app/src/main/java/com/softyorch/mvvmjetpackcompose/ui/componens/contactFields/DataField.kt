@@ -13,10 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.softyorch.mvvmjetpackcompose.R
 import com.softyorch.mvvmjetpackcompose.utils.TEXT_FIELD
 
 @Composable
@@ -48,7 +50,12 @@ fun DataField(
         textStyle = MaterialTheme.typography.bodyLarge,
         label = { Text(text = label) },
         placeholder = { Text(text = label, color = MaterialTheme.colorScheme.surfaceVariant) },
-        leadingIcon = { Icon(leadingIcon, contentDescription = null) },
+        leadingIcon = {
+            Icon(
+                leadingIcon,
+                contentDescription = stringResource(R.string.data_field_content_desc_field, label)
+            )
+        },
         supportingText = { if (error) Text(text = supportingText) },
         isError = error,
         keyboardOptions = KeyboardOptions(
