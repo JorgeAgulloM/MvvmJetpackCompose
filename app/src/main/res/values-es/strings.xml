@@ -17,4 +17,7 @@
     <string name="form_contact_age">Edad</string>
     <string name="form_contact_support_age">Edad no puede estar vacío</string>
 
+    <!-- Image Contact Auto -->
+    <string name="image_contact_auto_content_desc">Imagen de contacto</string>
+
 </resources>

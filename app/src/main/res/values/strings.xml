@@ -16,4 +16,7 @@
     <string name="form_contact_age">Age</string>
     <string name="form_contact_support_age">Age cannot be empty</string>
 
+    <!-- Image Contact Auto -->
+    <string name="image_contact_auto_content_desc">Contact image</string>
+
 </resources>
