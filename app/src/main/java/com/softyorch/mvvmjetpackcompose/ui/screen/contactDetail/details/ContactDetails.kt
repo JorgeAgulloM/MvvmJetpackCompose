@@ -217,7 +217,10 @@ fun TopBar(
         IconButton(
             onClick = { onBackClick() }
         ) {
-            Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = null)
+            Icon(
+                Icons.AutoMirrored.Outlined.ArrowBack,
+                contentDescription = stringResource(R.string.contact_details_content_desc_go_back)
+            )
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
