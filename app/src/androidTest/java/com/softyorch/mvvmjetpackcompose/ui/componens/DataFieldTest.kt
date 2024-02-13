@@ -16,6 +16,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.text.input.KeyboardType
+import com.softyorch.mvvmjetpackcompose.ui.componens.contactFields.DataField
 import com.softyorch.mvvmjetpackcompose.utils.TEXT_FIELD
 import org.junit.Before
 import org.junit.Rule

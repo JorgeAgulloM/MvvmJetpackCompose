@@ -33,7 +33,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.softyorch.mvvmjetpackcompose.R
-import com.softyorch.mvvmjetpackcompose.ui.componens.DataField
 import com.softyorch.mvvmjetpackcompose.ui.componens.ImageContactAuto
 import com.softyorch.mvvmjetpackcompose.ui.models.ContactErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.ContactUi

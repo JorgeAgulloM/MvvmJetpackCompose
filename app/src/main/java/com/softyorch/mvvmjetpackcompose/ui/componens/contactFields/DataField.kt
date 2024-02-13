@@ -1,4 +1,4 @@
-package com.softyorch.mvvmjetpackcompose.ui.componens
+package com.softyorch.mvvmjetpackcompose.ui.componens.contactFields
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
