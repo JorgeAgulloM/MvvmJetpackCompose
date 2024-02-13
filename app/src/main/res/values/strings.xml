@@ -36,6 +36,9 @@
     <string name="contact_details_btn_email">Email</string>
     <string name="contact_details_contact_info">Contact information</string>
     <string name="contact_details_content_desc_info">Information</string>
+    <string name="contact_details_content_desc_icon_call">Call</string>
+    <string name="contact_details_content_desc_icon_send_sms">Send SMS</string>
+    <string name="contact_details_content_desc_icon_send_email">Send email</string>
 
     <!-- Main Screen -->
     <string name="main_screen_content_desc_add_contact">Add contact</string>

@@ -37,6 +37,9 @@
     <string name="contact_details_btn_email">Email</string>
     <string name="contact_details_contact_info">Información de contacto</string>
     <string name="contact_details_content_desc_info">Infromación</string>
+    <string name="contact_details_content_desc_icon_call">Llamar</string>
+    <string name="contact_details_content_desc_icon_send_sms">Enviar SMS</string>
+    <string name="contact_details_content_desc_icon_send_email">Enviar correo</string>
 
     <!-- Main Screen -->
     <string name="main_screen_content_desc_add_contact">Añadir contacto</string>
@@ -52,5 +55,4 @@
 
     <!-- Splash Screen -->
     <string name="splash_screen_content_desc_icon">Icono de app</string>
-
 </resources>
