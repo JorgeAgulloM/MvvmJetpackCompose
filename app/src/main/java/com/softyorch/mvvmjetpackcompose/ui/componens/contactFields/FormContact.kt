@@ -28,9 +28,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.softyorch.mvvmjetpackcompose.R
 import com.softyorch.mvvmjetpackcompose.ui.componens.DataField
 import com.softyorch.mvvmjetpackcompose.ui.componens.ImageContactAuto
 import com.softyorch.mvvmjetpackcompose.ui.models.ContactErrorModel
@@ -47,9 +49,14 @@ fun FromContact(
     onDataChange: (ContactUi) -> Unit,
     setContact: () -> Unit
 ) {
-    val title = if (editContact) "Editar datos de ${contact.name}" else "Crear nuevo contacto"
-    val textButton = if (editContact) "Guardar" else "Crear"
-
+    val title = if (editContact)
+        stringResource(R.string.form_contact_data_edit, contact.name)
+    else
+        stringResource(R.string.form_contact_data_create)
+    val textButton = if (editContact)
+        stringResource(R.string.form_contact_save)
+    else
+        stringResource(R.string.form_contact_create)
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
 
@@ -95,43 +102,43 @@ fun FromContact(
             }
         }
         DataField(
-            label = "Nombre",
+            label = stringResource(R.string.form_contact_name),
             text = contact.name,
             error = contactErrors.name,
-            supportingText = "Debe contener al menos $MIN_NAME_LENGTH caracteres",
+            supportingText = stringResource(R.string.form_contact_support_char_min, MIN_NAME_LENGTH),
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.Person
         ) { name -> onDataChange(contact.copy(name = name)) }
         DataField(
-            label = "Apellidos",
+            label = stringResource(R.string.form_contact_surname),
             text = contact.surName ?: EMPTY_STRING,
             error = contactErrors.surName,
-            supportingText = "Debe contener al menos $MIN_NAME_LENGTH caracteres",
+            supportingText = stringResource(R.string.form_contact_support_char_min, MIN_NAME_LENGTH),
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.Person
         ) { surName -> onDataChange(contact.copy(surName = surName)) }
         DataField(
-            label = "Teléfono",
+            label = stringResource(R.string.form_contact_phone),
             text = contact.phoneNumber,
             error = contactErrors.phoneNumber,
-            supportingText = "Solo puede contener número",
+            supportingText = stringResource(R.string.form_contact_support_only_numbs),
             keyboardType = KeyboardType.Phone,
             leadingIcon = Icons.Default.Phone
         ) { phoneNumber -> onDataChange(contact.copy(phoneNumber = phoneNumber)) }
         DataField(
-            label = "Email",
+            label = stringResource(R.string.form_contact_email),
             text = contact.email ?: EMPTY_STRING,
             error = contactErrors.email,
-            supportingText = "El email no es correcto",
+            supportingText = stringResource(R.string.form_contact_support_email),
             keyboardType = KeyboardType.Email,
             leadingIcon = Icons.Default.Mail
         ) { email -> onDataChange(contact.copy(email = email)) }
         DataField(
-            label = "Edad",
+            label = stringResource(R.string.form_contact_age),
             text = contact.age ?: EMPTY_STRING,
             isLast = true,
             error = contactErrors.age,
-            supportingText = "Edad no puede estar vacío",
+            supportingText = stringResource(R.string.form_contact_support_age),
             keyboardType = KeyboardType.Number,
             leadingIcon = Icons.Default.CalendarMonth
         ) { age -> onDataChange(contact.copy(age = age)) }
