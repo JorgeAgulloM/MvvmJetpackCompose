@@ -37,4 +37,8 @@
     <string name="contact_details_contact_info">Información de contacto</string>
     <string name="contact_details_content_desc_info">Infromación</string>
 
+    <!--Main Screen -->
+    <string name="main_screen_content_desc_add_contact">Añadir contacto</string>
+    <string name="main_screen_search_contacts">Buscar contactos</string>
+
 </resources>
