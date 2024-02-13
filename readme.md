@@ -10,7 +10,8 @@
 - Database with Room
 - Kotlin Coroutines
 - Flow and StateFlow
-- Unititary, integration and UI testing with JUnit4, MockK and Compose-test
+- Unitary, integration and UI testing with JUnit4, MockK and Compose-test
+- CI with Github Actions (Review Build & run test)
 - Material 3
 - Extension functions
 - Use cases
