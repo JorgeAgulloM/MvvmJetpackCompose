@@ -8,6 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.softyorch.mvvmjetpackcompose.R
 import com.softyorch.mvvmjetpackcompose.ui.navigation.NavigationRoutes
@@ -35,6 +36,9 @@ fun SplashScreen(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Image(painter = painterResource(R.drawable.jetpack_compose), contentDescription = null)
+        Image(
+            painter = painterResource(R.drawable.jetpack_compose),
+            contentDescription = stringResource(R.string.splash_screen_content_desc_icon)
+        )
     }
 }
