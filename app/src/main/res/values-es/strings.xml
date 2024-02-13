@@ -24,4 +24,17 @@
     <string name="contact_contact_blocked">Contacto bloqueado</string>
     <string name="contact_contact_favorite">Contacto favorito</string>
 
+    <!-- Contact Details -->
+    <string name="contact_details_loading">Cargando…</string>
+    <string name="contact_details_contact_deleted">Usuario eliminado!</string>
+    <string name="contact_details_delete_contact_info">Eliminar a %1$s de la lista de contactos</string>
+    <string name="contact_details_sure">¿Estás seguro?</string>
+    <string name="contact_details_btn_no">No</string>
+    <string name="contact_details_btn_yes">Si</string>
+    <string name="contact_details_btn_call">Llamar</string>
+    <string name="contact_details_btn_sms">SMS</string>
+    <string name="contact_details_btn_email">Email</string>
+    <string name="contact_details_contact_info">Información de contacto</string>
+    <string name="contact_details_content_desc_info">Infromación</string>
+
 </resources>
