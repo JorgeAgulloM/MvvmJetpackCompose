@@ -57,4 +57,7 @@
     <!-- Splash Screen -->
     <string name="splash_screen_content_desc_icon">Icono de app</string>
 
+    <!-- Data Field -->
+    <string name="data_field_content_desc_field">Campo %1$s</string>
+
 </resources>
