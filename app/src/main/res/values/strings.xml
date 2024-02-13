@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">MvvmJetpackCompose</string>
+
+    <!-- Form Contact -->
+    <string name="form_contact_data_edit">Edit %1$s\'s data</string>
+    <string name="form_contact_data_create">Create new contact</string>
+    <string name="form_contact_save">Save</string>
+    <string name="form_contact_create">Create</string>
+    <string name="form_contact_name">Name</string>
+    <string name="form_contact_support_char_min">It must contain at least %1$s characters</string>
+    <string name="form_contact_surname">Surname</string>
+    <string name="form_contact_phone">Phone</string>
+    <string name="form_contact_support_only_numbs">It can only contain numbers</string>
+    <string name="form_contact_email">Email</string>
+    <string name="form_contact_support_email">The email is not correct</string>
+    <string name="form_contact_age">Age</string>
+    <string name="form_contact_support_age">Age cannot be empty</string>
+
 </resources>

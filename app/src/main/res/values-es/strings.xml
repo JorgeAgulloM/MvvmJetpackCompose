@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MvvmJetpackCompose</string>
+
+    <!-- Form Contact -->
+    <string name="form_contact_data_edit">Editar datos de %1$s</string>
+    <string name="form_contact_data_create">Crear nuevo contacto</string>
+    <string name="form_contact_save">Guardar</string>
+    <string name="form_contact_create">Crear</string>
+    <string name="form_contact_name">Nombre</string>
+    <string name="form_contact_support_char_min">Debe contener al menos %1$s caracteres</string>
+    <string name="form_contact_surname">Apellidos</string>
+    <string name="form_contact_phone">Teléfono</string>
+    <string name="form_contact_support_only_numbs">Solo puede contener números</string>
+    <string name="form_contact_email">Email</string>
+    <string name="form_contact_support_email">El email no es correcto</string>
+    <string name="form_contact_age">Edad</string>
+    <string name="form_contact_support_age">Edad no puede estar vacío</string>
+
+</resources>
