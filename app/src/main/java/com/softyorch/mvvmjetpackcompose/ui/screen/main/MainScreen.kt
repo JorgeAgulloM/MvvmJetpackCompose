@@ -107,7 +107,7 @@ private fun SearchButton(onClick: () -> Unit) {
         ) {
             Icon(
                 imageVector = Icons.Outlined.Search,
-                contentDescription = null
+                contentDescription = stringResource(R.string.main_screen_content_desc_search_contacts)
             )
             Spacer(modifier = Modifier.padding(horizontal = 8.dp))
             Text(text = stringResource(R.string.main_screen_search_contacts), style = MaterialTheme.typography.bodyLarge)
