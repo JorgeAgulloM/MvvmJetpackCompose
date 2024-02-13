@@ -24,8 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.softyorch.mvvmjetpackcompose.R
 import com.softyorch.mvvmjetpackcompose.ui.models.ContactUi
 import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
 import java.text.SimpleDateFormat
@@ -84,8 +86,8 @@ private fun DataContact(contact: ContactUi, dataView: DataView) {
 
 @Composable
 private fun FavoriteOrBlocked(favorite: Boolean?, blocked: Boolean?) {
-    val contentDescription = if (blocked == true) "Usuario bloqueado"
-    else if (favorite == true) "Usuario favorito"
+    val contentDescription = if (blocked == true) stringResource(R.string.contact_contact_blocked)
+    else if (favorite == true) stringResource(R.string.contact_contact_favorite)
     else EMPTY_STRING
 
     if (blocked == true) Icon(
