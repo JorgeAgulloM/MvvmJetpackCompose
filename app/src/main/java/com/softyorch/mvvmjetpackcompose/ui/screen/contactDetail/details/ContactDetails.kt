@@ -50,6 +50,7 @@ import com.softyorch.mvvmjetpackcompose.ui.componens.contactFields.FromContact
 import com.softyorch.mvvmjetpackcompose.ui.componens.contactFields.StateError
 import com.softyorch.mvvmjetpackcompose.ui.models.ContactErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.ContactUi
+import com.softyorch.mvvmjetpackcompose.utils.EMPTY_STRING
 import java.util.UUID
 
 @Composable
@@ -298,6 +299,7 @@ private fun BodyRead(contact: ContactUi) {
         IconAction(
             icon = Icons.Outlined.Phone,
             contentDesc = stringResource(R.string.contact_details_content_desc_icon_call),
+            enabled = contact.phoneNumber != EMPTY_STRING && contact.phoneBlocked != true,
             text = stringResource(R.string.contact_details_btn_call)
         ) {
             context.Actions().sendDial(contact.phoneNumber)
@@ -305,6 +307,7 @@ private fun BodyRead(contact: ContactUi) {
         IconAction(
             icon = Icons.Outlined.Sms,
             contentDesc = stringResource(R.string.contact_details_content_desc_icon_send_sms),
+            enabled = contact.phoneNumber != EMPTY_STRING && contact.phoneBlocked != true,
             text = stringResource(R.string.contact_details_btn_sms)
         ) {
             context.Actions().sendSMS(contact.phoneNumber, contact.name)
@@ -312,6 +315,7 @@ private fun BodyRead(contact: ContactUi) {
         IconAction(
             icon = Icons.Outlined.Email,
             contentDesc = stringResource(R.string.contact_details_content_desc_icon_send_email),
+            enabled = contact.email != EMPTY_STRING && contact.phoneBlocked != true,
             text = stringResource(R.string.contact_details_btn_email)
         ) {
             context.Actions().sendEmail(contact.phoneNumber, contact.name)
@@ -368,9 +372,20 @@ fun DetailsInfo(text: String) {
 }
 
 @Composable
-fun IconAction(icon: ImageVector, contentDesc: String, text: String, onClick: () -> Unit) {
+fun IconAction(
+    icon: ImageVector,
+    contentDesc: String,
+    text: String,
+    enabled: Boolean,
+    onClick: () -> Unit
+) {
+    val color = if (enabled) MaterialTheme.colorScheme.secondaryContainer
+    else MaterialTheme.colorScheme.outlineVariant
+
     Box(
-        modifier = Modifier.clip(CircleShape).clickable { onClick() },
+        modifier = Modifier.clip(CircleShape).clickable {
+            if (enabled) onClick()
+        },
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -380,7 +395,7 @@ fun IconAction(icon: ImageVector, contentDesc: String, text: String, onClick: ()
         ) {
             Box(
                 modifier = Modifier.padding(8.dp).background(
-                    color = MaterialTheme.colorScheme.secondaryContainer,
+                    color = color,
                     shape = CircleShape
                 ), contentAlignment = Alignment.Center
             ) {
