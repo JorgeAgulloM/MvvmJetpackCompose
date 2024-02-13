@@ -24,9 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.softyorch.mvvmjetpackcompose.R
 import com.softyorch.mvvmjetpackcompose.ui.componens.Contact
 import com.softyorch.mvvmjetpackcompose.ui.componens.DataView
 import com.softyorch.mvvmjetpackcompose.ui.navigation.NavigationRoutes
@@ -55,14 +57,14 @@ fun SearchScreen(
     ) {
         TextField(
             value = filter,
-            placeholder = { Text(text = "Buscar contactos") },
+            placeholder = { Text(text = stringResource(R.string.search_screen_search_contacts)) },
             modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp).focusRequester(focusRequester),
             onValueChange = { newFilter -> viewModel.searchEvent(newFilter) },
             leadingIcon = {
                 IconButton(onClick = { onBack() }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                        contentDescription = null
+                        contentDescription = stringResource(R.string.search_screen_content_desc_go_back)
                     )
                 }
             },
@@ -89,7 +91,7 @@ fun SearchScreen(
             }
 
             StateFilter.Empty -> Text(
-                text = "Puedes filtrar por Nombre, Apellidos, teléfono o email",
+                text = stringResource(R.string.search_screen_filter_options),
                 modifier = Modifier.padding(24.dp),
                 style = MaterialTheme.typography.bodyLarge
             )
