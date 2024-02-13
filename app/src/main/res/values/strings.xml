@@ -48,4 +48,7 @@
     <string name="search_screen_content_desc_go_back">Go back</string>
     <string name="search_screen_filter_options">You can filter by Name, Surname, telephone or email address</string>
 
+    <!-- Splash Screen -->
+    <string name="splash_screen_content_desc_icon">App icon</string>
+
 </resources>

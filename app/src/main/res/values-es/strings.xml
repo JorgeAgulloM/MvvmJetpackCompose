@@ -49,4 +49,7 @@
     <string name="search_screen_content_desc_go_back">Volver atrás</string>
     <string name="search_screen_filter_options">Puedes filtrar por Nombre, Apellidos, teléfono o email</string>
 
+    <!-- Splash Screen -->
+    <string name="splash_screen_content_desc_icon">Icono de app</string>
+
 </resources>
