@@ -11,9 +11,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.softyorch.mvvmjetpackcompose.R
 import com.softyorch.mvvmjetpackcompose.ui.componens.Contact
 import com.softyorch.mvvmjetpackcompose.ui.models.ContactUi
 import com.softyorch.mvvmjetpackcompose.ui.navigation.NavigationRoutes
@@ -32,7 +34,7 @@ fun ContactsList(
         state = lazyState
     ) {
         when (val state = uiState) {
-            ContactsListState.Loading -> item { Text(text = "Cargando") }
+            ContactsListState.Loading -> item { Text(text = stringResource(R.string.contact_list_loading)) }
             is ContactsListState.Success -> {
                 val orderList = state.contacts.sortedBy { it.name }
                 val contactMap: Map<String, List<ContactUi>> =
