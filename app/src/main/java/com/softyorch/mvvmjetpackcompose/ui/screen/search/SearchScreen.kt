@@ -26,7 +26,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.softyorch.mvvmjetpackcompose.R
 import com.softyorch.mvvmjetpackcompose.ui.componens.Contact
@@ -35,7 +34,7 @@ import com.softyorch.mvvmjetpackcompose.ui.navigation.NavigationRoutes
 
 @Composable
 fun SearchScreen(
-    viewModel: SearchViewModel = hiltViewModel<SearchViewModel>(),
+    viewModel: SearchViewModel,
     onDetailNav: (String) -> Unit,
     onBack: () -> Unit
 ) {

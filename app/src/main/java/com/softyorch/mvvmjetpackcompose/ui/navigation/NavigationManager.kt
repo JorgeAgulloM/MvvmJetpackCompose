@@ -1,6 +1,8 @@
 package com.softyorch.mvvmjetpackcompose.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -31,7 +33,9 @@ fun NavigationManager(navController: NavHostController = rememberNavController()
             }
         }
         composable(route = NavigationRoutes.SearchScreen.route) {
-            SearchScreen(onDetailNav = { route -> navController.navigate(route) }) {
+            SearchScreen(
+                viewModel = hiltViewModel(checkNotNull(LocalViewModelStoreOwner.current) {}, null),
+                onDetailNav = { route -> navController.navigate(route) }) {
                 navController.popBackStack()
             }
         }

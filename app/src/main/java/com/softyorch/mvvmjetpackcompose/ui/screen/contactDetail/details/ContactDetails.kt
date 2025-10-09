@@ -21,7 +21,7 @@ import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material.icons.outlined.Sms
-import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -41,7 +41,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.softyorch.mvvmjetpackcompose.R
 import com.softyorch.mvvmjetpackcompose.core.intents.ActionsImpl.Companion.Actions
@@ -55,7 +55,7 @@ import java.util.UUID
 
 @Composable
 fun ContactDetails(
-    viewModel: DetailsViewModel = hiltViewModel<DetailsViewModel>(),
+    viewModel: DetailsViewModel,
     contactId: UUID,
     onClick: () -> Unit
 ) {
@@ -137,61 +137,61 @@ private fun DeleteContact(
     contactName: String,
     onEventManager: (EventDetails) -> Unit
 ) {
-    AlertDialog(
-        onDismissRequest = { onEventManager(EventDetails.Read) }
-    ) {
-        Column(
-            modifier = Modifier.background(
-                color = MaterialTheme.colorScheme.background,
-                shape = MaterialTheme.shapes.large
-            ).padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = stringResource(R.string.contact_details_delete_contact_info, contactName),
-                style = MaterialTheme.typography.titleMedium
-            )
-            Spacer(modifier = Modifier.padding(vertical = 8.dp))
-            Text(
-                text = stringResource(R.string.contact_details_sure),
-                style = MaterialTheme.typography.bodyLarge
-            )
-            Spacer(modifier = Modifier.padding(vertical = 8.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
+    BasicAlertDialog(
+        onDismissRequest = { onEventManager(EventDetails.Read) },
+        properties = DialogProperties(), content = {
+            Column(
+                modifier = Modifier.background(
+                    color = MaterialTheme.colorScheme.background,
+                    shape = MaterialTheme.shapes.large
+                ).padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Button(
-                    onClick = { onEventManager(EventDetails.Read) },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant
-                    ),
-                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                Text(
+                    text = stringResource(R.string.contact_details_delete_contact_info, contactName),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Spacer(modifier = Modifier.padding(vertical = 8.dp))
+                Text(
+                    text = stringResource(R.string.contact_details_sure),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Spacer(modifier = Modifier.padding(vertical = 8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = stringResource(R.string.contact_details_btn_no),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                }
-                Button(
-                    onClick = { onEventManager(EventDetails.Delete) },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.errorContainer,
-                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant
-                    ),
-                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.contact_details_btn_yes),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
+                    Button(
+                        onClick = { onEventManager(EventDetails.Read) },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                        ),
+                        elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.contact_details_btn_no),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    }
+                    Button(
+                        onClick = { onEventManager(EventDetails.Delete) },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.errorContainer,
+                            contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                        ),
+                        elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.contact_details_btn_yes),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    }
                 }
             }
-        }
-    }
+        })
 }
 
 @Composable

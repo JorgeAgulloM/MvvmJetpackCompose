@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import com.softyorch.mvvmjetpackcompose.ui.screen.contactDetail.details.ContactDetails
 import java.util.UUID
 
@@ -16,6 +18,6 @@ fun ContactDetailScreen(contactId: UUID, onClick: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        ContactDetails(contactId = contactId) { onClick() }
+        ContactDetails(viewModel = hiltViewModel(checkNotNull(LocalViewModelStoreOwner.current) {}, null), contactId = contactId) { onClick() }
     }
 }

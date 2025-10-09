@@ -2,16 +2,15 @@ package com.softyorch.mvvmjetpackcompose.ui.screen.main.newContact
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.softyorch.mvvmjetpackcompose.ui.componens.contactFields.StateError
 import com.softyorch.mvvmjetpackcompose.ui.componens.contactFields.FromContact
+import com.softyorch.mvvmjetpackcompose.ui.componens.contactFields.StateError
 import com.softyorch.mvvmjetpackcompose.ui.models.ContactErrorModel
 import com.softyorch.mvvmjetpackcompose.ui.models.ContactUi
 
 @Composable
 fun CreateContact(
-    viewModel: CreateContactViewModel = hiltViewModel<CreateContactViewModel>(),
+    viewModel: CreateContactViewModel,
     onFinishCreateContact: () -> Unit
 ) {
 

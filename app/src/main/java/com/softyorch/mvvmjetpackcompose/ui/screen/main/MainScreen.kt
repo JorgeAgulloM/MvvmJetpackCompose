@@ -30,6 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavHostController
 import com.softyorch.mvvmjetpackcompose.R
 import com.softyorch.mvvmjetpackcompose.ui.navigation.NavigationRoutes
@@ -64,7 +66,9 @@ fun MainScreen(
     ) { sPd ->
         BottomSheetScaffold(
             sheetContent = {
-                CreateContact {
+                CreateContact(
+                    viewModel = hiltViewModel(checkNotNull(LocalViewModelStoreOwner.current) {}, null)
+                ) {
                     scope.launch {
                         bottomSheetScaffoldState.bottomSheetState.hide()
                     }
@@ -82,7 +86,9 @@ fun MainScreen(
                 verticalArrangement = Arrangement.Top
             ) {
                 SearchButton { navController.navigate(route = NavigationRoutes.Routes.SEARCH.name) }
-                ContactsList { route -> navController.navigate(route = route) }
+                ContactsList(
+                    viewModel = hiltViewModel(checkNotNull(LocalViewModelStoreOwner.current) {}, null)
+                ) { route -> navController.navigate(route = route) }
             }
         }
     }
