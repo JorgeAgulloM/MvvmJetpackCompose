@@ -1,7 +1,7 @@
 
 <img width="2592" height="2070" alt="Gemini_Generated_Image_odai29odai29odai" src="https://github.com/user-attachments/assets/10f29a30-41f7-40b5-a597-552ada88ba86" />
 
-### <img src="https://github.com/JorgeAgulloM/MvvmJetpackCompose/blob/32c5d179b9209b6cbddffdc4d8a4dd94719a3431/blob/main/ilustrations/jetpack_compose.png" alt="Versión Alpha" width="25px">Proyecto Android 16 con Jetpack Compose, Mvvm, Clean y Inyección de dependencias
+### <img src="https://github.com/JorgeAgulloM/MvvmJetpackCompose/blob/32c5d179b9209b6cbddffdc4d8a4dd94719a3431/blob/main/ilustrations/jetpack_compose.png" alt="Versión Alpha" width="25px">Proyecto Android 16 con Jetpack Compose, Mvvm, Clean e Inyección de dependencias
 #### :bookmark_tabs:Lista de contactos (basada en la lista de contactos de un dispositivo Redmi 10 con Android 13)
 
 #### Este proyecto está diseñado como práctica, en él puedes encontrar: 
